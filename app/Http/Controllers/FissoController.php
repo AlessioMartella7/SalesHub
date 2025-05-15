@@ -7,6 +7,7 @@ use App\Models\Fisso;
 use App\Imports\FissiImport;
 use App\Jobs\FissiImportExcel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FissoController extends Controller
@@ -54,7 +55,7 @@ class FissoController extends Controller
 
         $file = $request->file('import_file');
         $fileSize = $file->getSize();
-        $userID =  auth()->id();
+        $userID =  Auth::user()->id;
         // Salva il file in storage/app/tmp con nome univoco
         $filePath = $file->storeAs(
             'tmp',
