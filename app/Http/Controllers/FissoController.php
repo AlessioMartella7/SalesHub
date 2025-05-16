@@ -63,21 +63,20 @@ class FissoController extends Controller
         $filePath = $file->storeAs('excels_files', $userID . $fileName);
 
         // Percorso in cui si trova il file
-        $fullPath = storage_path('app/private/'. $filePath)
-
-;        // Se il file è più piccolo di X
+        $fullPath = storage_path('app/private/'. $filePath);
+                // Se il file è più piccolo di X
         if ($fileSize < 200 * 1024) {
             Excel::import(new FissiImport($userID),$fullPath );
+            // Elimina il file dopo l'importazione
+            Storage::delete($filePath);
             $message = 'File caricato con successo';
         } else {
 
             // Avvia il job in coda
-            FissiImportExcel::dispatch($fullPath, $userID);
+            FissiImportExcel::dispatch($filePath, $userID, $fullPath);
             $message = 'File importato con successo, caricamento in corso in background';
         }
 
-        // Elimina il file dopo l'importazione
-        Storage::delete($filePath);
 
         return redirect()->route('fissi.import')->with('success', $message);
     }

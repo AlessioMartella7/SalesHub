@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FissiImportExcel implements ShouldQueue
@@ -16,24 +17,26 @@ class FissiImportExcel implements ShouldQueue
 
     public string $filePath;
     public int $userId;
+    public string $fullPath;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(string $filePath, int $userId)
+    public function __construct(string $filePath, int $userId, string $fullPath)
     {
         $this->filePath = $filePath;
         $this->userId = $userId;
+        $this->fullPath = $fullPath;
     }
 
     /**
      * Execute the job.
      */
-    public function handle(): void
-    {
-        Excel::import(new FissiImportToModel($this->userId), storage_path('app/' . $this->filePath));
+public function handle(): void
+{
+    Excel::import(new FissiImportToModel($this->userId), $this->fullPath);
 
-        // Elimina il file dopo l'importazione
-        Storage::delete($this->filePath);
-    }
+    // elimina dal disco "local", che punta a storage/app/private
+    Storage::disk('local')->delete($this->filePath);
+}
 }
