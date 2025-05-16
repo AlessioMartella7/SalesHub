@@ -32,5 +32,8 @@ class FissiImportExcel implements ShouldQueue
     public function handle(): void
     {
         Excel::import(new FissiImportToModel($this->userId), storage_path('app/' . $this->filePath));
+
+        // Elimina il file dopo l'importazione
+        Storage::delete($this->filePath);
     }
 }

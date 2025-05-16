@@ -8,6 +8,7 @@ use App\Imports\FissiImport;
 use App\Jobs\FissiImportExcel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FissoController extends Controller
@@ -55,23 +56,28 @@ class FissoController extends Controller
 
         $file = $request->file('import_file');
         $fileSize = $file->getSize();
-        $userID =  Auth::user()->id;
-        // Salva il file in storage/app/tmp con nome univoco
-        $filePath = $file->storeAs(
-            'tmp',
-            now()->timestamp . '_' . $file->getClientOriginalName()
-        );
+        $fileName = $file->hashName();
+        $userID =  $request->user()->id;
 
-        // Se il file è più piccolo di X
+        // Percoso da dove il file viene salvato
+        $filePath = $file->storeAs('excels_files', $userID . $fileName);
+
+        // Percorso in cui si trova il file
+        $fullPath = storage_path('app/private/'. $filePath)
+
+;        // Se il file è più piccolo di X
         if ($fileSize < 200 * 1024) {
-            Excel::import(new FissiImport($userID), storage_path('app/' . $filePath));
+            Excel::import(new FissiImport($userID),$fullPath );
             $message = 'File caricato con successo';
         } else {
 
             // Avvia il job in coda
-            FissiImportExcel::dispatch($filePath, $userID);
+            FissiImportExcel::dispatch($fullPath, $userID);
             $message = 'File importato con successo, caricamento in corso in background';
         }
+
+        // Elimina il file dopo l'importazione
+        Storage::delete($filePath);
 
         return redirect()->route('fissi.import')->with('success', $message);
     }
