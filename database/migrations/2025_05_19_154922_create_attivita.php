@@ -18,8 +18,8 @@ return new class extends Migration
 
             //Foreign Key Users
             $table->foreignId('ragione_sociale_id')->constrained('ragioni_sociali')
-                  ->onUpdate('no action')
-                  ->onDelete('no action');
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
 
             $table->timestamps();
 

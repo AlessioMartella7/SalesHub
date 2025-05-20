@@ -19,8 +19,8 @@ return new class extends Migration
 
             //Foreign Key
             $table->foreignId('organizzazione_id')->constrained('organizzazioni')
-                  ->onUpdate('no action')
-                  ->onDelete('no action');
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
 
             $table->timestamps();
 
