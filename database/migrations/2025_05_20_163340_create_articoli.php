@@ -26,29 +26,47 @@ return new class extends Migration
                   ->onDelete('cascade');
 
             $table->timestamps();
-            $table->integer('codice_esterno')->nullable(); //id_articolo
-
+           
             $table->string('tipo', 1);
             $table->string('codice', 50);
             $table->string('codice_ean', 50)->nullable();
+            $table->string('codice_univoco', 10)->nullable();
 
             $table->string('voce_scontrino', 50)->nullable();
             $table->string('descrizione', 150)->nullable();
             $table->string('marca', 70)->nullable();
             $table->string('modello', 150)->nullable();
-            $table->string('flg_univocita', 1);
+
             $table->string('id_brand', 1)->nullable();
+            $table->string('costo_acquisto', 10)->nullable();
+            $table->string('aliquota_acquisto', 10)->nullable();
 
+            /*
+            tipologia_vendita
+            canone
 
+            prezzo
+            aliquota_prezzo
+            natura
+            importo_imponibile
 
-            
+            sconto	
+            sconto_iva_esclusa
 
+            importo_anticipo	  
 
+            importo_finanziato	  
+            importo_credito
+            importo_ndc           
 
+            importo_scontrino     
 
-            
-
-
+            vendita_info1
+            vendita_info2
+            vendita_info3
+            vendita_info4
+            vendita_info5
+            */
 
         });
     }

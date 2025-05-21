@@ -16,7 +16,7 @@ return new class extends Migration
             //Primary Key
             $table->bigIncrements('id');
 
-            //Foreign Key Users
+            //Foreign Key ragione sociale
             $table->foreignId('ragione_sociale_id')->constrained('ragioni_sociali')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');

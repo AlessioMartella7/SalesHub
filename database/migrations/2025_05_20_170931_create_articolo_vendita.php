@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('articoli_vendite', function (Blueprint $table) {
+        Schema::create('articolo_vendita', function (Blueprint $table) {
 
             $table->foreignId('articolo_id')->constrained('articoli');
             $table->foreignId('vendita_id')->constrained('vendite');
@@ -19,8 +19,9 @@ return new class extends Migration
 
             $table->timestamps(); 
             
-            $table->unsignedBigInteger('quantita');
             
+            $table->string('canone', 10)->nullable();
+             
 
 
         });
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('articoli_vendite');
+        Schema::dropIfExists('articolo_vendita');
     }
 };

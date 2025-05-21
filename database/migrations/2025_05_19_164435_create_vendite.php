@@ -45,7 +45,8 @@ return new class extends Migration
             $table->date('data_inizio');
             $table->date('data_fine');
 
-            $table->decimal('importo_scontrino', $precision = 20, $scale = 2);
+            $table->decimal('totale', $precision = 20, $scale = 2);
+            $table->decimal('totale_imponibile', $precision = 20, $scale = 2);
 
         });
     }
