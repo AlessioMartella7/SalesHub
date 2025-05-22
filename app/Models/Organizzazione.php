@@ -11,4 +11,10 @@ class Organizzazione extends Model
     use HasFactory;
 
     protected $table = 'organizzazioni';
+
+    protected $fillable = [
+        'codice_esterno',
+        'link',
+        'subdir'
+    ];
 }
