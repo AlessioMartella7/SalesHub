@@ -22,4 +22,9 @@ class Categoria extends Model
     {
         return $this->hasMany(Articolo::class);
     }
+
+    public function tipologie(): HasMany
+    {
+        return $this->hasMany(Tipologia::class);
+    }
 }

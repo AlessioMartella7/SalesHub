@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Tipologia extends Model
 {
@@ -16,4 +17,9 @@ class Tipologia extends Model
         'categoria_id',
         'tipologia'
     ];
+
+    public function categoria(): BelongsTo
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 }
