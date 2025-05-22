@@ -11,4 +11,14 @@ class Addetto extends Model
     use HasFactory;
 
     protected $table = 'addetti';
+
+    protected $fillable = [
+        'codice_esterno',
+        'ruolo',
+        'nominativo',
+        'nome',
+        'cognome',
+        'email',
+        'numero_centralino',
+    ];
 }
