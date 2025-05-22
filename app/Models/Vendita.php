@@ -34,4 +34,9 @@ class Vendita extends Model
     {
         return $this->belongsTo(Attivita::class);
     }
+
+    public function addetto(): BelongsTo
+    {
+        return $this->belongsTo(Addetto::class);
+    }
 }
