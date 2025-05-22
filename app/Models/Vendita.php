@@ -45,4 +45,9 @@ class Vendita extends Model
     {
         return $this->hasMany(Pagamento::class);
     }
+
+    public function cliente(): BelongsTo
+    {
+        return $this->belongsTo(Cliente::class);
+    }
 }
