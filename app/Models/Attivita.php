@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Attivita extends Model
 {
@@ -29,4 +30,9 @@ class Attivita extends Model
         'citta',
         'provincia',
     ];
+
+    public function ragioneSociale(): BelongsTo
+    {
+        return $this->belongsTo(RagioneSociale::class);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RagioneSociale extends Model
 {
@@ -26,5 +27,10 @@ class RagioneSociale extends Model
     public function organizzazione(): BelongsTo
     {
         return $this->belongsTo(Organizzazione::class);
+    }
+
+    public function attivita(): HasMany
+    {
+        return $this->hasMany(Attivita::class);
     }
 }
