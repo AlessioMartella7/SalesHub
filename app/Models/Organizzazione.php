@@ -9,4 +9,6 @@ class Organizzazione extends Model
 {
     /** @use HasFactory<\Database\Factories\OrganizzazioneFactory> */
     use HasFactory;
+
+    protected $table = 'organizzazioni';
 }

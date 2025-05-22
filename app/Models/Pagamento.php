@@ -9,4 +9,6 @@ class Pagamento extends Model
 {
     /** @use HasFactory<\Database\Factories\PagamentoFactory> */
     use HasFactory;
+
+    protected $table = 'pagamenti';
 }

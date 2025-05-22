@@ -9,4 +9,6 @@ class Attivita extends Model
 {
     /** @use HasFactory<\Database\Factories\AttivitaFactory> */
     use HasFactory;
+
+    protected $table = 'attivita';
 }

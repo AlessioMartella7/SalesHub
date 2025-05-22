@@ -9,4 +9,6 @@ class Articolo extends Model
 {
     /** @use HasFactory<\Database\Factories\ArticoloFactory> */
     use HasFactory;
+
+    protected $table = 'articoli';
 }

@@ -9,4 +9,6 @@ class RagioneSociale extends Model
 {
     /** @use HasFactory<\Database\Factories\RagioneSocialeFactory> */
     use HasFactory;
+
+    protected $table = 'ragioni_sociali';
 }
