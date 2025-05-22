@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Vendita extends Model
 {
@@ -28,4 +29,9 @@ class Vendita extends Model
         'totale',
         'totale_imponibile',
     ];
+
+    public function attivita(): BelongsTo
+    {
+        return $this->belongsTo(Attivita::class);
+    }
 }
