@@ -11,4 +11,21 @@ class Vendita extends Model
     use HasFactory;
 
     protected $table = 'vendite';
+
+    protected $fillable = [
+        'attivita_id',
+        'cliente_id',
+        'addetto_id',
+        'codice_esterno',
+        'stato',
+        'flg_scontrino',
+        'numero_scontrino',
+        'codice_lotteria',
+        'data_scontrino',
+        'data_vendita',
+        'data_inizio',
+        'data_fine',
+        'totale',
+        'totale_imponibile',
+    ];
 }
