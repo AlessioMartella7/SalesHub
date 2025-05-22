@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Articolo extends Model
 {
@@ -27,4 +28,9 @@ class Articolo extends Model
         'costo_acquisto',
         'aliquota_acquisto',
     ];
+
+    public function vendite(): BelongsToMany
+    {
+        return $this->belongsToMany(Vendita::class)->withPivot('canone');
+    }
 }
