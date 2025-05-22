@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Articolo extends Model
 {
@@ -32,5 +33,10 @@ class Articolo extends Model
     public function vendite(): BelongsToMany
     {
         return $this->belongsToMany(Vendita::class)->withPivot('canone');
+    }
+
+    public function articoliDettagli(): HasMany
+    {
+        return $this->hasMany(ArticoloDettaglio::class);
     }
 }

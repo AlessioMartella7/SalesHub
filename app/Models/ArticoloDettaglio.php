@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ArticoloDettaglio extends Model
 {
@@ -33,4 +34,9 @@ class ArticoloDettaglio extends Model
         'vendita_info4',
         'vendita_info5',
     ];
+
+    public function articolo(): BelongsTo
+    {
+        return $this->belongsTo(Articolo::class);
+    }
 }
