@@ -45,4 +45,9 @@ class Articolo extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
+
+    public function tipologia(): BelongsTo
+    {
+        return $this->belongsTo(Tipologia::class);
+    }
 }
