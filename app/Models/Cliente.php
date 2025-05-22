@@ -11,4 +11,24 @@ class Cliente extends Model
     use HasFactory;
 
     protected $table = 'clienti';
+
+    protected $fillable = [
+        'codice_esterno',
+        'cliente_tipo',
+        'nominativo',
+        'nome',
+        'cognome',
+        'email',
+        'codice_fiscale',
+        'piva',
+        'tel1',
+        'tel2',
+        'tel3',
+        'tel4',
+        'codice_cliente_wind',
+        'codice_cliente_vodafone',
+        'codice_cliente_tim',
+        'codice_cliente_fastweb',
+        'codice_cliente_sky',
+    ];
 }
