@@ -11,4 +11,9 @@ class Tipologia extends Model
     use HasFactory;
 
     protected $table = 'tipologie';
+
+    protected $fillable = [
+        'categoria_id',
+        'tipologia'
+    ];
 }
