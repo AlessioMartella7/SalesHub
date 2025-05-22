@@ -11,4 +11,20 @@ class Articolo extends Model
     use HasFactory;
 
     protected $table = 'articoli';
+
+    protected $fillable = [
+        'categoria_id',
+        'tipologia_id',
+        'tipo',
+        'codice',
+        'codice_ean',
+        'codice_univoco',
+        'voce_scontrino',
+        'descrizione',
+        'marca',
+        'modello',
+        'brand_id',
+        'costo_acquisto',
+        'aliquota_acquisto',
+    ];
 }
