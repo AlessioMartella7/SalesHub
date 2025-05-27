@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Requests\Supports\Messages;
+namespace App\Http\Requests\Supports\Messages;
 
 class ArticoloDettaglioMessages
 {

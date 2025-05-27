@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Requests\Supports\Rules;
+namespace App\Http\Requests\Supports\Rules;
 
 class AddettoRules
 {
