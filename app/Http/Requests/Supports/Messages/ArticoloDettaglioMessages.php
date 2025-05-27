@@ -4,7 +4,7 @@ namespace app\Http\Requests\Supports\Messages;
 
 class ArticoloDettaglioMessages
 {
-    public static function messages()
+    public static function messages(): array
     {
         return [
             'tipologia_vendita.string' => 'La tipologia vendita deve essere una stringa.',

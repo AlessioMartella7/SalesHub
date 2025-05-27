@@ -4,7 +4,7 @@ namespace App\Http\Requests\Supports\Rules;
 
 class ArticoloDettaglioRules
 {
-    public static function rules()
+    public static function rules(): array
     {
         return [
             'tipologia_vendita' => ['nullable', 'string', 'max:20'],
