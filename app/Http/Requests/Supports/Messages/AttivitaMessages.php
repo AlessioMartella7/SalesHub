@@ -4,7 +4,7 @@ namespace App\Http\Requests\Supports\Messages;
 
 class AttivitaMessages
 {
-    public static function messages()
+    public static function messages(): array
     {
         return [
             'codice_esterno.integer' => 'Il campo codice esterno deve essere un numero intero.',
