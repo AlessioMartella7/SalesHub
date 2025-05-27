@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -36,7 +37,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $sessionId = $request->session()->getId();
+
         Auth::guard('web')->logout();
+
+        DB::table('sessions')->where('id', $sessionId)->delete();
 
         $request->session()->invalidate();
 
