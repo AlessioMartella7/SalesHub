@@ -4,7 +4,7 @@ namespace App\Http\Requests\Supports\Messages;
 
 class PagamentoMessages
 {
-    public static function rules(): array
+    public static function messages(): array
     {
         return [
             'contanti.numeric' => 'Il campo contanti deve essere un numero.',
