@@ -6,7 +6,7 @@ use App\Models\Addetto;
 
 class CreateAddettoService
 {
-    public function store(array $data): Addetto
+    public function create(array $data): Addetto
     {
         return Addetto::firstOrCreate(
             ['codice_esterno' => $data['codice_esterno']],
