@@ -44,9 +44,7 @@ class StoreVenditaRequest extends FormRequest
     // Sanitizzo i dati prima di validarli
     protected function prepareForValidation(): void
     {
-        $articoli = collect(
-            $this->input('articoli', [])
-        )->map(function ($articolo) {
+        $articoli = collect($this->input('articoli', []))->map(function ($articolo) {
             return [
                 'info' => [
                     'codice' => $articolo['info']['codice_prodotto'],
