@@ -7,7 +7,7 @@ use App\Models\Pagamento;
 
 class CreatePagamentoService
 {
-    public function createMany(array $pagamenti, Vendita $vendita): void
+    public function createMany(Vendita $vendita, array $pagamenti): void
     {
        foreach($pagamenti as $datiPagamento) {
         $vendita->pagamenti()->create($datiPagamento);

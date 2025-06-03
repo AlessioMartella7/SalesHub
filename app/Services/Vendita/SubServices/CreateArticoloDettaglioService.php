@@ -7,7 +7,7 @@ use App\Models\Articolo;
 
 class CreateArticoloDettaglioService
 {
-    public function createMany(array $dettagli, Articolo $articolo): void
+    public function createMany(Articolo $articolo, array $dettagli): void
     {
         foreach ($dettagli as $dettaglio) {
             $articolo->articoliDettagli()->create($dettaglio);
