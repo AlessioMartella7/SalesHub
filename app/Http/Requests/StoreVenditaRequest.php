@@ -66,7 +66,7 @@ class StoreVenditaRequest extends FormRequest
 
         $vendita = [
             'info' => [
-                'codice_esterno' => $this->input('vendita_dettaglio_codice_interno'),
+                'codice_esterno' => $this->input('vendita_numero_vendita'),
                 'stato' => $this->input('vendita_stato'),
                 'numero_scontrino' => $this->input('vendita_numero_scontrino'),
                 'codice_lotteria' => $this->input('vendita_codice_lotteria'),
