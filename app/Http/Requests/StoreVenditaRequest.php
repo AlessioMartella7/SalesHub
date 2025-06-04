@@ -123,6 +123,7 @@ class StoreVenditaRequest extends FormRequest
                 'nominativo' => $this->input('negozio_nominativo'),
                 'email' => $this->input('negozio_email'),
                 'telefono' => $this->input('negozio_telefono'),
+                'indirizzo' => $this->input('negozio_indirizzo'),
                 'civico' => $this->input('negozio_civico'),
                 'cap' => $this->input('negozio_cap'),
                 'provincia' => $this->input('negozio_provincia'),
