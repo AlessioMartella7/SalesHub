@@ -34,7 +34,7 @@ class VenditaController extends Controller
             // Validazione passata → salvataggio atomico tramite service
             $vendita = $this->createVenditaService->handle($request->validated());
             return response()->json([
-                'message' => 'Vendita creata con successo',
+                'message' => 'Vendita creata con successo.',
                 'data' => $vendita->load([
                     'cliente',
                     'addetto',
@@ -49,7 +49,7 @@ class VenditaController extends Controller
 
             return response()->json([
                 'message' => 'Errore durante la creazione della vendita.',
-                'error' => $e->getMessage()
+                'error' => config('app.debug') ? $e->getMessage() : 'Errore interno.'
             ], 500);
         }
     }
