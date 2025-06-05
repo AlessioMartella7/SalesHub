@@ -12,7 +12,7 @@ Route::get('/user', function (Request $request) {
 
 //Rotte API Vendite
 
-Route::middleware('auth:api')
+Route::middleware('auth:api', 'throttle:60,1')
     ->controller(VenditaController::class)
     ->prefix('vendite')
     ->name('vendite.')
