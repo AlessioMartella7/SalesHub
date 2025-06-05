@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreVenditaRequest;
+use App\Models\Vendita;
 use Illuminate\Http\JsonResponse;
 use App\Services\Vendita\CreateVenditaService;
 
@@ -32,6 +33,17 @@ class VenditaController extends Controller
         try {
             // Validazione passata → salvataggio atomico tramite service
             $vendita = $this->createVenditaService->handle($request->validated());
+            return response()->json([
+                'message' => 'Vendita creata con successo',
+                'data' => $vendita->load([
+                    'cliente',
+                    'addetto',
+                    'attivita',
+                    'attivita.ragioneSociale.organizzazione',
+                    'articoli',
+                    'pagamenti'
+                ]),
+            ], 201);
         } catch (\Throwable $e) {
         }
     }
