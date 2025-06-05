@@ -45,6 +45,12 @@ class VenditaController extends Controller
                 ]),
             ], 201);
         } catch (\Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'message' => 'Errore durante la creazione della vendita.',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
