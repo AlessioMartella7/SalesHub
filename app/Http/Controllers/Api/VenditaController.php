@@ -4,9 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreVenditaRequest;
+use Illuminate\Http\JsonResponse;
+use App\Services\Vendita\CreateVenditaService;
 
 class VenditaController extends Controller
 {
+
+    public function __construct(
+        protected CreateVenditaService $createVenditaService
+    ) {}
+
+
     /**
      * Display a listing of the resource.
      */
