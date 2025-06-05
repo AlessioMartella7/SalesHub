@@ -27,9 +27,13 @@ class VenditaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVenditaRequest $request): JsonResponse
     {
-        //
+        try {
+            // Validazione passata → salvataggio atomico tramite service
+            $vendita = $this->createVenditaService->handle($request->validated());
+        } catch (\Throwable $e) {
+        }
     }
 
     /**
