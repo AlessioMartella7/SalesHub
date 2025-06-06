@@ -81,7 +81,6 @@ class StoreVenditaRequest extends FormRequest
                     return
                         [
                             'contanti' => $pagamento['vendita_contanti'],
-                            'pagamento' => $pagamento['vendita_pagamento'],
                             'pagamenti_elettronici' => $pagamento['vendita_pagamenti_elettronici'],
                             'bonifici' => $pagamento['vendita_bonifici'],
                             'assegni' => $pagamento['vendita_assegni'],
