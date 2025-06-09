@@ -7,8 +7,8 @@ class CategoriaRules
     public static function rules(): array
     {
         return [
-            'categoria' => ['required', 'string', 'max:30'],
-            'tipo' => ['required', 'string', 'max:1'],
+            'articoli.*.categoria.categoria' => ['required', 'string', 'max:30'],
+            'articoli.*.categoria.tipo' => ['required', 'string', 'max:1'],
         ];
     }
 }
