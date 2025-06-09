@@ -18,7 +18,6 @@ use App\Services\Vendita\SubServices\CreateTipologiaService;
 use App\Services\Vendita\SubServices\CreateArticoloService;
 use App\Services\Vendita\SubServices\CreateArticoloDettaglioService;
 use App\Services\Vendita\SubServices\CreateVenditaEntityService;
-use App\Services\Vendita\SubServices\AttachArticoliToVenditaService;
 use App\Services\Vendita\SubServices\CreatePagamentoService;
 
 class CreateVenditaService
@@ -36,55 +35,43 @@ class CreateVenditaService
         protected CreateArticoloService $articoloService,
         protected CreateArticoloDettaglioService $articoloDettaglioService,
         protected CreateVenditaEntityService $venditaEntityService,
-        protected AttachArticoliToVenditaService $attachArticoliService,
         protected CreatePagamentoService $pagamentoService
     ) {}
 
-    public function handle(array $data): Vendita {
-        return DB::transaction(function() use($data){
-            //Creo Organizzazione + RagioneSociale + attività
+    public function handle(array $data): Vendita
+    {
+        return DB::transaction(function () use ($data) {
+            // Creo Organizzazione + RagioneSociale + Attività
             $organizzazione = $this->organizzazioneService->create($data['organizzazione']);
             $ragioneSociale = $this->ragioneSocialeService->create($data['ragione_sociale'], $organizzazione);
             $attivita = $this->attivitaService->create($data['attivita'], $ragioneSociale);
 
-            //Creo Addetto
+            // Creo Addetto
             $addetto = $this->addettoService->create($data['addetto']);
-
-            //Collego l'addetto al punto vendita
             $this->addettoAttivitaService->attach($addetto, $attivita);
 
-            //Creo Cliente
+            // Creo Cliente
             $cliente = $this->clienteService->create($data['cliente']);
 
-            //Creo gli articoli
-            $articoli = [];
-
-            //Creo Categoria + Tipologia
-            foreach($data['articoli'] as $item){
-                $categoria = $this->categoriaService->create($item['categoria']);
-                $tipologia = $this->tipologiaService->create($item['tipologia'], $categoria);
-
-                //Articoli + Dettagli
-                $articolo = $this->articoloService->create($item['info'], $categoria, $tipologia);
-                $this->articoloDettaglioService->createMany($articolo, $item['dettagli'] ?? []);
-
-                $articoli [] = $articolo;
-            }
-
-            //Creo Vendita
-
+            // Creo Vendita
             $vendita = $this->venditaEntityService->create($data['vendita']['info'], $cliente, $addetto, $attivita);
 
-            //Collego gli articoli alla vendita
-            $this->attachArticoliService->attach($vendita, $data['vendita']['articoli']);
+            // Creo gli articoli e i dettagli, collegandoli direttamente alla vendita
+            foreach ($data['articoli'] as $item) {
+                $categoria = $this->categoriaService->create($item['categoria'] ?? []);
+                $tipologia = $this->tipologiaService->create($item['tipologia'] ?? [], $categoria);
 
-            //Creo Pagamento
+                // Passa la vendita o vendita_id al service
+                $articolo = $this->articoloService->create($item['info'], $categoria, $tipologia, $vendita);
 
-            $this->pagamentoService->createMany($vendita, $data['vendita']['pagamenti']);
+                // Crea dettaglio articolo (one-to-one)
+                $this->articoloDettaglioService->create($articolo, $item['dettaglio'] ?? []);
+            }
+
+            // Creo Pagamento (one-to-one)
+            $this->pagamentoService->create($vendita, $data['vendita']['pagamento'] ?? []);
 
             return $vendita;
-
         }, 5);
-
     }
 }
