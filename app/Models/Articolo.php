@@ -15,6 +15,7 @@ class Articolo extends Model
     protected $table = 'articoli';
 
     protected $fillable = [
+        'vendita_id',
         'categoria_id',
         'tipologia_id',
         'tipo',

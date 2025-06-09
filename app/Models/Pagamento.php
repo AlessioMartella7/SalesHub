@@ -14,7 +14,7 @@ class Pagamento extends Model
     protected $table = 'pagamenti';
 
     protected $fillable = [
-        'vendite_id',
+        'vendita_id',
         'contanti',
         'pagamenti_elettronici',
         'bonifici',

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             //fk vendite
-            $table->foreignId('vendite_id')->constrained('vendite')
+            $table->foreignId('vendita_id')->constrained('vendite')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
