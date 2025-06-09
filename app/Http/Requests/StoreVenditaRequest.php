@@ -51,18 +51,16 @@ class StoreVenditaRequest extends FormRequest
                     'descrizione' => $articolo['info']['descrizione_prodotto'],
                     'costo' => $articolo['info']['costo_acquisto'],
                 ],
-                'dettagli' => collect($articolo['dettagli'] ?? [])->map(function ($dettaglio) {
-                    return
-                        [
-                            'tipologia_vendita' => $dettaglio['tipologia_vendita'],
-                            'importo_credito' => $dettaglio['credito'],
-                            'importo_anticipo' => $dettaglio['anticipo'],
-                            'natura' => $dettaglio['iva_natura_iva'],
-                            'aliquota_prezzo' => $dettaglio['iva_aliquota'],
-                        ];
-                })->toArray(),
+                // Ora dettaglio è un singolo oggetto, non array
+                'dettaglio' => [
+                    'tipologia_vendita' => $articolo['dettaglio']['tipologia_vendita'] ?? null,
+                    'importo_credito' => $articolo['dettaglio']['credito'] ?? null,
+                    'importo_anticipo' => $articolo['dettaglio']['anticipo'] ?? null,
+                    'natura' => $articolo['dettaglio']['iva_natura_iva'] ?? null,
+                    'aliquota_prezzo' => $articolo['dettaglio']['iva_aliquota'] ?? null,
+                ],
             ];
-        });
+        })->toArray();
 
         $vendita = [
             'info' => [
@@ -75,28 +73,23 @@ class StoreVenditaRequest extends FormRequest
                 'data_scontrino' => $this->input('vendita_data_scontrino'),
                 'totale' => $this->input('vendita_totale_importo_scontrino'),
             ],
-
-            'pagamenti' => collect($this->input('vendita.pagamenti', []))->map(
-                function ($pagamento) {
-                    return
-                        [
-                            'contanti' => $pagamento['vendita_contanti'],
-                            'pagamenti_elettronici' => $pagamento['vendita_pagamenti_elettronici'],
-                            'bonifici' => $pagamento['vendita_bonifici'],
-                            'assegni' => $pagamento['vendita_assegni'],
-                            'buoni' => $pagamento['vendita_buoni'],
-                            'coupon' => $pagamento['vendita_coupon'],
-                            'altri_pagamenti' => $pagamento['vendita_altri_pagamenti'],
-                            'non_scontrinato' => $pagamento['vendita_non_scontrinato'],
-                            'non_riscosso' => $pagamento['vendita_non_riscosso'],
-                        ];
-                }
-            )->toArray()
+            // Pagamento ora è un singolo oggetto, non array
+            'pagamento' => [
+                'contanti' => $this->input('vendita.pagamento.vendita_contanti'),
+                'pagamenti_elettronici' => $this->input('vendita.pagamento.vendita_pagamenti_elettronici'),
+                'bonifici' => $this->input('vendita.pagamento.vendita_bonifici'),
+                'assegni' => $this->input('vendita.pagamento.vendita_assegni'),
+                'buoni' => $this->input('vendita.pagamento.vendita_buoni'),
+                'coupon' => $this->input('vendita.pagamento.vendita_coupon'),
+                'altri_pagamenti' => $this->input('vendita.pagamento.vendita_altri_pagamenti'),
+                'non_scontrinato' => $this->input('vendita.pagamento.vendita_non_scontrinato'),
+                'non_riscosso' => $this->input('vendita.pagamento.vendita_non_riscosso'),
+            ]
         ];
 
         $this->merge([
 
-            'articoli' => $articoli->toArray(),
+            'articoli' => $articoli,
 
             'vendita' => $vendita,
 
