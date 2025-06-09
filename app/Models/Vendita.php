@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Vendita extends Model
 {
@@ -42,11 +42,6 @@ class Vendita extends Model
         return $this->belongsTo(Addetto::class);
     }
 
-    public function pagamenti(): HasMany
-    {
-        return $this->hasMany(Pagamento::class);
-    }
-
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(Cliente::class);
@@ -55,5 +50,10 @@ class Vendita extends Model
     public function articoli(): HasMany
     {
         return $this->hasMany(Articolo::class);
+    }
+
+    public function pagamento(): HasOne
+    {
+        return $this->hasOne(Pagamento::class);
     }
 }

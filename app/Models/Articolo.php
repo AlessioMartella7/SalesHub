@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Articolo extends Model
@@ -47,7 +45,7 @@ class Articolo extends Model
         return $this->belongsTo(Tipologia::class);
     }
 
-    public function articoliDettaglio(): HasOne
+    public function articoloDettaglio(): HasOne
     {
         return $this->hasOne(ArticoloDettaglio::class);
     }
