@@ -15,12 +15,12 @@ return new class extends Migration
         Schema::create('ragioni_sociali', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
+            $table->id();
 
             //Foreign Key
             $table->foreignId('organizzazione_id')->constrained('organizzazioni')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
 
@@ -32,7 +32,6 @@ return new class extends Migration
             $table->string('email', 100)->nullable();
             $table->string('tel', 100)->nullable();
         });
-
     }
 
     /**

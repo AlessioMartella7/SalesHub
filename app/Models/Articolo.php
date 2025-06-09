@@ -31,9 +31,9 @@ class Articolo extends Model
         'aliquota_acquisto',
     ];
 
-    public function vendite(): BelongsToMany
+    public function vendita(): BelongsTo
     {
-        return $this->belongsToMany(Vendita::class)->withPivot('canone');
+        return $this->belongsTo(Vendita::class);
     }
 
     public function articoliDettagli(): HasMany

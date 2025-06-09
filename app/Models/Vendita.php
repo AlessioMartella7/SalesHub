@@ -52,8 +52,8 @@ class Vendita extends Model
         return $this->belongsTo(Cliente::class);
     }
 
-    public function articoli(): BelongsToMany
+    public function articoli(): HasMany
     {
-        return $this->belongsToMany(Articolo::class)->withPivot('canone');
+        return $this->hasMany(Articolo::class);
     }
 }

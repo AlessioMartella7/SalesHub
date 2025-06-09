@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::create('articoli_dettagli', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
-          
-            //fk pdv 
+            $table->id();
+
+            //fk pdv
             $table->foreignId('articolo_id')->constrained('articoli')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
 
             $table->string('tipologia_vendita', 20)->nullable();
-            $table->string('canone',10)->nullable();
+            $table->string('canone', 10)->nullable();
 
             $table->decimal('prezzo', 20, 2)->nullable();
             $table->decimal('aliquota_prezzo', 20, 2)->nullable();
@@ -46,7 +46,6 @@ return new class extends Migration
             $table->string('vendita_info3', 255)->nullable();
             $table->string('vendita_info4', 255)->nullable();
             $table->string('vendita_info5', 255)->nullable();
-
         });
     }
 

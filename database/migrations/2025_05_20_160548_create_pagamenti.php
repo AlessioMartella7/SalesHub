@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('pagamenti', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
+            $table->id();
 
-            //fk vendite 
+            //fk vendite
             $table->foreignId('vendite_id')->constrained('vendite')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
-        
+
             $table->decimal('contanti', $precision = 20, $scale = 2)->nullable();
             $table->decimal('pagamenti_elettronici', $precision = 20, $scale = 2)->nullable();
             $table->decimal('bonifici', $precision = 20, $scale = 2)->nullable();
@@ -31,12 +31,11 @@ return new class extends Migration
             $table->decimal('coupon', $precision = 20, $scale = 2)->nullable();
             $table->decimal('altri_pagamenti', $precision = 20, $scale = 2)->nullable();
             $table->decimal('non_scontrinato', $precision = 20, $scale = 2)->nullable();
-            $table->decimal('non_scontrinato_pos', $precision = 20, $scale = 2)->nullable(); 
-            $table->decimal('non_riscosso', $precision = 20, $scale = 2)->nullable();       
-            
+            $table->decimal('non_scontrinato_pos', $precision = 20, $scale = 2)->nullable();
+            $table->decimal('non_riscosso', $precision = 20, $scale = 2)->nullable();
+
             $table->decimal('importo_conto_operatore_contanti', $precision = 20, $scale = 2);
             $table->decimal('importo_conto_operatore_pos', $precision = 20, $scale = 2);
-
         });
     }
 

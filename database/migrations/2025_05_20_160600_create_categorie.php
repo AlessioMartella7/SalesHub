@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('categorie', function (Blueprint $table) {
             //Primary Key
-            $table->bigIncrements('id');
+            $table->id();
 
             $table->timestamps();
 
             $table->string('categoria', 30);
-            $table->string('tipo', 1); // C canvass P prodotto S servizio 
+            $table->string('tipo', 1); // C canvass P prodotto S servizio
 
         });
     }

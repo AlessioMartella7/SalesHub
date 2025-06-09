@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('attivita', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
+            $table->id();
 
             //Foreign Key ragione sociale
             $table->foreignId('ragione_sociale_id')->constrained('ragioni_sociali')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
 
@@ -38,7 +38,6 @@ return new class extends Migration
             $table->string('cap', 100)->nullable();
             $table->string('citta', 100)->nullable();
             $table->string('provincia', 100)->nullable();
-
         });
     }
 

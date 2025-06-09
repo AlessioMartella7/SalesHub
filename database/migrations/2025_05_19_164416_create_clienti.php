@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('clienti', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
-            
+            $table->id();
+
             $table->timestamps();
- 
+
             $table->integer('codice_esterno')->nullable(); //id_cliente
             $table->string('cliente_tipo', 50);
             $table->string('nominativo', 150);
@@ -36,7 +36,6 @@ return new class extends Migration
             $table->string('codice_cliente_tim', 50)->nullable();
             $table->string('codice_cliente_fastweb', 50)->nullable();
             $table->string('codice_cliente_sky', 50)->nullable();
-
         });
     }
 

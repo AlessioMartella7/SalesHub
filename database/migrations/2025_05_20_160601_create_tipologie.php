@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('tipologie', function (Blueprint $table) {
             //Primary Key
-            $table->bigIncrements('id');
+            $table->id();
 
             //fk categoria
             $table->foreignId('categoria_id')->constrained('categorie')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
             $table->string('tipologia', 30);

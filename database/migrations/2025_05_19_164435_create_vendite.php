@@ -14,28 +14,28 @@ return new class extends Migration
         Schema::create('vendite', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
-          
-            //fk pdv 
+            $table->id();
+
+            //fk pdv
             $table->foreignId('attivita_id')->constrained('attivita')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             //fk clienti
             $table->foreignId('cliente_id')->constrained('clienti')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
-                  
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             //fk addetti
             $table->foreignId('addetto_id')->constrained('addetti')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
 
             $table->integer('codice_esterno')->nullable(); //id_vendite
             $table->string('stato', 20);
-            $table->string('flg_scontrino', 1); // S - scontrino F - fattura A - attestato di vendita 
+            $table->string('flg_scontrino', 1); // S - scontrino F - fattura A - attestato di vendita
 
             $table->string('numero_scontrino', 30)->nullable();
             $table->string('codice_lotteria', 30)->nullable();
@@ -47,7 +47,6 @@ return new class extends Migration
 
             $table->decimal('totale', $precision = 20, $scale = 2);
             $table->decimal('totale_imponibile', $precision = 20, $scale = 2);
-
         });
     }
 

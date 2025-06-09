@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('organizzazioni', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
+            $table->id();
 
             $table->timestamps();
 

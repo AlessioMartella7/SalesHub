@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('addetti', function (Blueprint $table) {
 
             //Primary Key
-            $table->bigIncrements('id');
+            $table->id();
 
             $table->timestamps();
 
@@ -26,7 +26,6 @@ return new class extends Migration
 
             $table->string('email', 100)->nullable();
             $table->string('numero_centralino', 10)->nullable();
-
         });
     }
 
