@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Articolo extends Model
 {
@@ -36,11 +37,6 @@ class Articolo extends Model
         return $this->belongsTo(Vendita::class);
     }
 
-    public function articoliDettagli(): HasMany
-    {
-        return $this->hasMany(ArticoloDettaglio::class);
-    }
-
     public function categoria(): BelongsTo
     {
         return $this->belongsTo(Categoria::class);
@@ -49,5 +45,10 @@ class Articolo extends Model
     public function tipologia(): BelongsTo
     {
         return $this->belongsTo(Tipologia::class);
+    }
+
+    public function articoliDettaglio(): HasOne
+    {
+        return $this->hasOne(ArticoloDettaglio::class);
     }
 }
