@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\VenditaController;
 use App\Http\Controllers\FissoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,12 +19,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Rotte Fissi
+// Rotte Fissi
 Route::middleware('auth')->prefix('fissi')->controller(FissoController::class)->name('fissi.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/import', 'importForm')->name('import.form');
     Route::post('/import', 'import')->name('import');
     Route::get('/{fisso}', 'show')->name('show');
 });
+
+// Rotte Vendita Provvisorie per test
+
+Route::middleware('auth.basic')->controller(VenditaController::class)
+    ->prefix('api/vendite')
+    ->name('vendite.')
+    ->group(function () {
+        Route::post('/', 'store')->name('store');
+    });
 
 require __DIR__ . '/auth.php';
