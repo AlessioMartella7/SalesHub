@@ -27,9 +27,30 @@ class VenditaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreVenditaRequest $request)
+    public function store(StoreVenditaRequest $request): JsonResponse
     {
-        //
+        try {
+            // Validazione passata → salvataggio atomico tramite service
+            $vendita = $this->createVenditaService->handle($request->validated());
+            return response()->json([
+                'message' => 'Vendita creata con successo.',
+                'data' => $vendita->load([
+                    'cliente',
+                    'addetto',
+                    'attivita',
+                    'attivita.ragioneSociale.organizzazione',
+                    'articoli',
+                    'pagamenti'
+                ]),
+            ], 201);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'message' => 'Errore durante la creazione della vendita.',
+                'error' => config('app.debug') ? $e->getMessage() : 'Errore interno.'
+            ], 500);
+        }
     }
 
     /**

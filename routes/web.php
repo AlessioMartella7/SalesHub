@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\VenditaController;
+use App\Http\Controllers\VenditaController;
 use App\Http\Controllers\FissoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,11 +29,11 @@ Route::middleware('auth')->prefix('fissi')->controller(FissoController::class)->
 
 // Rotte Vendita Provvisorie per test
 
-Route::middleware('auth.basic')->controller(VenditaController::class)
-    ->prefix('api/vendite')
+Route::middleware('auth')->controller(VenditaController::class)
+    ->prefix('vendite')
     ->name('vendite.')
     ->group(function () {
-        Route::post('/', 'store')->name('store');
+        Route::post('/', 'store')->name('storeTest');
     });
 
 require __DIR__ . '/auth.php';
