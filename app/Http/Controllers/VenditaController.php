@@ -6,9 +6,13 @@ use App\Models\Vendita;
 use App\Http\Requests\StoreVenditaRequest;
 use App\Http\Requests\UpdateVenditaRequest;
 use Illuminate\Http\JsonResponse;
+use App\Services\Vendita\CreateVenditaService;
 
 class VenditaController extends Controller
 {
+    public function __construct(
+        protected CreateVenditaService $createVenditaService
+    ) {}
     /**
      * Display a listing of the resource.
      */
