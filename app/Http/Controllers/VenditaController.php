@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vendita;
 use App\Http\Requests\StoreVenditaRequest;
 use App\Http\Requests\UpdateVenditaRequest;
+use Illuminate\Http\JsonResponse;
 
 class VenditaController extends Controller
 {
