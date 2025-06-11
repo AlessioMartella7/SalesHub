@@ -13,7 +13,7 @@ class ClienteMessages
             'cliente_tipo.string' => 'Il campo tipo cliente deve essere una stringa.',
             'cliente_tipo.max' => 'Il campo tipo cliente non può superare 50 caratteri.',
 
-            'nominativo.required' => 'Il campo nominativo è obbligatorio.',
+            'nominativo.required' => 'Il campo nominativo cliente è obbligatorio.',
             'nominativo.string' => 'Il campo nominativo deve essere una stringa.',
             'nominativo.max' => 'Il campo nominativo non può superare 150 caratteri.',
 
@@ -28,7 +28,7 @@ class ClienteMessages
             'email.max' => 'Il campo email non può superare 100 caratteri.',
             'email.email' => 'Il campo email deve contenere un indirizzo email valido.',
 
-            'codice_fiscale.string' => 'Il campo codice fiscale deve essere una stringa.',
+            'codice_fiscale.string' => 'Il campo codice fiscale cliente deve essere una stringa.',
             'codice_fiscale.max' => 'Il campo codice fiscale non può superare 100 caratteri.',
 
             'piva.string' => 'Il campo partita IVA deve essere una stringa.',

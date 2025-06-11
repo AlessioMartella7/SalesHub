@@ -32,153 +32,130 @@ use App\Http\Requests\Supports\Messages\VenditaMessages;
 
 class StoreVenditaRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-
-    // Sanitizzo i dati prima di validarli
     protected function prepareForValidation(): void
     {
-        $articoli = collect($this->input('articoli', []))->map(function ($articolo) {
-            return [
-                'info' => [
-                    'codice' => $articolo['info']['codice_prodotto'],
-                    'descrizione' => $articolo['info']['descrizione_prodotto'],
-                    'costo' => $articolo['info']['costo_acquisto'],
-                ],
-                // Ora dettaglio è un singolo oggetto, non array
-                'dettaglio' => [
-                    'tipologia_vendita' => $articolo['dettaglio']['tipologia_vendita'] ?? null,
-                    'importo_credito' => $articolo['dettaglio']['credito'] ?? null,
-                    'importo_anticipo' => $articolo['dettaglio']['anticipo'] ?? null,
-                    'natura' => $articolo['dettaglio']['iva_natura_iva'] ?? null,
-                    'aliquota_prezzo' => $articolo['dettaglio']['iva_aliquota'] ?? null,
-                ],
-            ];
-        })->toArray();
-
-        $vendita = [
-            'info' => [
-                'codice_esterno' => $this->input('vendita_numero_vendita'),
-                'stato' => $this->input('vendita_stato'),
-                'numero_scontrino' => $this->input('vendita_numero_scontrino'),
-                'codice_lotteria' => $this->input('vendita_codice_lotteria'),
-                'data_inizio' => $this->input('vendita_data_inizio'),
-                'data_fine' => $this->input('vendita_data_fine'),
-                'data_scontrino' => $this->input('vendita_data_scontrino'),
-                'totale' => $this->input('vendita_totale_importo_scontrino'),
-            ],
-            // Pagamento ora è un singolo oggetto, non array
-            'pagamento' => [
-                'contanti' => $this->input('vendita.pagamento.vendita_contanti'),
-                'pagamenti_elettronici' => $this->input('vendita.pagamento.vendita_pagamenti_elettronici'),
-                'bonifici' => $this->input('vendita.pagamento.vendita_bonifici'),
-                'assegni' => $this->input('vendita.pagamento.vendita_assegni'),
-                'buoni' => $this->input('vendita.pagamento.vendita_buoni'),
-                'coupon' => $this->input('vendita.pagamento.vendita_coupon'),
-                'altri_pagamenti' => $this->input('vendita.pagamento.vendita_altri_pagamenti'),
-                'non_scontrinato' => $this->input('vendita.pagamento.vendita_non_scontrinato'),
-                'non_riscosso' => $this->input('vendita.pagamento.vendita_non_riscosso'),
-            ]
-        ];
+        $cliente = $this->input('cliente', []);
+        $venditaInfo = $this->input('vendita.info', []);
+        $venditaPagamenti = $this->input('vendita.pagamento', []);
+        $ragioneSociale = $this->input('ragione_sociale', []);
+        $attivita = $this->input('attivita', []);
+        $addetto = $this->input('addetto', []);
+        $articoli = $this->input('articoli', []);
 
         $this->merge([
+            // Root-level fields
+            'nominativo' => $cliente['cliente_nominativo'] ?? null,
+            'azienda' => $ragioneSociale['nominativo'] ?? null,
+            'partita_iva' => $ragioneSociale['partita_iva'] ?? null,
+            'codice_fiscale' => $ragioneSociale['codice_fiscale'] ?? null,
+            'cliente_tipo' => $cliente['cliente_tipo'] ?? null,
 
-            'articoli' => $articoli,
-
-            'vendita' => $vendita,
-
-            'ragione_sociale' => [
-                'codice_esterno' => $this->input('ragione_sociale_codice_interno'),
-                'azienda' => $this->input('ragione_sociale_nominativo'),
-            ],
-
-            'addetto' => [
-                'codice_esterno' => $this->input('addetto_codice_esterno'),
-            ],
-
-            'categoria' => [
-                'categoria' => $this->input('vendita_categoria'),
-            ],
-
-            'tipologia' => [
-                'tipologia' => $this->input('vendita_tipologia'),
-            ],
-
-            'attivita' => [
-                'codice_esterno' => $this->input('negozio_codice_interno'),
-                'nominativo' => $this->input('negozio_nominativo'),
-                'email' => $this->input('negozio_email'),
-                'telefono' => $this->input('negozio_telefono'),
-                'indirizzo' => $this->input('negozio_indirizzo'),
-                'civico' => $this->input('negozio_civico'),
-                'cap' => $this->input('negozio_cap'),
-                'provincia' => $this->input('negozio_provincia'),
-                'citta' => $this->input('negozio_citta'),
-            ],
-
+            // Cliente mapping
             'cliente' => [
-                'codice_esterno' => $this->input('cliente_codice_interno'),
-                'nominativo' => $this->input('cliente_nominativo'),
-                'nome' => $this->input('cliente_nome'),
-                'cognome' => $this->input('cliente_cognome'),
-                'email' => $this->input('cliente_email'),
-                'piva' => $this->input('cliente_piva'),
-                'codice_fiscale' => $this->input('cliente_codice_fiscale'),
-                'telefono1' => $this->input('cliente_telefono1'),
-                'telefono2' => $this->input('cliente_telefono2'),
-                'telefono3' => $this->input('cliente_telefono3'),
-                'telefono4' => $this->input('cliente_telefono4'),
+                'cliente_tipo' => $cliente['cliente_tipo'] ?? null,
+                'codice_esterno' => $cliente['cliente_codice_interno'] ?? null,
+                'nominativo' => $cliente['cliente_nominativo'] ?? null,
+                'nome' => $cliente['cliente_nome'] ?? null,
+                'cognome' => $cliente['cliente_cognome'] ?? null,
+                'email' => $cliente['cliente_email'] ?? null,
+                'piva' => $cliente['cliente_piva'] ?? null,
+                'codice_fiscale' => $cliente['cliente_codice_fiscale'] ?? null,
+                'telefono1' => $cliente['cliente_telefono1'] ?? null,
+                'telefono2' => $cliente['cliente_telefono2'] ?? null,
+                'telefono3' => $cliente['cliente_telefono3'] ?? null,
+                'telefono4' => $cliente['cliente_telefono4'] ?? null,
             ],
+
+            // Vendita info mapping
+            'vendita' => [
+                'info' => [
+                    'codice_esterno' => $venditaInfo['vendita_numero_vendita'] ?? null,
+                    'stato' => $venditaInfo['vendita_stato'] ?? null,
+                    'numero_scontrino' => $venditaInfo['vendita_numero_scontrino'] ?? null,
+                    'codice_lotteria' => $venditaInfo['vendita_codice_lotteria'] ?? null,
+                    'data_vendita' => $venditaInfo['data_attivazione'] ?? null,
+                    'data_inizio' => $venditaInfo['vendita_data_inizio'] ?? null,
+                    'data_fine' => $venditaInfo['vendita_data_fine'] ?? null,
+                    'totale' => $venditaInfo['vendita_totale_importo_scontrino'] ?? null,
+                    'totale_imponibile' => $venditaInfo['totale_imponibile'] ?? null,
+                    'flg_scontrino' => $venditaInfo['flg_scontrino'] ?? null,
+                ],
+                'pagamento' => [
+                    'importo_conto_operatore_contanti' => $venditaPagamenti['vendita_importo_conto_operatore_contanti'] ?? null,
+                    'importo_conto_operatore_pos' => $venditaPagamenti['vendita_importo_conto_operatore_pos'] ?? null,
+                ]
+            ],
+
+            // Ragione sociale
+            'ragione_sociale' => [
+                'codice_interno' => $ragioneSociale['codice_interno'] ?? null,
+                'nominativo' => $ragioneSociale['nominativo'] ?? null,
+                'partita_iva' => $ragioneSociale['partita_iva'] ?? null,
+                'codice_fiscale' => $ragioneSociale['codice_fiscale'] ?? null,
+                'email' => $ragioneSociale['email'] ?? null,
+                'tel' => $ragioneSociale['tel'] ?? null,
+            ],
+
+            // Addetto
+            'addetto' => [
+                'codice_esterno' => $addetto['codice_esterno'] ?? null,
+                'nominativo' => $addetto['nominativo'] ?? null,
+            ],
+
+            // Attività
+            'attivita' => [
+                'codice_interno' => $attivita['codice_interno'] ?? null,
+                'nominativo' => $attivita['nominativo'] ?? null,
+                'email' => $attivita['negozio_email'] ?? null,
+                'telefono' => $attivita['negozio_telefono'] ?? null,
+                'indirizzo' => $attivita['negozio_indirizzo'] ?? null,
+                'civico' => $attivita['negozio_civico'] ?? null,
+                'cap' => $attivita['negozio_cap'] ?? null,
+                'provincia' => $attivita['negozio_provincia'] ?? null,
+                'citta' => $attivita['negozio_citta'] ?? null,
+            ],
+
+            // Articoli lasciati invariati se già corretti
+            'articoli' => $articoli,
         ]);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return array_merge(
-
-            ...[
-                AddettoRules::rules(),
-                ArticoloDettaglioRules::rules(),
-                ArticoloRules::rules(),
-                AttivitaRules::rules(),
-                CategoriaRules::rules(),
-                ClienteRules::rules(),
-                OrganizzazioneRules::rules(),
-                PagamentoRules::rules(),
-                RagioneSocialeRules::rules(),
-                TipologiaRules::rules(),
-                VenditaRules::rules(),
-            ]
+            AddettoRules::rules(),
+            ArticoloDettaglioRules::rules(),
+            ArticoloRules::rules(),
+            AttivitaRules::rules(),
+            CategoriaRules::rules(),
+            ClienteRules::rules(),
+            OrganizzazioneRules::rules(),
+            PagamentoRules::rules(),
+            RagioneSocialeRules::rules(),
+            TipologiaRules::rules(),
+            VenditaRules::rules()
         );
     }
 
     public function messages(): array
     {
         return array_merge(
-            ...[
-                AddettoMessages::messages(),
-                ArticoloDettaglioMessages::messages(),
-                ArticoloMessages::messages(),
-                AttivitaMessages::messages(),
-                CategoriaMessages::messages(),
-                ClienteMessages::messages(),
-                OrganizzazioneMessages::messages(),
-                PagamentoMessages::messages(),
-                RagioneSocialeMessages::messages(),
-                TipologiaMessages::messages(),
-                VenditaMessages::messages(),
-            ]
+            AddettoMessages::messages(),
+            ArticoloDettaglioMessages::messages(),
+            ArticoloMessages::messages(),
+            AttivitaMessages::messages(),
+            CategoriaMessages::messages(),
+            ClienteMessages::messages(),
+            OrganizzazioneMessages::messages(),
+            PagamentoMessages::messages(),
+            RagioneSocialeMessages::messages(),
+            TipologiaMessages::messages(),
+            VenditaMessages::messages()
         );
     }
 }

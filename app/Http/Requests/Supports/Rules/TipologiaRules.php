@@ -7,7 +7,7 @@ class TipologiaRules
     public static function rules(): array
     {
         return [
-            'articoli.*.tipologia.tipologia' => ['required', 'string', 'max:30'],
+            'articoli.*.tipologia' => ['required', 'string', 'max:30'],
         ];
     }
 }

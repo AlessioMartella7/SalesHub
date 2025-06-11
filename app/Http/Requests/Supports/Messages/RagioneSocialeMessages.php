@@ -16,12 +16,10 @@ class RagioneSocialeMessages
 
             'partita_iva.required' => 'Il campo partita IVA è obbligatorio.',
             'partita_iva.string' => 'Il campo partita IVA deve essere una stringa.',
-            'partita_iva.size' => 'Il campo partita IVA deve contenere esattamente 16 caratteri.',
             'partita_iva.unique' => 'La partita IVA inserita è già presente.',
 
-            'codice_fiscale.required' => 'Il campo codice fiscale è obbligatorio.',
-            'codice_fiscale.string' => 'Il campo codice fiscale deve essere una stringa.',
-            'codice_fiscale.size' => 'Il campo codice fiscale deve contenere esattamente 16 caratteri.',
+            'codice_fiscale.required' => 'Il campo codice fiscale RS è obbligatorio.',
+            'codice_fiscale.string' => 'Il campo codice fiscale RS deve essere una stringa.',
 
             'email.email' => 'Il campo email deve essere un indirizzo email valido.',
             'email.max' => 'Il campo email non può superare i 100 caratteri.',

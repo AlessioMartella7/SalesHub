@@ -9,8 +9,8 @@ class RagioneSocialeRules
         return [
             'codice_esterno' => ['nullable', 'integer'],
             'azienda' => ['required', 'string', 'max:150', 'unique:ragioni_sociali,azienda'],
-            'partita_iva' => ['required', 'string', 'size:16', 'unique:ragioni_sociali,partita_iva'],
-            'codice_fiscale' => ['required', 'string', 'size:16'],
+            'partita_iva' => ['required', 'string', 'max:16', 'unique:ragioni_sociali,partita_iva'],
+            'codice_fiscale' => ['required', 'string', 'max:16'],
             'email' => ['nullable', 'email', 'max:100'],
             'tel' => ['nullable', 'string', 'max:100'],
         ];
