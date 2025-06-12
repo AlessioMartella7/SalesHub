@@ -25,9 +25,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->integer('codice_esterno')->nullable(); //id_rs
-            $table->string('azienda', 150);
+            $table->string('azienda', 150)->unique();
 
-            $table->string('partita_iva', 16);
+            $table->string('partita_iva', 16)->unique();
             $table->string('codice_fiscale', 16);
             $table->string('email', 100)->nullable();
             $table->string('tel', 100)->nullable();

@@ -10,8 +10,15 @@ class CreateRagioneSocialeService
     public function create(array $data, Organizzazione $organizzazione): RagioneSociale
     {
         return RagioneSociale::firstOrCreate(
-            ['codice_esterno' => $data['codice_esterno']],
-            array_merge($data, ['organizzazione_id' => $organizzazione->id])
+            [
+                'codice_esterno' => $data['codice_esterno'],
+                'azienda' => $data['azienda'],
+                'partita_iva' => $data['partita_iva']
+            ],
+            [
+                'organizzazione_id' => $organizzazione->id,
+                'codice_fiscale' => $data['codice_fiscale']
+            ]
         );
     }
 }

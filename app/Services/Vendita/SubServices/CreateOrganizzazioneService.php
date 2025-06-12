@@ -10,7 +10,10 @@ class CreateOrganizzazioneService
     {
         return Organizzazione::firstOrCreate(
             ['codice_esterno' => $data['codice_esterno']],
-            $data
+            [
+                'subdir' => $data['subdir'],
+                'link' => $data['link'],
+            ]
         );
     }
 }
