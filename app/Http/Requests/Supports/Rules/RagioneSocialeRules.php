@@ -7,12 +7,12 @@ class RagioneSocialeRules
     public static function rules(): array
     {
         return [
-            'codice_esterno' => ['nullable', 'integer'],
-            'azienda' => ['required', 'string', 'max:150', 'unique:ragioni_sociali,azienda'],
-            'partita_iva' => ['required', 'string', 'max:16', 'unique:ragioni_sociali,partita_iva'],
-            'codice_fiscale' => ['required', 'string', 'max:16'],
-            'email' => ['nullable', 'email', 'max:100'],
-            'tel' => ['nullable', 'string', 'max:100'],
+            'ragione_sociale.codice_esterno' => ['nullable', 'integer'],
+            'ragione_sociale.azienda' => ['required', 'string', 'max:150', 'unique:ragioni_sociali,azienda'],
+            'ragione_sociale.partita_iva' => ['required', 'string', 'max:16', 'unique:ragioni_sociali,partita_iva'],
+            'ragione_sociale.codice_fiscale' => ['required', 'string', 'max:16'],
+            'ragione_sociale.email' => ['nullable', 'email', 'max:100'],
+            'ragione_sociale.tel' => ['nullable', 'string', 'max:100'],
         ];
     }
 }

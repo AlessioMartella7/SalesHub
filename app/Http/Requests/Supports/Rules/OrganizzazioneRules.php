@@ -7,9 +7,9 @@ class OrganizzazioneRules
     public static function rules(): array
     {
         return [
-            'codice_esterno' => ['nullable', 'integer', 'unique:organizzazioni,codice_esterno'],
-            'link' => ['nullable', 'string', 'max:50'],
-            'subdir' => ['nullable', 'string', 'max:50', 'unique:organizzazioni,subdir'],
+            'organizzazione.codice_esterno' => ['nullable', 'integer', 'unique:organizzazioni,codice_esterno'],
+            'organizzazione.link' => ['nullable', 'string', 'max:50'],
+            'organizzazione.subdir' => ['nullable', 'string', 'max:50', 'unique:organizzazioni,subdir'],
         ];
     }
 }
