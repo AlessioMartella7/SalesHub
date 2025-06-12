@@ -7,27 +7,27 @@ class ClienteRules
     public static function rules(): array
     {
         return [
-            'codice_esterno' => ['nullable', 'integer'],
+            'cliente.codice_esterno' => ['nullable', 'integer'],
 
-            'cliente_tipo' => ['required', 'string', 'max:50'],
-            'nominativo' => ['required', 'string', 'max:150'],
+            'cliente.cliente_tipo' => ['required', 'string', 'max:50'],
+            'cliente.nominativo' => ['required', 'string', 'max:150'],
 
-            'nome' => ['nullable', 'string', 'max:100'],
-            'cognome' => ['nullable', 'string', 'max:100'],
-            'email' => ['required', 'string', 'max:100'],
-            'codice_fiscale' => ['nullable', 'string', 'max:100'],
-            'piva' => ['nullable', 'string', 'max:100'],
+            'cliente.nome' => ['nullable', 'string', 'max:100'],
+            'cliente.cognome' => ['nullable', 'string', 'max:100'],
+            'cliente.email' => ['required', 'string', 'max:100'],
+            'cliente.codice_fiscale' => ['nullable', 'string', 'max:100'],
+            'cliente.piva' => ['nullable', 'string', 'max:100'],
 
-            'tel1' => ['nullable', 'string', 'max:25'],
-            'tel2' => ['nullable', 'string', 'max:25'],
-            'tel3' => ['nullable', 'string', 'max:25'],
-            'tel4' => ['nullable', 'string', 'max:25'],
+            'cliente.tel1' => ['nullable', 'string', 'max:25'],
+            'cliente.tel2' => ['nullable', 'string', 'max:25'],
+            'cliente.tel3' => ['nullable', 'string', 'max:25'],
+            'cliente.tel4' => ['nullable', 'string', 'max:25'],
 
-            'codice_cliente_wind' => ['nullable', 'string', 'max:50'],
-            'codice_cliente_vodafone' => ['nullable', 'string', 'max:50'],
-            'codice_cliente_tim' => ['nullable', 'string', 'max:50'],
-            'codice_cliente_fastweb' => ['nullable', 'string', 'max:50'],
-            'codice_cliente_sky' => ['nullable', 'string', 'max:50'],
+            'cliente.codice_cliente_wind' => ['nullable', 'string', 'max:50'],
+            'cliente.codice_cliente_vodafone' => ['nullable', 'string', 'max:50'],
+            'cliente.codice_cliente_tim' => ['nullable', 'string', 'max:50'],
+            'cliente.codice_cliente_fastweb' => ['nullable', 'string', 'max:50'],
+            'cliente.codice_cliente_sky' => ['nullable', 'string', 'max:50'],
         ];
     }
 }

@@ -40,34 +40,38 @@ class StoreVenditaRequest extends FormRequest
     public function rules(): array
     {
         return array_merge(
-            AddettoRules::rules(),
-            ArticoloDettaglioRules::rules(),
-            ArticoloRules::rules(),
-            AttivitaRules::rules(),
-            CategoriaRules::rules(),
-            ClienteRules::rules(),
-            OrganizzazioneRules::rules(),
-            PagamentoRules::rules(),
-            RagioneSocialeRules::rules(),
-            TipologiaRules::rules(),
-            VenditaRules::rules()
+            ...[
+                AddettoRules::rules(),
+                ArticoloDettaglioRules::rules(),
+                ArticoloRules::rules(),
+                AttivitaRules::rules(),
+                CategoriaRules::rules(),
+                ClienteRules::rules(),
+                OrganizzazioneRules::rules(),
+                PagamentoRules::rules(),
+                RagioneSocialeRules::rules(),
+                TipologiaRules::rules(),
+                VenditaRules::rules()
+            ]
         );
     }
 
     public function messages(): array
     {
         return array_merge(
-            AddettoMessages::messages(),
-            ArticoloDettaglioMessages::messages(),
-            ArticoloMessages::messages(),
-            AttivitaMessages::messages(),
-            CategoriaMessages::messages(),
-            ClienteMessages::messages(),
-            OrganizzazioneMessages::messages(),
-            PagamentoMessages::messages(),
-            RagioneSocialeMessages::messages(),
-            TipologiaMessages::messages(),
-            VenditaMessages::messages()
+            ...[
+                AddettoMessages::messages(),
+                ArticoloDettaglioMessages::messages(),
+                ArticoloMessages::messages(),
+                AttivitaMessages::messages(),
+                CategoriaMessages::messages(),
+                ClienteMessages::messages(),
+                OrganizzazioneMessages::messages(),
+                PagamentoMessages::messages(),
+                RagioneSocialeMessages::messages(),
+                TipologiaMessages::messages(),
+                VenditaMessages::messages()
+            ]
         );
     }
 }
