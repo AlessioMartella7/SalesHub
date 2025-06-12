@@ -7,22 +7,22 @@ class AttivitaRules
     public static function rules(): array
     {
         return [
-            'codice_esterno' => ['nullable', 'integer'],
-            'nominativo' => ['required', 'string', 'max:100'],
+            'attivita.codice_esterno' => ['nullable', 'integer'],
+            'attivita.nominativo' => ['required', 'string', 'max:100'],
 
-            'codice_operatore_wind' => ['nullable', 'string', 'max:100'],
-            'codice_operatore_vodafone' => ['nullable', 'string', 'max:100'],
-            'codice_operatore_tim' => ['nullable', 'string', 'max:100'],
-            'codice_operatore_fastweb' => ['nullable', 'string', 'max:100'],
-            'codice_operatore_sky' => ['nullable', 'string', 'max:100'],
+            'attivita.codice_operatore_wind' => ['nullable', 'string', 'max:100'],
+            'attivita.codice_operatore_vodafone' => ['nullable', 'string', 'max:100'],
+            'attivita.codice_operatore_tim' => ['nullable', 'string', 'max:100'],
+            'attivita.codice_operatore_fastweb' => ['nullable', 'string', 'max:100'],
+            'attivita.codice_operatore_sky' => ['nullable', 'string', 'max:100'],
 
-            'email' => ['nullable', 'string', 'max:100'],
-            'tel' => ['nullable', 'string', 'max:100'],
-            'indirizzo' => ['nullable', 'string', 'max:100'],
-            'civico' => ['nullable', 'string', 'max:100'],
-            'cap' => ['nullable', 'string', 'max:100'],
-            'citta' => ['nullable', 'string', 'max:100'],
-            'provincia' => ['nullable', 'string', 'max:100'],
+            'attivita.email' => ['nullable', 'string', 'max:100'],
+            'attivita.tel' => ['nullable', 'string', 'max:100'],
+            'attivita.indirizzo' => ['nullable', 'string', 'max:100'],
+            'attivita.civico' => ['nullable', 'string', 'max:100'],
+            'attivita.cap' => ['nullable', 'string', 'max:100'],
+            'attivita.citta' => ['nullable', 'string', 'max:100'],
+            'attivita.provincia' => ['nullable', 'string', 'max:100'],
 
         ];
     }
