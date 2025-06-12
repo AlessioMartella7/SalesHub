@@ -7,9 +7,9 @@ class TipologiaMessages
     public static function messages(): array
     {
         return [
-            'tipologia.required' => 'Il campo tipologia è obbligatorio.',
-            'tipologia.string' => 'Il campo tipologia deve essere una stringa.',
-            'tipologia.max' => 'Il campo tipologia non può superare i 30 caratteri.',
+            'articoli.*.tipologia.tipologia.required' => 'Il campo tipologia è obbligatorio.',
+            'articoli.*.tipologia.tipologia.string' => 'Il campo tipologia deve essere una stringa.',
+            'articoli.*.tipologia.tipologia.max' => 'Il campo tipologia non può superare i 30 caratteri.',
         ];
     }
 }

@@ -7,7 +7,7 @@ class CategoriaRules
     public static function rules(): array
     {
         return [
-            'articoli.*.categoria' => ['required', 'string', 'max:30'],
+            'articoli.*.categoria.categoria' => ['required', 'string', 'max:30'],
         ];
     }
 }
