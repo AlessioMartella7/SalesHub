@@ -12,11 +12,9 @@ class RagioneSocialeMessages
             'ragione_sociale.azienda.required' => 'Il campo azienda è obbligatorio.',
             'ragione_sociale.azienda.string' => 'Il campo azienda deve essere una stringa.',
             'ragione_sociale.azienda.max' => 'Il campo azienda non può superare i 150 caratteri.',
-            'ragione_sociale.azienda.unique' => 'L\'azienda inserita è già presente.',
 
             'ragione_sociale.partita_iva.required' => 'Il campo partita IVA è obbligatorio.',
             'ragione_sociale.partita_iva.string' => 'Il campo partita IVA deve essere una stringa.',
-            'ragione_sociale.partita_iva.unique' => 'La partita IVA inserita è già presente.',
 
             'ragione_sociale.codice_fiscale.required' => 'Il campo codice fiscale RS è obbligatorio.',
             'ragione_sociale.codice_fiscale.string' => 'Il campo codice fiscale RS deve essere una stringa.',
