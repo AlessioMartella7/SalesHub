@@ -45,7 +45,7 @@ class VenditaController extends Controller
                     'attivita',
                     'attivita.ragioneSociale.organizzazione',
                     'articoli',
-                    'pagamenti'
+                    'pagamento'
                 ]),
             ], 201);
         } catch (\Throwable $e) {

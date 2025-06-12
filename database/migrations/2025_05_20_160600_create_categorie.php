@@ -18,8 +18,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('categoria', 30);
-            $table->string('tipo', 1); // C canvass P prodotto S servizio
-
         });
     }
 
