@@ -18,8 +18,8 @@ class PagamentoRules
             'vendita.pagamento.non_scontrinato_pos' => ['nullable', 'numeric', 'min:0'],
             'vendita.pagamento.non_riscosso' => ['nullable', 'numeric', 'min:0'],
 
-            'vendita.pagamento.importo_conto_operatore_contanti' => ['required', 'numeric', 'min:0'],
-            'vendita.pagamento.importo_conto_operatore_pos' => ['required', 'numeric', 'min:0'],
+            'vendita.pagamento.importo_conto_operatore_contanti' => ['numeric', 'min:0'],
+            'vendita.pagamento.importo_conto_operatore_pos' => ['numeric', 'min:0'],
         ];
     }
 }

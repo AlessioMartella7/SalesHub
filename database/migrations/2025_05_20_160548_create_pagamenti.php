@@ -34,8 +34,8 @@ return new class extends Migration
             $table->decimal('non_scontrinato_pos', $precision = 20, $scale = 2)->nullable();
             $table->decimal('non_riscosso', $precision = 20, $scale = 2)->nullable();
 
-            $table->decimal('importo_conto_operatore_contanti', $precision = 20, $scale = 2);
-            $table->decimal('importo_conto_operatore_pos', $precision = 20, $scale = 2);
+            $table->decimal('importo_conto_operatore_contanti', $precision = 20, $scale = 2)->nullable();
+            $table->decimal('importo_conto_operatore_pos', $precision = 20, $scale = 2)->nullable();
         });
     }
 

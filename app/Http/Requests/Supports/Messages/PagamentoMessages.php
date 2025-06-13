@@ -37,11 +37,9 @@ class PagamentoMessages
             'non_riscosso.numeric' => 'Il campo non riscosso deve essere un numero.',
             'non_riscosso.min' => 'Il campo non riscosso deve essere almeno 0.',
 
-            'importo_conto_operatore_contanti.required' => 'Il campo importo conto operatore contanti è obbligatorio.',
             'importo_conto_operatore_contanti.numeric' => 'Il campo importo conto operatore contanti deve essere un numero.',
             'importo_conto_operatore_contanti.min' => 'Il campo importo conto operatore contanti deve essere almeno 0.',
 
-            'importo_conto_operatore_pos.required' => 'Il campo importo conto operatore POS è obbligatorio.',
             'importo_conto_operatore_pos.numeric' => 'Il campo importo conto operatore POS deve essere un numero.',
             'importo_conto_operatore_pos.min' => 'Il campo importo conto operatore POS deve essere almeno 0.',
         ];
