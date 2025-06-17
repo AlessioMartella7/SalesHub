@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\VenditaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,7 +11,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 
-//Rotte API Vendite
+// Rotte API Vendite
 
 Route::middleware('auth:api', 'throttle:60,1')
     ->controller(VenditaController::class)
@@ -19,3 +20,7 @@ Route::middleware('auth:api', 'throttle:60,1')
     ->group(function () {
         Route::post('/', 'store')->name('store');
     });
+
+// Rotta per ricevere token
+
+Route::post('/get-token',[TokenController::class, 'getToken']);
