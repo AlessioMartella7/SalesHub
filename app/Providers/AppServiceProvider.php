@@ -27,5 +27,10 @@ class AppServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(CarbonInterval::minutes(15));
         Passport::refreshTokensExpireIn(CarbonInterval::days(7));
         Passport::personalAccessTokensExpireIn(CarbonInterval::days(30));
+
+        Passport::tokensCan([
+        'vendita:create' => 'Create new vendita',
+        'vendita:read' => 'Leggi vendita'
+    ]);
     }
 }

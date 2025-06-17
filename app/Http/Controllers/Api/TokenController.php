@@ -23,7 +23,7 @@ class TokenController extends Controller
             return response()->json(['message' => 'Credenziali non valide'], 401);
         }
 
-        $token = $user->createToken('Token temporaneo')->accessToken;
+        $token = $user->createToken('Token temporaneo',['vendita:create'])->accessToken;
 
         return response()->json(['access_token' => $token]);
     }

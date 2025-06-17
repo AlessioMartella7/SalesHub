@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\VenditaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Laravel\Passport\Http\Middleware\CheckToken;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 
 // Rotte API Vendite
 
-Route::middleware('auth:api', 'throttle:60,1')
+Route::middleware(['auth:api', 'throttle:60,1', CheckToken::using('vendita:create')])
     ->controller(VenditaController::class)
     ->prefix('vendite')
     ->name('vendite.')
