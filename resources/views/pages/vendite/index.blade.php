@@ -35,12 +35,12 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label fw-bold">Cliente</label>
-                    <input type="text" name="cliente" class="form-control" placeholder="Cliente"
+                    <input type="text" name="cliente" class="form-control" placeholder="Codice Esterno Cliente"
                         value="{{ request('cliente') }}">
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label fw-bold">Addetto</label>
-                    <input type="text" name="addetto" class="form-control" placeholder="Addetto"
+                    <label class="form-label fw-bold">Addetto (Codice Esterno)</label>
+                    <input type="text" name="addetto" class="form-control" placeholder="Codice Esterno Addetto"
                         value="{{ request('addetto') }}">
                 </div>
                 <div class="col-md-3">
@@ -79,8 +79,8 @@
                             <p>Totale record: {{ $vendite->total() }}</p>
                             <tr class="fw-bold fs-5">
                                 <th>Codice Vendita</th>
-                                <th>Cliente</th>
-                                <th>Addetto</th>
+                                <th>Codice Cliente</th>
+                                <th>Codice Addetto</th>
                                 <th>Numero Scontrino</th>
                                 <th>Data Scontrino</th>
                                 <th>Data Vendita</th>
@@ -93,8 +93,8 @@
                         @forelse ($vendite as $vendita)
                             <tr>
                                 <td>{{ $vendita->codice_esterno }}</td>
-                                <td>{{ $vendita->cliente->nominativo ?? '-' }}</td>
-                                <td>{{ $vendita->addetto->nominativo ?? '-' }}</td>
+                                <td>{{ $vendita->cliente->codice_esterno ?? '-' }}</td>
+                                <td>{{ $vendita->addetto->codice_esterno ?? '-' }}</td>
                                 <td>{{ $vendita->numero_scontrino }}</td>
                                 <td>{{ $vendita->data_scontrino }}</td>
                                 <td>{{ $vendita->data_vendita }}</td>

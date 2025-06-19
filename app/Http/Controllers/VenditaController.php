@@ -32,12 +32,12 @@ class VenditaController extends Controller
         }
         if ($cliente = request('cliente')) {
             $query->whereHas('cliente', function ($q) use ($cliente) {
-                $q->where('nominativo', 'like', "%$cliente%");
+                $q->where('codice_esterno', $cliente);
             });
         }
         if ($addetto = request('addetto')) {
             $query->whereHas('addetto', function ($q) use ($addetto) {
-                $q->where('nominativo', 'like', "%$addetto%");
+                $q->where('codice_esterno', $addetto);
             });
         }
         if ($numeroScontrino = request('numero_scontrino')) {
@@ -71,7 +71,7 @@ class VenditaController extends Controller
             });
         }
 
-        $vendite = $query->orderByDesc('data_vendita')->paginate(20);
+        $vendite = $query->orderByDesc('data_vendita')->paginate(50);
 
         return view('pages.vendite.index', compact('vendite'));
     }
