@@ -95,8 +95,8 @@
                                 <td>{{ $vendita->codice_esterno }}</td>
                                 <td>{{ $vendita->cliente->codice_esterno ?? '-' }}</td>
                                 <td>{{ $vendita->addetto->codice_esterno ?? '-' }}</td>
-                                <td>{{ $vendita->numero_scontrino }}</td>
-                                <td>{{ $vendita->data_scontrino }}</td>
+                                <td>{{ $vendita->numero_scontrino ?? '-' }}</td>
+                                <td>{{ $vendita->data_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->data_vendita }}</td>
                                 <td>{{ $vendita->totale }}</td>
                                 <td>
