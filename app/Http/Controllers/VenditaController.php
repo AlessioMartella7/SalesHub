@@ -18,7 +18,15 @@ class VenditaController extends Controller
      */
     public function index()
     {
-        //
+        $vendite = Vendita::with([
+            'cliente',
+            'addetto',
+            'attivita',
+            'attivita.ragioneSociale.organizzazione',
+            'articoli',
+            'pagamento'
+        ])->get();
+        return view('pages.vendite.index', compact('vendite'));
     }
 
     /**

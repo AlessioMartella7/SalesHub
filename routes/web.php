@@ -33,6 +33,7 @@ Route::middleware('auth')->controller(VenditaController::class)
     ->prefix('vendite')
     ->name('vendite.')
     ->group(function () {
+        Route::get('/', 'index')->name('index');
         Route::post('/', 'store')->name('storeTest');
     });
 
