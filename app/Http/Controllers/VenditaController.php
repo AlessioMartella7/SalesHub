@@ -18,14 +18,61 @@ class VenditaController extends Controller
      */
     public function index()
     {
-        $vendite = Vendita::with([
+        $query = Vendita::with([
             'cliente',
             'addetto',
             'attivita',
             'attivita.ragioneSociale.organizzazione',
             'articoli',
             'pagamento'
-        ])->get();
+        ]);
+
+        if ($codice = request('codice_esterno')) {
+            $query->where('codice_esterno', 'like', "%$codice%");
+        }
+        if ($cliente = request('cliente')) {
+            $query->whereHas('cliente', function ($q) use ($cliente) {
+                $q->where('nominativo', 'like', "%$cliente%");
+            });
+        }
+        if ($addetto = request('addetto')) {
+            $query->whereHas('addetto', function ($q) use ($addetto) {
+                $q->where('nominativo', 'like', "%$addetto%");
+            });
+        }
+        if ($numeroScontrino = request('numero_scontrino')) {
+            $query->where('numero_scontrino', 'like', "%$numeroScontrino%");
+        }
+        if ($dataScontrino = request('data_scontrino')) {
+            $query->whereDate('data_scontrino', $dataScontrino);
+        }
+        if ($dataVendita = request('data_vendita')) {
+            $query->whereDate('data_vendita', $dataVendita);
+        }
+        if ($from = request('dt_from')) {
+            $query->whereDate('data_vendita', '>=', $from);
+        }
+        if ($to = request('dt_to')) {
+            $query->whereDate('data_vendita', '<=', $to);
+        }
+        if ($attivita = request('attivita')) {
+            $query->whereHas('attivita', function ($q) use ($attivita) {
+                $q->where('nominativo', 'like', "%$attivita%");
+            });
+        }
+        if ($ragioneSociale = request('ragione_sociale')) {
+            $query->whereHas('attivita.ragioneSociale', function ($q) use ($ragioneSociale) {
+                $q->where('azienda', 'like', "%$ragioneSociale%");
+            });
+        }
+        if ($organizzazione = request('organizzazione')) {
+            $query->whereHas('attivita.ragioneSociale.organizzazione', function ($q) use ($organizzazione) {
+                $q->where('subdir', 'like', "%$organizzazione%");
+            });
+        }
+
+        $vendite = $query->orderByDesc('data_vendita')->paginate(20);
+
         return view('pages.vendite.index', compact('vendite'));
     }
 

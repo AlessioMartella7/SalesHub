@@ -3,13 +3,116 @@
     'description' => 'Gestione delle vendite',
     'breadcrumbs' => [['label' => 'Vendite', 'url' => route('vendite.index')]],
 ])
+
 @section('content')
     <main>
         <div class="container">
-            <div class="row d-flex justify-content-center">
-                <div class="text-center mt-5">
-                    <h1>Vendite</h1>
+            <div class="text-center mt-5">
+                <h1>Vendite</h1>
+            </div>
+
+            {{-- FORM FILTRI --}}
+            <form method="GET" action="{{ route('vendite.index') }}" class="row g-3 my-4">
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Organizzazione</label>
+                    <input type="text" name="organizzazione" class="form-control" placeholder="Organizzazione"
+                        value="{{ request('organizzazione') }}">
                 </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Ragione Sociale</label>
+                    <input type="text" name="ragione_sociale" class="form-control" placeholder="Ragione Sociale"
+                        value="{{ request('ragione_sociale') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Attività</label>
+                    <input type="text" name="attivita" class="form-control" placeholder="Attività"
+                        value="{{ request('attivita') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Codice Vendita</label>
+                    <input type="text" name="codice_esterno" class="form-control" placeholder="Codice Vendita"
+                        value="{{ request('codice_esterno') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Cliente</label>
+                    <input type="text" name="cliente" class="form-control" placeholder="Cliente"
+                        value="{{ request('cliente') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Addetto</label>
+                    <input type="text" name="addetto" class="form-control" placeholder="Addetto"
+                        value="{{ request('addetto') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Numero Scontrino</label>
+                    <input type="text" name="numero_scontrino" class="form-control" placeholder="Numero Scontrino"
+                        value="{{ request('numero_scontrino') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Data Scontrino</label>
+                    <input type="date" name="data_scontrino" class="form-control"
+                        value="{{ request('data_scontrino') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Data Vendita</label>
+                    <input type="date" name="data_vendita" class="form-control" value="{{ request('data_vendita') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Dal</label>
+                    <input type="date" name="dt_from" class="form-control" value="{{ request('dt_from') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Al</label>
+                    <input type="date" name="dt_to" class="form-control" value="{{ request('dt_to') }}">
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2">Filtra</button>
+                    <a href="{{ route('vendite.index') }}" class="btn btn-secondary">Reset</a>
+                </div>
+            </form>
+
+            {{-- Table --}}
+            <div class="col-12 my-4">
+                <table class="table table-striped">
+                    <thead>
+                        @if ($vendite->count() > 0)
+                            <p>Totale record: {{ $vendite->total() }}</p>
+                            <tr class="fw-bold fs-5">
+                                <th>Codice Vendita</th>
+                                <th>Cliente</th>
+                                <th>Addetto</th>
+                                <th>Numero Scontrino</th>
+                                <th>Data Scontrino</th>
+                                <th>Data Vendita</th>
+                                <th>Totale</th>
+                                <th>Dettagli</th>
+                            </tr>
+                        @endif
+                    </thead>
+                    <tbody>
+                        @forelse ($vendite as $vendita)
+                            <tr>
+                                <td>{{ $vendita->codice_esterno }}</td>
+                                <td>{{ $vendita->cliente->nominativo ?? '-' }}</td>
+                                <td>{{ $vendita->addetto->nominativo ?? '-' }}</td>
+                                <td>{{ $vendita->numero_scontrino }}</td>
+                                <td>{{ $vendita->data_scontrino }}</td>
+                                <td>{{ $vendita->data_vendita }}</td>
+                                <td>{{ $vendita->totale }}</td>
+                                <td>
+                                    {{--                                     <a href="{{ route('vendite.show', ['vendita' => $vendita->id]) }}"
+                                        class="btn btn-info btn-sm">Mostra</a> --}}
+                                </td>
+                            </tr>
+                        @empty
+                            <p class="fw-bold fs-2 text-center">Nessun dato è stato ancora caricato</p>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-12 my-3 d-flex justify-content-center">
+                {{ $vendite->appends(request()->query())->links() }}
             </div>
         </div>
     </main>
