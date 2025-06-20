@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Carbon\CarbonInterval;
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RedirectIfAuthenticated::redirectUsing(fn () => route('fissi.index'));
+
         Paginator::useBootstrap();
 
         Passport::tokensExpireIn(CarbonInterval::minutes(15));

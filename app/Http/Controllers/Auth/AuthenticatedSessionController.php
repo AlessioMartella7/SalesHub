@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('fissi.index', absolute: false));
+        return redirect()->route('fissi.index',);
     }
 
     /**
