@@ -86,10 +86,11 @@
                                 <th>Codice Vendita</th>
                                 <th>Codice Cliente</th>
                                 <th>Codice Addetto</th>
-                                <th>Fld Scontrino</th>
+                                <th>Flg Scontrino</th>
                                 <th>Numero Scontrino</th>
                                 <th>Data Scontrino</th>
                                 <th>Data Vendita</th>
+                                <th>Stato</th>
                                 <th>Totale</th>
                                 <th>Dettagli</th>
                             </tr>
@@ -105,6 +106,7 @@
                                 <td>{{ $vendita->numero_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->data_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->data_vendita }}</td>
+                                <td>{{ $vendita->stato }}</td>
                                 <td>{{ $vendita->totale }}</td>
                                 <td>
                                     {{--                                     <a href="{{ route('vendite.show', ['vendita' => $vendita->id]) }}"
