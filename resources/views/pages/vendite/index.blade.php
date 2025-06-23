@@ -4,6 +4,7 @@
     'breadcrumbs' => [['label' => 'Vendite', 'url' => route('vendite.index')]],
 ])
 
+{{-- Font Awesome CDN --}}
 @section('links')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
@@ -84,7 +85,7 @@
 
             {{-- Table --}}
             <div class="col-12 my-4">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                     <thead>
                         @if ($vendite->count() > 0)
                             <p>Totale record: {{ $vendite->total() }}</p>
