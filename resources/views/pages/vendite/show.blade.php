@@ -13,14 +13,27 @@
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-12 my-3 ">
+
+                    {{-- Header Main --}}
                     <div class="text-center my-5">
                         <h2>Dettagli Vendita:
                             {{ $vendita->codice_esterno }}
                         </h2>
+
+                        <div class="my-4">
+                            <h5>
+                                "{{ $vendita->attivita->ragioneSociale->organizzazione->subdir }}" -
+                                "{{ $vendita->attivita->ragioneSociale->azienda }}" -
+                                "{{ $vendita->attivita->nominativo }}"
+                            </h5>
+                        </div>
                     </div>
 
                     {{-- Tabella Articoli --}}
                     @include('pages.vendite.partials.articoli')
+
+                    {{-- Tabella Addetto --}}
+                    @include('pages.vendite.partials.addetto')
 
                     {{-- Bottone ritorno --}}
                     <div class="text-center">
