@@ -4,6 +4,12 @@
     'breadcrumbs' => [['label' => 'Vendite', 'url' => route('vendite.index')]],
 ])
 
+@section('links')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
+
 @section('content')
     <main>
         <div class="container">
@@ -82,7 +88,7 @@
                     <thead>
                         @if ($vendite->count() > 0)
                             <p>Totale record: {{ $vendite->total() }}</p>
-                            <tr class="fw-bold fs-5">
+                            <tr class="fw-bold fs-5 text-center">
                                 <th>Codice Vendita</th>
                                 <th>Codice Cliente</th>
                                 <th>Codice Addetto</th>
@@ -98,7 +104,7 @@
                     </thead>
                     <tbody>
                         @forelse ($vendite as $vendita)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{ $vendita->codice_esterno }}</td>
                                 <td>{{ $vendita->cliente->codice_esterno ?? '-' }}</td>
                                 <td>{{ $vendita->addetto->codice_esterno ?? '-' }}</td>
@@ -107,10 +113,12 @@
                                 <td>{{ $vendita->data_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->data_vendita }}</td>
                                 <td>{{ $vendita->stato }}</td>
-                                <td>{{ $vendita->totale }}</td>
+                                <td>{{ $vendita->totale }}€</td>
                                 <td>
-                                    {{--                                     <a href="{{ route('vendite.show', ['vendita' => $vendita->id]) }}"
-                                        class="btn btn-info btn-sm">Mostra</a> --}}
+                                    <a href="{{ route('vendite.show', ['vendita' => $vendita->id]) }}"
+                                        title="Mostra Dettagli">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @empty

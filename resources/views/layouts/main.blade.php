@@ -13,6 +13,9 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    <!-- Fonts -->
+    @yield('links')
+
 </head>
 @include('partials.header')
 

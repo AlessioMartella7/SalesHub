@@ -121,7 +121,7 @@ class VenditaController extends Controller
      */
     public function show(Vendita $vendita)
     {
-        //
+        return view('pages.vendite.show', compact('vendita'));
     }
 
     /**

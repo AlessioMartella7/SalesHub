@@ -35,6 +35,7 @@ Route::middleware('auth')->controller(VenditaController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'store')->name('storeTest');
+        Route::get('/{vendita}', 'show')->name('show');
     });
 
 require __DIR__ . '/auth.php';
