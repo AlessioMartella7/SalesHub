@@ -44,6 +44,11 @@
                         value="{{ request('addetto') }}">
                 </div>
                 <div class="col-md-3">
+                    <label class="form-label fw-bold">flg Scontrino</label>
+                    <input type="text" name="flg_scontrino" class="form-control" placeholder="Flg Scontrino"
+                        value="{{ request('flg_scontrino') }}">
+                </div>
+                <div class="col-md-3">
                     <label class="form-label fw-bold">Numero Scontrino</label>
                     <input type="text" name="numero_scontrino" class="form-control" placeholder="Numero Scontrino"
                         value="{{ request('numero_scontrino') }}">
@@ -81,6 +86,7 @@
                                 <th>Codice Vendita</th>
                                 <th>Codice Cliente</th>
                                 <th>Codice Addetto</th>
+                                <th>Fld Scontrino</th>
                                 <th>Numero Scontrino</th>
                                 <th>Data Scontrino</th>
                                 <th>Data Vendita</th>
@@ -95,6 +101,7 @@
                                 <td>{{ $vendita->codice_esterno }}</td>
                                 <td>{{ $vendita->cliente->codice_esterno ?? '-' }}</td>
                                 <td>{{ $vendita->addetto->codice_esterno ?? '-' }}</td>
+                                <td>{{ $vendita->flg_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->numero_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->data_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->data_vendita }}</td>

@@ -40,6 +40,9 @@ class VenditaController extends Controller
                 $q->where('codice_esterno', $addetto);
             });
         }
+        if ($flgScontrino = request('flg_scontrino')) {
+            $query->where('flg_scontrino', 'like', "%$flgScontrino%");
+        }
         if ($numeroScontrino = request('numero_scontrino')) {
             $query->where('numero_scontrino', 'like', "%$numeroScontrino%");
         }
