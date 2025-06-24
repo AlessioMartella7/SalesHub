@@ -42,7 +42,7 @@ return new class extends Migration
             $table->string('marca', 70)->nullable();
             $table->string('modello', 150)->nullable();
 
-            $table->string('brand_id', 1)->nullable();
+            $table->string('brand_id')->nullable();
             $table->string('costo_acquisto', 10)->nullable();
             $table->string('aliquota_acquisto', 10)->nullable();
         });

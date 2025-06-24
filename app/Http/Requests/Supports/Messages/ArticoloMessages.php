@@ -33,7 +33,6 @@ class ArticoloMessages
             'modello.max' => 'Il campo modello non può superare :max caratteri.',
 
             'brand_id.string' => 'Il campo brand ID deve essere una stringa.',
-            'brand_id.max' => 'Il campo brand ID non può superare :max caratteri.',
 
             'costo_acquisto.string' => 'Il campo costo acquisto deve essere una stringa.',
             'costo_acquisto.max' => 'Il campo costo acquisto non può superare :max caratteri.',
