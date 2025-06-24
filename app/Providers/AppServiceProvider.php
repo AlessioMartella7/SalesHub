@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RedirectIfAuthenticated::redirectUsing(fn () => route('fissi.index'));
+        RedirectIfAuthenticated::redirectUsing(fn () => route('vendite.index'));
 
         Paginator::useBootstrap();
 
