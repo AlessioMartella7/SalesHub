@@ -9,7 +9,7 @@ class VenditaRules
         return [
             'vendita.info.codice_esterno' => ['nullable', 'integer'],
             'vendita.info.stato' => ['required', 'string', 'max:20'],
-            'vendita.info.flg_scontrino' => ['required', 'string', 'max:1'],
+            'vendita.info.flg_scontrino' => ['string', 'max:1'],
 
             'vendita.info.numero_scontrino' => ['nullable', 'string', 'max:30'],
             'vendita.info.codice_lotteria' => ['nullable', 'string', 'max:30'],

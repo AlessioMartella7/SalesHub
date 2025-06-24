@@ -13,7 +13,6 @@ class VenditaMessages
             'vendita.stato.string' => 'Il campo stato deve essere una stringa.',
             'vendita.stato.max' => 'Il campo stato non può superare 20 caratteri.',
 
-            'vendita.flg_scontrino.required' => 'Il campo tipo scontrino è obbligatorio.',
             'vendita.flg_scontrino.string' => 'Il campo tipo scontrino deve essere una stringa.',
             'vendita.flg_scontrino.max' => 'Il campo tipo scontrino deve essere di 1 carattere.',
 
