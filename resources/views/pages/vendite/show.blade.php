@@ -65,6 +65,9 @@
                     {{-- Tabella Cliente --}}
                     @include('pages.vendite.partials.cliente')
 
+                    {{-- Tabella Pagamento --}}
+                    @include('pages.vendite.partials.pagamento')
+
                     {{-- Bottone ritorno --}}
                     <div class="text-center">
                         <a href="{{ url()->previous() }}" class="btn btn-lg btn-primary mt-3">Indietro</a>

@@ -31,9 +31,9 @@
                 <td>{{ $cliente->cognome }}</td>
                 <td>{{ $cliente->email }}</td>
                 <td>{{ $cliente->codice_fiscale }}</td>
-                <td>{{ $cliente->partita_iva }}</td>
-                <td>{{ $cliente->tel1 }}</td>
-                <td>{{ $cliente->codice_cliente_wind }}</td>
+                <td>{{ $cliente->partita_iva ?? '-' }}</td>
+                <td>{{ $cliente->tel1 ?? '-' }}</td>
+                <td>{{ $cliente->codice_cliente_wind ?? '-' }}</td>
                 <td>
                     <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapse">
