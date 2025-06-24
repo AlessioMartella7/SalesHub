@@ -30,18 +30,19 @@
                     </div>
 
                     <div class="col-12 my-4">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered border-dark">
                             <thead>
-                                <tr class="fw-bold fs-4 text-center">
-                                    <th colspan="13" class="table-warning">
+                                <tr class="fw-bold fs-4 text-center ">
+                                    <th colspan="5" class="table-secondary border-dark">
                                         Dettagli
                                     </th>
                                 </tr>
-                                <tr class="fw-bold fs-5 text-center table-light ">
+                                <tr class="fw-bold fs-5 text-center table-light border-dark ">
                                     <th>Data Inizio</th>
                                     <th>Data Fine</th>
                                     <th>Codice Lotteria</th>
                                     <th>Totale Imponibile</th>
+                                    <th>Totale</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,7 @@
                                     <td>{{ $vendita->data_fine }}</td>
                                     <td>{{ $vendita->codice_lotteria ?? '-' }}</td>
                                     <td>{{ $vendita->totale_imponibile }} €</td>
+                                    <td>{{ $vendita->totale }} €</td>
                                 </tr>
                             </tbody>
                         </table>

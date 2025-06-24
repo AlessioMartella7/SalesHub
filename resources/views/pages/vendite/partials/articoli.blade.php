@@ -1,13 +1,13 @@
                     <div class="col-12 my-4">
 
-                        <table class="table table-bordered">
+                        <table class="table table-bordered border-dark">
                             <thead>
                                 <tr class="fw-bold fs-4 text-center">
-                                    <th colspan="13" class="table-warning">
+                                    <th colspan="13" class="table-secondary border-dark">
                                         Articoli
                                     </th>
                                 </tr>
-                                <tr class="fw-bold fs-5 text-center table-light ">
+                                <tr class="fw-bold fs-5 text-center table-light border-dark ">
                                     <th>Categoria</th>
                                     <th>Tipologia</th>
                                     <th>Tipo</th>
