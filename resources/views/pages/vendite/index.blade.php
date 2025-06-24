@@ -85,7 +85,7 @@
 
             {{-- Table --}}
             <div class="col-12 my-4">
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-light table-bordered border-dark">
                     <thead>
                         @if ($vendite->count() > 0)
                             <p>Totale record: {{ $vendite->total() }}</p>
