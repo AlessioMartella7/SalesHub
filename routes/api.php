@@ -24,7 +24,3 @@ Route::middleware(['auth:api', CheckToken::using('vendita:create')]) // Reinseri
 // Rotta per ricevere token
 
 Route::post('/get-token',[TokenController::class, 'getToken']);
-
-Route::middleware('auth:api')->get('/me', function () {
-    return response()->json(Auth::user());
-});
