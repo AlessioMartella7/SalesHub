@@ -19,11 +19,11 @@ return new class extends Migration
             $table->timestamps();
 
             $table->integer('codice_esterno')->nullable(); //id_cliente
-            $table->string('cliente_tipo', 50);
-            $table->string('nominativo', 150);
+            $table->string('cliente_tipo', 255)->nullable();
+            $table->string('nominativo', 255)->nullable();
             $table->string('nome', 100)->nullable();
             $table->string('cognome', 100)->nullable();
-            $table->string('email', 100);
+            $table->string('email', 255)->nullable();
             $table->string('codice_fiscale', 100)->nullable();
             $table->string('piva', 100)->nullable();
             $table->string('tel1', 25)->nullable();

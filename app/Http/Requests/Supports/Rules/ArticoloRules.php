@@ -11,7 +11,7 @@ class ArticoloRules
             'articoli.*.info.codice' => ['string', 'max:50'],
 
             'articoli.*.info.codice_ean' => ['nullable', 'string', 'max:50'],
-            'articoli.*.info.codice_univoco' => ['nullable', 'string', 'max:10'],
+            'articoli.*.info.codice_univoco' => ['nullable', 'string'],
 
             'articoli.*.info.voce_scontrino' => ['nullable', 'string', 'max:50'],
             'articoli.*.info.descrizione' => ['nullable', 'string', 'max:150'],

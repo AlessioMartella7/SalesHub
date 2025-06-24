@@ -9,9 +9,7 @@ class ClienteMessages
         return [
             'cliente.codice_esterno.integer' => 'Il campo codice esterno deve essere un numero intero.',
 
-            'cliente.cliente_tipo.required' => 'Il campo tipo cliente è obbligatorio.',
             'cliente.cliente_tipo.string' => 'Il campo tipo cliente deve essere una stringa.',
-            'cliente.cliente.cliente_tipo.max' => 'Il campo tipo cliente non può superare 50 caratteri.',
 
             'cliente.cliente.nominativo.required' => 'Il campo nominativo cliente è obbligatorio.',
             'cliente.nominativo.string' => 'Il campo nominativo deve essere una stringa.',
@@ -23,9 +21,7 @@ class ClienteMessages
             'cliente.cognome.string' => 'Il campo cognome deve essere una stringa.',
             'cliente.cognome.max' => 'Il campo cognome non può superare 100 caratteri.',
 
-            'cliente.email.required' => 'Il campo email è obbligatorio.',
             'cliente.email.string' => 'Il campo email deve essere una stringa.',
-            'cliente.email.max' => 'Il campo email non può superare 100 caratteri.',
             'cliente.email.email' => 'Il campo email deve contenere un indirizzo email valido.',
 
             'cliente.codice_fiscale.string' => 'Il campo codice fiscale cliente deve essere una stringa.',

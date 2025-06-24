@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->string('tipologia_vendita', 20)->nullable();
+            $table->string('tipologia_vendita', 255)->nullable();
             $table->string('canone', 10)->nullable();
 
             $table->decimal('prezzo', 20, 2)->nullable();

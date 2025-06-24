@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 
 // Rotte API Vendite
 
-Route::middleware(['auth:api', 'throttle:60,1', CheckToken::using('vendita:create')])
+Route::middleware(['auth:api', CheckToken::using('vendita:create')]) // Reinserire il middleware throttle
     ->controller(VenditaController::class)
     ->prefix('vendite')
     ->name('vendite.')

@@ -29,6 +29,31 @@
                         </div>
                     </div>
 
+                    <div class="col-12 my-4">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="fw-bold fs-4 text-center">
+                                    <th colspan="13" class="table-warning">
+                                        Dettagli
+                                    </th>
+                                </tr>
+                                <tr class="fw-bold fs-5 text-center table-light ">
+                                    <th>Data Inizio</th>
+                                    <th>Data Fine</th>
+                                    <th>Codice Lotteria</th>
+                                    <th>Totale Imponibile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td>{{ $vendita->data_inizio }}</td>
+                                    <td>{{ $vendita->data_fine }}</td>
+                                    <td>{{ $vendita->codice_lotteria ?? '-' }}</td>
+                                    <td>{{ $vendita->totale_imponibile }} €</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     {{-- Tabella Articoli --}}
                     @include('pages.vendite.partials.articoli')
 

@@ -9,12 +9,12 @@ class ClienteRules
         return [
             'cliente.codice_esterno' => ['nullable', 'integer'],
 
-            'cliente.cliente_tipo' => ['required', 'string', 'max:50'],
-            'cliente.nominativo' => ['required', 'string', 'max:150'],
+            'cliente.cliente_tipo' => ['nullable','string'],
+            'cliente.nominativo' => ['nullable','string'],
 
             'cliente.nome' => ['nullable', 'string', 'max:100'],
             'cliente.cognome' => ['nullable', 'string', 'max:100'],
-            'cliente.email' => ['required', 'string', 'max:100'],
+            'cliente.email' => ['nullable', 'string'],
             'cliente.codice_fiscale' => ['nullable', 'string', 'max:100'],
             'cliente.piva' => ['nullable', 'string', 'max:100'],
 

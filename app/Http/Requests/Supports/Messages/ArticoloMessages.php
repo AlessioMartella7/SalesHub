@@ -19,7 +19,6 @@ class ArticoloMessages
             'codice_ean.max' => 'Il campo codice EAN non può superare :max caratteri.',
 
             'codice_univoco.string' => 'Il campo codice univoco deve essere una stringa.',
-            'codice_univoco.max' => 'Il campo codice univoco non può superare :max caratteri.',
 
             'voce_scontrino.string' => 'Il campo voce scontrino deve essere una stringa.',
             'voce_scontrino.max' => 'Il campo voce scontrino non può superare :max caratteri.',

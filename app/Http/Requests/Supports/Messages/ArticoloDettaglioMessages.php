@@ -8,7 +8,6 @@ class ArticoloDettaglioMessages
     {
         return [
             'articoli.*.dettaglio.tipologia_vendita.string' => 'La tipologia vendita deve essere una stringa.',
-            'articoli.*.dettaglio.tipologia_vendita.max' => 'La tipologia vendita non può superare :max caratteri.',
 
             'articoli.*.dettaglio.canone.string' => 'Il canone deve essere una stringa.',
             'articoli.*.dettaglio.canone.max' => 'Il canone non può superare :max caratteri.',

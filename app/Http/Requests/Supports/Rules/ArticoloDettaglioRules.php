@@ -7,7 +7,7 @@ class ArticoloDettaglioRules
     public static function rules(): array
     {
         return [
-            'articoli.*.dettaglio.tipologia_vendita' => ['nullable', 'string', 'max:20'],
+            'articoli.*.dettaglio.tipologia_vendita' => ['nullable', 'string'],
             'articoli.*.dettaglio.canone' => ['nullable', 'string', 'max:10'],
 
             'articoli.*.dettaglio.prezzo' => ['nullable', 'numeric', 'between:0,99999999999999999999.99'],

@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('tipo', 1);
             $table->string('codice', 50);
             $table->string('codice_ean', 50)->nullable();
-            $table->string('codice_univoco', 10)->nullable();
+            $table->string('codice_univoco', 255)->nullable();
 
             $table->string('voce_scontrino', 50)->nullable();
             $table->string('descrizione', 150)->nullable();
