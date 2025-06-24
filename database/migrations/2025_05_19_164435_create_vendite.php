@@ -35,7 +35,7 @@ return new class extends Migration
 
             $table->integer('codice_esterno')->nullable(); //id_vendite
             $table->string('stato', 20);
-            $table->string('flg_scontrino', 1); // S - scontrino F - fattura A - attestato di vendita
+            $table->string('flg_scontrino', 1)->nullable(); // S - scontrino F - fattura A - attestato di vendita
 
             $table->string('numero_scontrino', 30)->nullable();
             $table->string('codice_lotteria', 30)->nullable();
