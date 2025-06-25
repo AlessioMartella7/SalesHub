@@ -67,6 +67,7 @@ class CreateVenditaService
                 // Crea dettaglio articolo (one-to-one)
                 $dettaglio = $this->articoloDettaglioService->create($articolo, $item['dettaglio'] ?? []);
 
+                // Salva domande e risposte se presenti
                 if (!empty($item['dettaglio']['domande'])) {
                     $this->domandaRispostaService->create($dettaglio, $item['dettaglio']['domande']);
                 }

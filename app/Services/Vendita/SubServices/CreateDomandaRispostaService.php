@@ -22,7 +22,7 @@ class CreateDomandaRispostaService
             }
 
             // Aggiorna o crea la risposta associata all'articolo dettaglio
-            DomandaRisposta::updateOrCreate(
+            Risposta::updateOrCreate(
                 [
                     'domanda_id' => $domanda->id,
                     'articolo_dettaglio_id' => $dettaglio->id,
