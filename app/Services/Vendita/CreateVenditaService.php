@@ -19,6 +19,7 @@ use App\Services\Vendita\SubServices\CreateArticoloService;
 use App\Services\Vendita\SubServices\CreateArticoloDettaglioService;
 use App\Services\Vendita\SubServices\CreateVenditaEntityService;
 use App\Services\Vendita\SubServices\CreatePagamentoService;
+use App\Services\Vendita\SubServices\CreateDomandaRispostaService;
 
 class CreateVenditaService
 {
@@ -35,7 +36,8 @@ class CreateVenditaService
         protected CreateArticoloService $articoloService,
         protected CreateArticoloDettaglioService $articoloDettaglioService,
         protected CreateVenditaEntityService $venditaEntityService,
-        protected CreatePagamentoService $pagamentoService
+        protected CreatePagamentoService $pagamentoService,
+        protected CreateDomandaRispostaService $domandaRispostaService
     ) {}
 
     public function handle(array $data): Vendita

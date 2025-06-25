@@ -16,8 +16,8 @@ use App\Http\Requests\Supports\Rules\PagamentoRules;
 use App\Http\Requests\Supports\Rules\RagioneSocialeRules;
 use App\Http\Requests\Supports\Rules\TipologiaRules;
 use App\Http\Requests\Supports\Rules\VenditaRules;
-use App\Http\Requests\Supports\Messages\DettaglioDomandaRules;
-use App\Http\Requests\Supports\Messages\DomandaRispostaRules;
+use App\Http\Requests\Supports\Rules\DettaglioDomandaRules;
+use App\Http\Requests\Supports\Rules\DomandaRispostaRules;
 
 
 // Messages
