@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('domanda_id');
-            $table->unsignedBigInteger('dettaglio_id');
+            $table->unsignedBigInteger('articolo_dettaglio_id');
             $table->string('risposta')->nullable();
             $table->timestamps();
 
             $table->foreign('domanda_id')->references('id')->on('articoli_dettagli_domande')->onDelete('cascade');
-            $table->foreign('dettaglio_id')->references('id')->on('articoli_dettagli')->onDelete('cascade');
+            $table->foreign('articolo_dettaglio_id')->references('id')->on('articoli_dettagli')->onDelete('cascade');
 
-            $table->unique(['domanda_id', 'dettaglio_id'], 'unique_domanda_dettaglio');
+            $table->unique(['domanda_id', 'articolo_dettaglio_id'], 'unique_domanda_articolo_dettaglio');
         });
     }
 
