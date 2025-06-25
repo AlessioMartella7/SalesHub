@@ -65,7 +65,11 @@ class CreateVenditaService
                 $articolo = $this->articoloService->create($item['info'], $categoria, $tipologia, $vendita);
 
                 // Crea dettaglio articolo (one-to-one)
-                $this->articoloDettaglioService->create($articolo, $item['dettaglio'] ?? []);
+                $dettaglio = $this->articoloDettaglioService->create($articolo, $item['dettaglio'] ?? []);
+
+                if (!empty($item['dettaglio']['domande'])) {
+                    $this->domandaRispostaService->create($dettaglio, $item['dettaglio']['domande']);
+                }
             }
 
             // Creo Pagamento (one-to-one)
