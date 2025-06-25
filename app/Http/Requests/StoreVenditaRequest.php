@@ -16,6 +16,9 @@ use App\Http\Requests\Supports\Rules\PagamentoRules;
 use App\Http\Requests\Supports\Rules\RagioneSocialeRules;
 use App\Http\Requests\Supports\Rules\TipologiaRules;
 use App\Http\Requests\Supports\Rules\VenditaRules;
+use App\Http\Requests\Supports\Messages\DettaglioDomandaRules;
+use App\Http\Requests\Supports\Messages\DomandaRispostaRules;
+
 
 // Messages
 use App\Http\Requests\Supports\Messages\AddettoMessages;
@@ -29,6 +32,9 @@ use App\Http\Requests\Supports\Messages\PagamentoMessages;
 use App\Http\Requests\Supports\Messages\RagioneSocialeMessages;
 use App\Http\Requests\Supports\Messages\TipologiaMessages;
 use App\Http\Requests\Supports\Messages\VenditaMessages;
+use App\Http\Requests\Supports\Messages\DettaglioDomandaMessages;
+use App\Http\Requests\Supports\Messages\DomandaRispostaMessages;
+
 
 class StoreVenditaRequest extends FormRequest
 {
@@ -51,7 +57,9 @@ class StoreVenditaRequest extends FormRequest
                 PagamentoRules::rules(),
                 RagioneSocialeRules::rules(),
                 TipologiaRules::rules(),
-                VenditaRules::rules()
+                VenditaRules::rules(),
+                DettaglioDomandaRules::rules(),
+                DomandaRispostaRules::rules()
             ]
         );
     }
@@ -70,7 +78,9 @@ class StoreVenditaRequest extends FormRequest
                 PagamentoMessages::messages(),
                 RagioneSocialeMessages::messages(),
                 TipologiaMessages::messages(),
-                VenditaMessages::messages()
+                VenditaMessages::messages(),
+                DettaglioDomandaMessages::messages(),
+                DomandaRispostaMessages::messages()
             ]
         );
     }
