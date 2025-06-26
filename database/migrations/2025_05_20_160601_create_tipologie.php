@@ -21,7 +21,7 @@ return new class extends Migration
                 ->onDelete('cascade');
 
             $table->timestamps();
-            $table->string('tipologia', 30);
+            $table->string('tipologia', 255);
         });
     }
 
