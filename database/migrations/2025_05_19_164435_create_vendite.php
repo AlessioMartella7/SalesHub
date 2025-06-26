@@ -47,6 +47,8 @@ return new class extends Migration
 
             $table->decimal('totale', $precision = 20, $scale = 2);
             $table->decimal('totale_imponibile', $precision = 20, $scale = 2);
+
+            $table->unique(['codice_esterno', 'attivita_id']);
         });
     }
 

@@ -130,6 +130,8 @@
 
                             @php
                                 $dettaglioArticolo = $articolo->articoloDettaglio;
+
+                                // Raggruppo per domanda_id
                                 $rispostePerDomanda = $dettaglioArticolo->risposte->groupBy(function ($risposta) {
                                     return $risposta->domanda->id ?? null;
                                 });
@@ -139,6 +141,7 @@
                                 <li><strong>Step Vendita:</strong>
                                     <ul>
                                         @foreach ($rispostePerDomanda as $domandaId => $risposte)
+                                            {{-- Recupero l'oggetto Domanda alla quale la prima risposta nella collection appartiene tramite relazione --}}
                                             @php $domanda = $risposte->first()->domanda; @endphp
                                             <li>
                                                 <strong>{{ $domanda->testo ?? 'Domanda non trovata' }}</strong>

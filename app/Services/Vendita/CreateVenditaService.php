@@ -3,6 +3,7 @@
 namespace App\Services\Vendita;
 
 use App\Models\Vendita;
+use App\Models\Attivita;
 use Illuminate\Support\Facades\DB;
 
 // import dei sub services
@@ -42,6 +43,15 @@ class CreateVenditaService
 
     public function handle(array $data): Vendita
     {
+        $attivita = Attivita::where('codice_esterno', $data['attivita']['codice_esterno'])->first();
+
+        if (
+            $attivita && Vendita::where('codice_esterno', $data['vendita']['info']['codice_esterno'])
+            ->where('attivita_id', $attivita->id)->exists()
+        ) {
+            throw new \Exception("Vendita già esistente per questo codice e attività.");
+        }
+
         return DB::transaction(function () use ($data) {
             // Creo Organizzazione + RagioneSociale + Attività
             $organizzazione = $this->organizzazioneService->create($data['organizzazione']);
