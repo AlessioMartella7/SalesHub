@@ -128,8 +128,6 @@
                                 {{ $dettaglioArticolo->vendita_info5 ?? '-' }}
                             </li>
 
-                            {{-- ...altri <li> dettagli... --}}
-
                             @php
                                 $dettaglioArticolo = $articolo->articoloDettaglio;
                                 $rispostePerDomanda = $dettaglioArticolo->risposte->groupBy(function ($risposta) {
@@ -147,7 +145,7 @@
                                                 <ul>
                                                     @foreach ($risposte as $risposta)
                                                         <li>
-                                                            <span class="text-success">{{ $risposta->risposta }}</span>
+                                                            <span>{{ $risposta->risposta }}</span>
                                                         </li>
                                                     @endforeach
                                                 </ul>
