@@ -49,7 +49,7 @@
                 </tr>
 
                 @php
-                    $dettaglio = $articolo->articoloDettaglio;
+                    $dettaglioArticolo = $articolo->articoloDettaglio;
                 @endphp
 
                 {{-- Riga dei dettagli espandibile --}}
@@ -59,74 +59,103 @@
                         <ul class="mb-0">
 
                             <li><strong>Tipologia Vendita:</strong>
-                                {{ $dettaglio->tipologia_vendita ?? '-' }}
+                                {{ $dettaglioArticolo->tipologia_vendita ?? '-' }}
                             </li>
 
                             <li><strong>Canone:</strong>
-                                {{ $dettaglio->canone ?? '-' }} €
+                                {{ $dettaglioArticolo->canone ?? '-' }} €
                             </li>
 
                             <li><strong>Prezzo:</strong>
-                                {{ $dettaglio->prezzo ?? '-' }} €
+                                {{ $dettaglioArticolo->prezzo ?? '-' }} €
                             </li>
 
                             <li><strong>Aliquota Prezzo:</strong>
-                                {{ $dettaglio->aliquota_prezzo ?? '-' }} €
+                                {{ $dettaglioArticolo->aliquota_prezzo ?? '-' }} €
                             </li>
 
                             <li><strong>Natura:</strong>
-                                {{ $dettaglio->natura ?? '-' }}
+                                {{ $dettaglioArticolo->natura ?? '-' }}
                             </li>
 
                             <li><strong>Importo Imponibile:</strong>
-                                {{ $dettaglio->importo_imponibile ?? '-' }} €
+                                {{ $dettaglioArticolo->importo_imponibile ?? '-' }} €
                             </li>
 
                             <li><strong>Sconto:</strong>
-                                {{ $dettaglio->sconto ?? '-' }} €
+                                {{ $dettaglioArticolo->sconto ?? '-' }} €
                             </li>
                             <li><strong>Sconto Iva Esclusa:</strong>
-                                {{ $dettaglio->sconto_iva_esclusa ?? '-' }} €
+                                {{ $dettaglioArticolo->sconto_iva_esclusa ?? '-' }} €
                             </li>
 
                             <li><strong>Importo Anticipo:</strong>
-                                {{ $dettaglio->importo_anticipo ?? '-' }} €
+                                {{ $dettaglioArticolo->importo_anticipo ?? '-' }} €
                             </li>
 
                             <li><strong>Importo Finanziato:</strong>
-                                {{ $dettaglio->importo_finanziato ?? '-' }} €
+                                {{ $dettaglioArticolo->importo_finanziato ?? '-' }} €
                             </li>
 
                             <li><strong>Importo Credito:</strong>
-                                {{ $dettaglio->importo_credito ?? '-' }} €
+                                {{ $dettaglioArticolo->importo_credito ?? '-' }} €
                             </li>
                             <li><strong>Importo NDC:</strong>
-                                {{ $dettaglio->importo_ndc ?? '-' }} €
+                                {{ $dettaglioArticolo->importo_ndc ?? '-' }} €
                             </li>
 
                             <li><strong>Importo Scontrino:</strong>
-                                {{ $dettaglio->importo_scontrino ?? '-' }} €
+                                {{ $dettaglioArticolo->importo_scontrino ?? '-' }} €
                             </li>
 
                             <li><strong>Importo Info 1:</strong>
-                                {{ $dettaglio->vendita_info1 ?? '-' }}
+                                {{ $dettaglioArticolo->vendita_info1 ?? '-' }}
                             </li>
 
                             <li><strong>Importo Info 2:</strong>
-                                {{ $dettaglio->vendita_info2 ?? '-' }}
+                                {{ $dettaglioArticolo->vendita_info2 ?? '-' }}
                             </li>
 
                             <li><strong>Importo Info 3:</strong>
-                                {{ $dettaglio->vendita_info3 ?? '-' }}
+                                {{ $dettaglioArticolo->vendita_info3 ?? '-' }}
                             </li>
 
                             <li><strong>Importo Info 4:</strong>
-                                {{ $dettaglio->vendita_info4 ?? '-' }}
+                                {{ $dettaglioArticolo->vendita_info4 ?? '-' }}
                             </li>
 
                             <li><strong>Importo Info 5:</strong>
-                                {{ $dettaglio->vendita_info5 ?? '-' }}
+                                {{ $dettaglioArticolo->vendita_info5 ?? '-' }}
                             </li>
+
+                            {{-- ...altri <li> dettagli... --}}
+
+                            @php
+                                $dettaglioArticolo = $articolo->articoloDettaglio;
+                                $rispostePerDomanda = $dettaglioArticolo->risposte->groupBy(function ($risposta) {
+                                    return $risposta->domanda->id ?? null;
+                                });
+                            @endphp
+
+                            @if ($rispostePerDomanda->count())
+                                <li><strong>Step Vendita:</strong>
+                                    <ul>
+                                        @foreach ($rispostePerDomanda as $domandaId => $risposte)
+                                            @php $domanda = $risposte->first()->domanda; @endphp
+                                            <li>
+                                                <strong>{{ $domanda->testo ?? 'Domanda non trovata' }}</strong>
+                                                <ul>
+                                                    @foreach ($risposte as $risposta)
+                                                        <li>
+                                                            <span class="text-success">{{ $risposta->risposta }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @endif
                         </ul>
                     </td>
                 </tr>

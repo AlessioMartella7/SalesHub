@@ -24,7 +24,9 @@ class VenditaController extends Controller
             'attivita',
             'attivita.ragioneSociale.organizzazione',
             'articoli',
-            'pagamento'
+            'articoli.articoloDettaglio.risposte.domanda',
+            'pagamento',
+            'domande'
         ]);
 
         if ($codice = request('codice_esterno')) {
