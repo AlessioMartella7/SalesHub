@@ -26,7 +26,6 @@ class VenditaController extends Controller
             'articoli',
             'articoli.articoloDettaglio.risposte.domanda',
             'pagamento',
-            'domande'
         ]);
 
         if ($codice = request('codice_esterno')) {
