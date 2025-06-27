@@ -4,7 +4,7 @@
         <thead>
             <tr class="fw-bold fs-4 text-center">
                 <th colspan="13" class="table-secondary border-dark">
-                    Articoli
+                    <h3>Articoli</h3>
                 </th>
             </tr>
             <tr class="fw-bold fs-5 text-center table-light border-dark ">
@@ -55,8 +55,9 @@
                 {{-- Riga dei dettagli espandibile --}}
                 <tr class="collapse" id="collapse-{{ $index }}">
                     <td colspan="13" class="bg-light text-start">
-                        <strong>Dettagli Aggiuntivi:</strong><br>
-                        <ul class="mb-0">
+                        <h5 class="fw-bold">Dettagli Aggiuntivi:</h5>
+
+                        <ul class="mb-0 my-2">
 
                             <li><strong>Tipologia Vendita:</strong>
                                 {{ $dettaglioArticolo->tipologia_vendita ?? '-' }}
@@ -137,27 +138,27 @@
                                 });
                             @endphp
 
-                            @if ($rispostePerDomanda->count())
-                                <li><strong>Step Vendita:</strong>
-                                    <ul>
-                                        @foreach ($rispostePerDomanda as $domandaId => $risposte)
-                                            {{-- Recupero l'oggetto Domanda alla quale la prima risposta nella collection appartiene tramite relazione --}}
-                                            @php $domanda = $risposte->first()->domanda; @endphp
-                                            <li>
-                                                <strong>{{ $domanda->testo ?? 'Domanda non trovata' }}</strong>
-                                                <ul>
-                                                    @foreach ($risposte as $risposta)
-                                                        <li>
-                                                            <span>{{ $risposta->risposta }}</span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
                         </ul>
+
+                        @if ($rispostePerDomanda->count())
+                            <h5 class="my-2 fw-bold">Step di Vendita:</h5>
+                            <ul>
+                                @foreach ($rispostePerDomanda as $domandaId => $risposte)
+                                    {{-- Recupero l'oggetto Domanda alla quale la prima risposta nella collection appartiene tramite relazione --}}
+                                    @php $domanda = $risposte->first()->domanda; @endphp
+                                    <li>
+                                        <strong>{{ $domanda->testo ?? 'Domanda non trovata' }}</strong>
+                                        <ul>
+                                            @foreach ($risposte as $risposta)
+                                                <li>
+                                                    <span>{{ $risposta->risposta }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </td>
                 </tr>
             @endforeach

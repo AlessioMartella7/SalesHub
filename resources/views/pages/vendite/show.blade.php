@@ -20,12 +20,10 @@
                             {{ $vendita->codice_esterno }}
                         </h2>
 
-                        <div class="my-4">
-                            <h5>
-                                "{{ $vendita->attivita->ragioneSociale->organizzazione->subdir }}" -
-                                "{{ $vendita->attivita->ragioneSociale->azienda }}" -
-                                "{{ $vendita->attivita->nominativo }}"
-                            </h5>
+                        <div class="my-4 fs-5 fw-bold">
+                            "{{ $vendita->attivita->ragioneSociale->organizzazione->subdir }}" -
+                            "{{ $vendita->attivita->ragioneSociale->azienda }}" -
+                            "{{ $vendita->attivita->nominativo }}"
                         </div>
                     </div>
 
@@ -34,7 +32,7 @@
                             <thead>
                                 <tr class="fw-bold fs-4 text-center ">
                                     <th colspan="5" class="table-secondary border-dark">
-                                        Dettagli
+                                        <h3>Dettagli</h3>
                                     </th>
                                 </tr>
                                 <tr class="fw-bold fs-5 text-center table-light border-dark ">

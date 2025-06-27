@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'BISuite Centralizzato')</title>
-
+    <meta name="description" content="@yield('meta_description', 'Gestione centralizzata vendite telefonia')">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 

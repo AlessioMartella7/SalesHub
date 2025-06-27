@@ -8,7 +8,7 @@
         <thead>
             <tr class="fw-bold fs-4 text-center">
                 <th colspan="7" class="table-secondary border-dark">
-                    Addetto
+                    <h3>Addetto</h3>
                 </th>
             </tr>
             <tr class="fw-bold fs-5 text-center table-light border-dark">
