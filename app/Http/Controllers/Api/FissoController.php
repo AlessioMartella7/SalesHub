@@ -13,12 +13,10 @@ class FissoController extends Controller
      */
     public function index()
     {
-        $fissi = Fisso::all();
 
-        return response()->json([
-            'message' => 'success',
-            'data' => $fissi
-        ]);
+        $fissi = Fisso::orderBy('id', 'asc')->paginate(50);
+
+        return response()->json($fissi, 200);
     }
 
     /**

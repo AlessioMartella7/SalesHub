@@ -31,5 +31,5 @@ Route::middleware('auth:api')
     ->prefix('fissi')
     ->name('fissi.')
     ->group(function () {
-        Route::get('/', 'index')->name('index');
+        Route::get('/', 'index')->name('api.index');
     });
