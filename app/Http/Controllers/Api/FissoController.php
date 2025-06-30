@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Fisso;
 use Illuminate\Http\Request;
 
 class FissoController extends Controller
@@ -12,7 +13,12 @@ class FissoController extends Controller
      */
     public function index()
     {
-        //
+        $fissi = Fisso::all();
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $fissi
+        ]);
     }
 
     /**
