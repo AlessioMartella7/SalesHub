@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RedirectIfAuthenticated::redirectUsing(fn () => route('vendite.index'));
+        RedirectIfAuthenticated::redirectUsing(fn() => route('vendite.index'));
 
         Paginator::useBootstrap();
 
@@ -32,8 +32,9 @@ class AppServiceProvider extends ServiceProvider
         Passport::personalAccessTokensExpireIn(CarbonInterval::days(30));
 
         Passport::tokensCan([
-        'vendita:create' => 'Create a new vendita',
-        'vendita:read' => 'Retrive vendita info'
-    ]);
+            'vendita:create' => 'Create a new vendita',
+            'read' => 'Retrive info',
+
+        ]);
     }
 }

@@ -26,7 +26,7 @@ Route::middleware(['auth:api', CheckToken::using('vendita:create')]) // Reinseri
 
 // Rotte API Fissi
 
-Route::middleware('auth:api')
+Route::middleware(['auth:api', CheckToken::using('read')])
     ->controller(FissoController::class)
     ->prefix('fissi')
     ->name('fissi.')
