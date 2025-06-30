@@ -14,7 +14,17 @@ class FissoController extends Controller
     public function index()
     {
 
-        $fissi = Fisso::orderBy('id', 'asc')->paginate(50);
+        $query = Fisso::query();
+
+        if (filled(request('codice_contratto'))) {
+            $query->where('codice_contratto', request('codice_contratto'));
+        }
+
+        if (filled(request('codice_pdv'))) {
+            $query->where('codice_pdv', request('codice_pdv'));
+        }
+
+        $fissi = $query->orderBy('id', 'asc')->paginate(50);
 
         return response()->json($fissi, 200);
     }
