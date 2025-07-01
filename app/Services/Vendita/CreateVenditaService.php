@@ -66,7 +66,7 @@ class CreateVenditaService
             $cliente = $this->clienteService->create($data['cliente']);
 
             // Creo Vendita
-            $vendita = $this->venditaEntityService->create($data['vendita']['info'], $cliente, $addetto, $attivita);
+            $vendita = $this->venditaEntityService->create($data['vendita']['info'], $cliente, $addetto, $attivita, $organizzazione);
 
             // Creo gli articoli e i dettagli, collegandoli direttamente alla vendita
             foreach ($data['articoli'] as $item) {

@@ -16,6 +16,7 @@ class Vendita extends Model
     protected $table = 'vendite';
 
     protected $fillable = [
+        'organizzazione_id',
         'attivita_id',
         'cliente_id',
         'addetto_id',
