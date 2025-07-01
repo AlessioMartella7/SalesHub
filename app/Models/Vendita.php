@@ -32,6 +32,11 @@ class Vendita extends Model
         'totale_imponibile',
     ];
 
+    public function organizzazione(): BelongsTo
+    {
+        return $this->belongsTo(Organizzazione::class);
+    }
+
     public function attivita(): BelongsTo
     {
         return $this->belongsTo(Attivita::class);

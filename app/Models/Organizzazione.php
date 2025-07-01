@@ -23,4 +23,9 @@ class Organizzazione extends Model
     {
         return $this->hasMany(RagioneSociale::class);
     }
+
+    public function vendite(): HasMany
+    {
+        return $this->hasMany(Vendita::class);
+    }
 }
