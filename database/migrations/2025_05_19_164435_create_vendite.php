@@ -16,6 +16,11 @@ return new class extends Migration
             //Primary Key
             $table->id();
 
+            //fk Organizzazioni
+            $table->foreignId('organizzazione_id')->constrained('organizzazioni')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
             //fk pdv
             $table->foreignId('attivita_id')->constrained('attivita')
                 ->onUpdate('cascade')
@@ -48,7 +53,6 @@ return new class extends Migration
             $table->decimal('totale', $precision = 20, $scale = 2);
             $table->decimal('totale_imponibile', $precision = 20, $scale = 2);
 
-            $table->unique(['codice_esterno', 'attivita_id']);
         });
     }
 
