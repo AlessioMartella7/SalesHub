@@ -43,20 +43,21 @@ class CreateVenditaService
 
     public function handle(array $data): Vendita
     {
-        $attivita = Attivita::where('codice_esterno', $data['attivita']['codice_esterno'])->first();
-
-        if (
-            $attivita && Vendita::where('codice_esterno', $data['vendita']['info']['codice_esterno'])
-            ->where('attivita_id', $attivita->id)->exists()
-        ) {
-            throw new \Exception("Vendita già esistente per questo codice e attività.");
-        }
-
         return DB::transaction(function () use ($data) {
             // Creo Organizzazione + RagioneSociale + Attività
             $organizzazione = $this->organizzazioneService->create($data['organizzazione']);
             $ragioneSociale = $this->ragioneSocialeService->create($data['ragione_sociale'], $organizzazione);
             $attivita = $this->attivitaService->create($data['attivita'], $ragioneSociale);
+
+            // Controllo esistenza Vendita SOLO per questa organizzazione
+            if (Vendita::where('codice_esterno', $data['vendita']['info']['codice_esterno'])
+                ->where('attivita_id', $attivita->id)
+                ->where('organizzazione_id', $organizzazione->id)
+                ->where('ragione_sociale_id', $ragioneSociale->id)
+                ->exists()
+            ) {
+                throw new \Exception("Vendita già esistente per questa attività e organizzazione.");
+            }
 
             // Creo Addetto
             $addetto = $this->addettoService->create($data['addetto']);
@@ -66,7 +67,7 @@ class CreateVenditaService
             $cliente = $this->clienteService->create($data['cliente']);
 
             // Creo Vendita
-            $vendita = $this->venditaEntityService->create($data['vendita']['info'], $cliente, $addetto, $attivita, $organizzazione);
+            $vendita = $this->venditaEntityService->create($data['vendita']['info'], $cliente, $addetto, $attivita, $ragioneSociale, $organizzazione);
 
             // Creo gli articoli e i dettagli, collegandoli direttamente alla vendita
             foreach ($data['articoli'] as $item) {

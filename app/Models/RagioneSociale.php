@@ -33,4 +33,9 @@ class RagioneSociale extends Model
     {
         return $this->hasMany(Attivita::class);
     }
+
+    public function vendite(): HasMany
+    {
+        return $this->hasMany(Vendita::class);
+    }
 }

@@ -21,8 +21,8 @@
                         </h2>
 
                         <div class="my-4 fs-5 fw-bold">
-                            "{{ $vendita->attivita->ragioneSociale->organizzazione->subdir }}" -
-                            "{{ $vendita->attivita->ragioneSociale->azienda }}" -
+                            "{{ $vendita->organizzazione->subdir }}" -
+                            "{{ $vendita->ragioneSociale->azienda }}" -
                             "{{ $vendita->attivita->nominativo }}"
                         </div>
                     </div>

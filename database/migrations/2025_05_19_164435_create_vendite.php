@@ -18,21 +18,26 @@ return new class extends Migration
 
             //fk Organizzazioni
             $table->foreignId('organizzazione_id')->constrained('organizzazioni')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            //fk pdv
+            //fk Ragioni Sociali
+            $table->foreignId('ragione_sociale_id')->constrained('ragioni_sociali')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            //fk Attività
             $table->foreignId('attivita_id')->constrained('attivita')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            //fk clienti
-            $table->foreignId('cliente_id')->constrained('clienti')
+            //fk Addetti
+            $table->foreignId('addetto_id')->constrained('addetti')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            //fk addetti
-            $table->foreignId('addetto_id')->constrained('addetti')
+            //fk Clienti
+            $table->foreignId('cliente_id')->constrained('clienti')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -53,6 +58,7 @@ return new class extends Migration
             $table->decimal('totale', $precision = 20, $scale = 2);
             $table->decimal('totale_imponibile', $precision = 20, $scale = 2);
 
+            $table->unique(['codice_esterno', 'attivita_id', 'ragione_sociale_id', 'organizzazione_id'], 'unq_codice_att_ragsoc_org');
         });
     }
 

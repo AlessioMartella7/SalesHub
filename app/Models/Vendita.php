@@ -17,9 +17,10 @@ class Vendita extends Model
 
     protected $fillable = [
         'organizzazione_id',
+        'ragione_sociale_id',
         'attivita_id',
-        'cliente_id',
         'addetto_id',
+        'cliente_id',
         'codice_esterno',
         'stato',
         'flg_scontrino',
@@ -36,6 +37,11 @@ class Vendita extends Model
     public function organizzazione(): BelongsTo
     {
         return $this->belongsTo(Organizzazione::class);
+    }
+
+    public function ragioneSociale(): BelongsTo
+    {
+        return $this->belongsTo(RagioneSociale::class);
     }
 
     public function attivita(): BelongsTo
