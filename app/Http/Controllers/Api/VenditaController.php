@@ -40,13 +40,15 @@ class VenditaController extends Controller
                     'cliente',
                     'addetto',
                     'attivita',
-                    'attivita.ragioneSociale.organizzazione',
+                    'attivita',
+                    'ragioneSociale',
+                    'organizzazione',
                     'articoli',
                     'pagamento'
                 ]),
             ], 201);
         } catch (QueryException $e) {
-             // Gestione vincolo UNIQUE fallito (es. codice_esterno + attivita_id già esistenti)
+            // Gestione vincolo UNIQUE fallito (es. codice_esterno + attivita_id già esistenti)
             if (str_contains($e->getMessage(), 'UNIQUE') || $e->errorInfo[1] === 1062) {
                 return response()->json([
                     'message' => 'Vendita già esistente per questa attività.',
@@ -58,7 +60,6 @@ class VenditaController extends Controller
                 'message' => 'Errore di database durante la creazione della vendita.',
                 'error' => config('app.debug') ? $e->getMessage() : 'Errore DB.'
             ], 500);
-
         } catch (\Throwable $e) {
             report($e);
 

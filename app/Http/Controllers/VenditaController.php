@@ -23,7 +23,8 @@ class VenditaController extends Controller
             'cliente',
             'addetto',
             'attivita',
-            'attivita.ragioneSociale.organizzazione',
+            'ragioneSociale',
+            'organizzazione',
             'articoli',
             'articoli.articoloDettaglio.risposte.domanda',
             'pagamento',
@@ -66,12 +67,12 @@ class VenditaController extends Controller
             });
         }
         if ($ragioneSociale = request('ragione_sociale')) {
-            $query->whereHas('attivita.ragioneSociale', function ($q) use ($ragioneSociale) {
+            $query->whereHas('ragioneSociale', function ($q) use ($ragioneSociale) {
                 $q->where('azienda', 'like', "%$ragioneSociale%");
             });
         }
         if ($organizzazione = request('organizzazione')) {
-            $query->whereHas('attivita.ragioneSociale.organizzazione', function ($q) use ($organizzazione) {
+            $query->whereHas('organizzazione', function ($q) use ($organizzazione) {
                 $q->where('subdir', 'like', "%$organizzazione%");
             });
         }
@@ -105,7 +106,9 @@ class VenditaController extends Controller
                     'cliente',
                     'addetto',
                     'attivita',
-                    'attivita.ragioneSociale.organizzazione',
+                    'attivita',
+                    'ragioneSociale',
+                    'organizzazione',
                     'articoli',
                     'pagamento'
                 ]),
