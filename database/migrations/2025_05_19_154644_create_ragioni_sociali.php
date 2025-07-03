@@ -25,12 +25,14 @@ return new class extends Migration
             $table->timestamps();
 
             $table->integer('codice_esterno')->nullable(); //id_rs
-            $table->string('azienda', 150)->unique();
-
-            $table->string('partita_iva', 16)->unique();
+            $table->string('azienda', 150);
+            $table->string('partita_iva', 16);
             $table->string('codice_fiscale', 16);
             $table->string('email', 100)->nullable();
             $table->string('tel', 100)->nullable();
+
+            $table->unique(['azienda', 'organizzazione_id'], 'unq_azienda_organizzazione');
+            $table->unique(['partita_iva', 'organizzazione_id'], 'unq_piva_organizzazione');
         });
     }
 

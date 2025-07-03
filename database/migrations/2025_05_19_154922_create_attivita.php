@@ -38,6 +38,8 @@ return new class extends Migration
             $table->string('cap', 100)->nullable();
             $table->string('citta', 100)->nullable();
             $table->string('provincia', 100)->nullable();
+
+            $table->unique(['codice_esterno', 'ragione_sociale_id'], 'unq_codice_attivita_ragsoc');
         });
     }
 

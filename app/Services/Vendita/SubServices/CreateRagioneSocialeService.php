@@ -13,9 +13,10 @@ class CreateRagioneSocialeService
             [
                 'codice_esterno' => $data['codice_esterno'],
                 'azienda' => $data['azienda'],
-                'partita_iva' => $data['partita_iva']
+                'partita_iva' => $data['partita_iva'],
+                'organizzazione_id' => $organizzazione->id,
             ],
-            array_merge($data, ['organizzazione_id' => $organizzazione->id])
+            $data
         );
     }
 }
