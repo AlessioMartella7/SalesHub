@@ -52,6 +52,12 @@ class VenditaController extends Controller
             if (str_contains($e->getMessage(), 'UNIQUE') || $e->errorInfo[1] === 1062) {
                 return response()->json([
                     'message' => 'Vendita già esistente per questa attività.',
+                    'exception' => config('app.debug') ? [
+                        'message' => $e->getMessage(),
+                        'errorInfo' => $e->errorInfo,
+                        'code' => $e->getCode(),
+                        'trace' => $e->getTraceAsString(),
+                    ] : null,
                 ], 409); // 409 Conflict
             }
 
