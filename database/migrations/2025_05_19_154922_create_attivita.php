@@ -40,6 +40,8 @@ return new class extends Migration
             $table->string('provincia', 100)->nullable();
 
             $table->unique(['codice_esterno', 'ragione_sociale_id'], 'unq_codice_attivita_ragsoc');
+
+            $table->index(['codice_esterno', 'ragione_sociale_id']);
         });
     }
 

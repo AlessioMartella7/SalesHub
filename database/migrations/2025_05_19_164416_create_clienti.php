@@ -36,6 +36,8 @@ return new class extends Migration
             $table->string('codice_cliente_tim', 50)->nullable();
             $table->string('codice_cliente_fastweb', 50)->nullable();
             $table->string('codice_cliente_sky', 50)->nullable();
+
+            $table->index(['codice_esterno']);
         });
     }
 

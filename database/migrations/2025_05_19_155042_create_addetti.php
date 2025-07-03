@@ -26,6 +26,8 @@ return new class extends Migration
 
             $table->string('email', 100)->nullable();
             $table->string('numero_centralino', 10)->nullable();
+
+            $table->index(['codice_esterno']);
         });
     }
 

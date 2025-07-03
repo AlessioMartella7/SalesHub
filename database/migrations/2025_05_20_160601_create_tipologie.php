@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->timestamps();
             $table->string('tipologia', 255);
+
+            $table->index(['tipologia', 'categoria_id']);
         });
     }
 

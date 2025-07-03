@@ -33,6 +33,8 @@ return new class extends Migration
 
             $table->unique(['azienda', 'organizzazione_id'], 'unq_azienda_organizzazione');
             $table->unique(['partita_iva', 'organizzazione_id'], 'unq_piva_organizzazione');
+
+            $table->index(['codice_esterno', 'organizzazione_id']);
         });
     }
 

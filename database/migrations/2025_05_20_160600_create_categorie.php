@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('categoria', 30);
+
+            $table->index(['categoria']);
         });
     }
 
