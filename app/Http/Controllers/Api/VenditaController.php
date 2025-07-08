@@ -8,6 +8,8 @@ use App\Http\Requests\StoreVenditaRequest;
 use Illuminate\Http\JsonResponse;
 use App\Services\Vendita\CreateVenditaService;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\LazyCollection;
+use Illuminate\Support\Facades\Validator;
 
 class VenditaController extends Controller
 {
@@ -74,6 +76,52 @@ class VenditaController extends Controller
                 'error' => config('app.debug') ? $e->getMessage() : 'Errore interno.'
             ], 500);
         }
+    }
+
+    /**
+     * Store a batch of newly created resources in storage.
+     */
+    public function storeBatch(Request $request): JsonResponse
+    {
+        $vendite = LazyCollection::make(function () use ($request) {
+            foreach ($request->input('vendite', []) as $vendita) {
+                yield $vendita;
+            }
+        });
+
+        $rules = (new StoreVenditaRequest())->rules();
+        $messages = (new StoreVenditaRequest())->messages();
+
+        $errors = [];
+        $index = 0;
+
+        $vendite->each(function ($data) use ($rules, $messages, &$errors, &$index) {
+            $validator = Validator::make($data, $rules, $messages);
+
+            if ($validator->fails()) {
+                $errors[] = [
+                    'index' => $index,
+                    'validation_errors' => $validator->errors(),
+                ];
+            } else {
+                try {
+                    $this->createVenditaService->handle($validator->validated());
+                } catch (\Throwable $e) {
+                    $errors[] = [
+                        'index' => $index,
+                        'message' => $e->getMessage(),
+                    ];
+                }
+            }
+            $index++;
+        });
+
+        $status = empty($errors) ? 201 : 422;
+
+        return response()->json([
+            'message' => 'Elaborazione completata',
+            'errori' => $errors,
+        ], $status);
     }
 
     /**
