@@ -87,7 +87,7 @@ class VenditaController extends Controller
             foreach ($request->input('vendite', []) as $vendita) {
                 yield $vendita;
             }
-        });
+        })->chunk(100);
 
         $rules = (new StoreVenditaRequest())->rules();
         $messages = (new StoreVenditaRequest())->messages();
@@ -95,25 +95,27 @@ class VenditaController extends Controller
         $errors = [];
         $index = 0;
 
-        $vendite->each(function ($data) use ($rules, $messages, &$errors, &$index) {
-            $validator = Validator::make($data, $rules, $messages);
+        $vendite->each(function ($chunk) use ($rules, $messages, &$errors, &$index) {
+            foreach ($chunk as $data) {
+                $validator = \Illuminate\Support\Facades\Validator::make($data, $rules, $messages);
 
-            if ($validator->fails()) {
-                $errors[] = [
-                    'index' => $index,
-                    'validation_errors' => $validator->errors(),
-                ];
-            } else {
-                try {
-                    $this->createVenditaService->handle($validator->validated());
-                } catch (\Throwable $e) {
+                if ($validator->fails()) {
                     $errors[] = [
                         'index' => $index,
-                        'message' => $e->getMessage(),
+                        'validation_errors' => $validator->errors(),
                     ];
+                } else {
+                    try {
+                        $this->createVenditaService->handle($validator->validated());
+                    } catch (\Throwable $e) {
+                        $errors[] = [
+                            'index' => $index,
+                            'message' => $e->getMessage(),
+                        ];
+                    }
                 }
+                $index++;
             }
-            $index++;
         });
 
         $status = empty($errors) ? 201 : 422;
