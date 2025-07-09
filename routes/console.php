@@ -11,6 +11,4 @@ Artisan::command('inspire', function () {
 
 // Schedule per cancellare i token oauth scaduti
 
-Schedule::call(function () {
-    DB::table('oauth_access_tokens')->where('expires_at', '<', now())->delete();
-})->daily();
+Schedule::command('app:clear-expired-tokens')->daily();
