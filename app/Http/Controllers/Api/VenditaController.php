@@ -97,7 +97,7 @@ class VenditaController extends Controller
 
         $vendite->each(function ($chunk) use ($rules, $messages, &$errors, &$index) {
             foreach ($chunk as $data) {
-                $validator = \Illuminate\Support\Facades\Validator::make($data, $rules, $messages);
+                $validator = Validator::make($data, $rules, $messages);
 
                 if ($validator->fails()) {
                     $errors[] = [
