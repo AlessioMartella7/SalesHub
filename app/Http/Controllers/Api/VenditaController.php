@@ -87,7 +87,7 @@ class VenditaController extends Controller
             foreach ($request->input('vendite', []) as $vendita) {
                 yield $vendita;
             }
-        })->chunk(100);
+        })->chunk(300);
 
         $rules = (new StoreVenditaRequest())->rules();
         $messages = (new StoreVenditaRequest())->messages();
