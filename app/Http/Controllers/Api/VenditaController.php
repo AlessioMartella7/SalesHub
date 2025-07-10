@@ -8,8 +8,8 @@ use App\Http\Requests\StoreVenditaRequest;
 use Illuminate\Http\JsonResponse;
 use App\Services\Vendita\CreateVenditaService;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Facades\Validator;
+use App\Jobs\ProcessVenditeChunk;
 
 class VenditaController extends Controller
 {
@@ -83,47 +83,37 @@ class VenditaController extends Controller
      */
     public function storeBatch(Request $request): JsonResponse
     {
-        $vendite = LazyCollection::make(function () use ($request) {
-            foreach ($request->input('vendite', []) as $vendita) {
-                yield $vendita;
-            }
-        })->chunk(300);
-
+        $vendite = $request->input('vendite', []);
         $rules = (new StoreVenditaRequest())->rules();
         $messages = (new StoreVenditaRequest())->messages();
 
         $errors = [];
-        $index = 0;
+        $chunkSize = 1000;
 
-        $vendite->each(function ($chunk) use ($rules, $messages, &$errors, &$index) {
-            foreach ($chunk as $data) {
+        // Validazione
+
+        foreach (array_chunk($vendite, $chunkSize) as $chunk) {
+            $validChunk = [];
+            foreach ($chunk as $index => $data) {
                 $validator = Validator::make($data, $rules, $messages);
-
                 if ($validator->fails()) {
                     $errors[] = [
                         'index' => $index,
                         'validation_errors' => $validator->errors(),
                     ];
                 } else {
-                    try {
-                        $this->createVenditaService->handle($validator->validated());
-                    } catch (\Throwable $e) {
-                        $errors[] = [
-                            'index' => $index,
-                            'message' => $e->getMessage(),
-                        ];
-                    }
+                    $validChunk[] = $validator->validated();
                 }
-                $index++;
             }
-        });
-
-        $status = empty($errors) ? 201 : 422;
+            if (!empty($validChunk)) {
+                ProcessVenditeChunk::dispatch($validChunk);
+            }
+        }
 
         return response()->json([
-            'message' => 'Elaborazione completata',
+            'message' => 'Batch in elaborazione',
             'errori' => $errors,
-        ], $status);
+        ], 202);
     }
 
     /**
