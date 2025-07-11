@@ -88,7 +88,7 @@ class VenditaController extends Controller
         $messages = (new StoreVenditaRequest())->messages();
 
         $errors = [];
-        $chunkSize = 1000;
+        $chunkSize = 100;
 
         // Validazione
 
