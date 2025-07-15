@@ -26,7 +26,7 @@ class StoreImportRequest extends FormRequest
                 'required',
                 'file',
                 'mimes:xlsx,csv',
-                'max:2048'
+                'max:4096'
             ]
         ];
     }
@@ -37,7 +37,7 @@ class StoreImportRequest extends FormRequest
             'import_file.required' => 'Il file di importazione è obbligatorio. Per favore carica un file.',
             'import_file.file' => 'Il file caricato non è valido. Assicurati di caricare un file.',
             'import_file.mimes' => 'Il file deve essere di tipo .xlsx o .csv. Per favore, carica un file valido.',
-            'import_file.max' => 'Il file caricato è troppo grande. La dimensione massima consentita è 2 MB.',
+            'import_file.max' => 'Il file caricato è troppo grande. La dimensione massima consentita è 4 MB.',
         ];
     }
 }

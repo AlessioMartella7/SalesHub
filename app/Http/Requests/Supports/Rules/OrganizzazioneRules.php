@@ -8,8 +8,8 @@ class OrganizzazioneRules
     {
         return [
             'organizzazione.codice_esterno' => ['nullable', 'integer'],
-            'organizzazione.link' => ['nullable', 'string', 'max:50'],
-            'organizzazione.subdir' => ['nullable', 'string', 'max:50'],
+            'organizzazione.link' => ['nullable', 'string', 'max:255'],
+            'organizzazione.subdir' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unsignedInteger('codice_esterno')->unique()->nullable(); // id_istanza
-            $table->string('link', 50)->nullable();
-            $table->string('subdir', 50)->unique()->nullable();
+            $table->string('link', 255)->nullable();
+            $table->string('subdir', 255)->unique()->nullable();
 
             $table->index(['codice_esterno']);
             $table->index(['subdir']);

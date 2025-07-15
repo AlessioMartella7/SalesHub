@@ -1,4 +1,4 @@
-<div class="col-12 my-4">
+<div class="col-12 my-4 d-flex justify-content-center">
 
     <table class="table table-bordered border-dark">
         <thead>

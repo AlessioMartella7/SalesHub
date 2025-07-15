@@ -89,7 +89,8 @@
                     <thead>
                         @if ($vendite->count() > 0)
                             <p>Totale record: {{ $vendite->total() }}</p>
-                            <tr class="fw-bold fs-5 text-center">
+                            <tr class="fw-bold fs-5 text-center align-middle">
+                                <th>Organizzazione</th>
                                 <th>Codice Vendita</th>
                                 <th>Codice Cliente</th>
                                 <th>Codice Addetto</th>
@@ -105,7 +106,8 @@
                     </thead>
                     <tbody>
                         @forelse ($vendite as $vendita)
-                            <tr class="text-center">
+                            <tr class="text-center align-middle">
+                                <td>{{ $vendita->organizzazione->subdir ?? '-' }}</td>
                                 <td>{{ $vendita->codice_esterno }}</td>
                                 <td>{{ $vendita->cliente->codice_esterno ?? '-' }}</td>
                                 <td>{{ $vendita->addetto->codice_esterno ?? '-' }}</td>
