@@ -14,7 +14,7 @@ class AddettoRules
             'addetto.nome' => ['nullable', 'string', 'max:100'],
             'addetto.cognome' => ['nullable', 'string', 'max:100'],
             'addetto.email' => ['nullable', 'email', 'max:100'],
-            'addetto.numero_centralino' => ['nullable', 'string', 'max:10'],
+            'addetto.numero_centralino' => ['nullable', 'string', 'max:255'],
         ];
     }
 }
