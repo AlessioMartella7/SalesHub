@@ -139,4 +139,18 @@ class VenditaController extends Controller
     {
         //
     }
+
+    // Annulla vendita
+    public function annulla(string $id)
+    {
+        $vendita = Vendita::findOrFail($id);
+        $vendita->stato = 'ANNULLATA';
+        $vendita->save();
+
+        return response()->json([
+            'message' => 'Vendita Annullata',
+            'id' => $vendita->id,
+            'stato' => $vendita->stato,
+        ],200);
+    }
 }
