@@ -141,9 +141,8 @@ class VenditaController extends Controller
     }
 
     // Annulla vendita
-    public function annulla(string $id)
+    public function annulla(Vendita $vendita)
     {
-        $vendita = Vendita::findOrFail($id);
         $vendita->stato = 'ANNULLATA';
         $vendita->save();
 

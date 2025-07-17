@@ -23,7 +23,8 @@ Route::middleware(['auth:api', CheckToken::using('vendita:create')]) // Reinseri
     ->group(function () {
         Route::post('/', 'store')->name('store');
         Route::post('/batch', 'storeBatch')->name('store.batch');
-    });
+        Route::patch('/{vendita}/annulla', 'annulla')->name('annulla');
+        });
 
 // Rotte API Fissi
 
