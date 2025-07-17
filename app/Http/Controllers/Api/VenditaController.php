@@ -10,6 +10,7 @@ use App\Services\Vendita\CreateVenditaService;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use App\Jobs\ProcessVenditeChunk;
+use App\Models\Vendita;
 
 class VenditaController extends Controller
 {
