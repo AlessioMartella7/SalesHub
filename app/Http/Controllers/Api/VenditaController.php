@@ -38,7 +38,8 @@ class VenditaController extends Controller
             $vendita = $this->createVenditaService->handle($validatedRequest);
             return response()->json([
                 'message' => 'Vendita creata con successo.',
-                'data' => $vendita->load([
+                'id'=> $vendita->id,
+/*                 'data' => $vendita->load([
                     'cliente',
                     'addetto',
                     'attivita',
@@ -47,7 +48,7 @@ class VenditaController extends Controller
                     'organizzazione',
                     'articoli',
                     'pagamento'
-                ]),
+                ]), */
             ], 201);
         } catch (QueryException $e) {
             // Gestione vincolo UNIQUE fallito (es. codice_esterno + attivita_id già esistenti)
