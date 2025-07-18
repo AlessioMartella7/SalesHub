@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Addetto;
+use App\Models\Organizzazione;
 use App\Models\Vendita;
 use Illuminate\Auth\Access\Response;
 
@@ -65,8 +65,8 @@ class VenditaPolicy
         return false;
     }
 
-    public function annulla(Addetto $addetto, Vendita $vendita) : bool
+    public function annulla(Organizzazione $organizzazione, Vendita $vendita) : bool
     {
-        return $addetto->id === $vendita->addetto_id;
+        return $organizzazione->id === $vendita->organizzazione_id;
     }
 }

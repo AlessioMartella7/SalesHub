@@ -11,7 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use App\Jobs\ProcessVenditeChunk;
 use App\Models\Vendita;
-use App\Models\Addetto;
+use App\Models\Organizzazione;
 use App\Policies\VenditaPolicy;
 
 class VenditaController extends Controller
@@ -42,8 +42,8 @@ class VenditaController extends Controller
             return response()->json([
                 'message' => 'Vendita creata con successo.',
                 'id'=> $vendita->id,
-                'addetto_id' => $vendita->addetto_id,
-/*                 'data' => $vendita->load([
+                'organizzazione_id' => $vendita->organizzazione_id,
+                /*  'data' => $vendita->load([
                     'cliente',
                     'addetto',
                     'attivita',
@@ -149,13 +149,13 @@ class VenditaController extends Controller
 
 public function annulla(Request $request, Vendita $vendita)
 {
-    $addetto = Addetto::find($request->input('addetto_id'));
+    $organizzazione = Organizzazione::find($request->input('organizzazione_id'));
 
-    if (!$addetto) {
-        return response()->json(['message' => 'Addetto non trovato'], 403);
+    if (!$organizzazione) {
+        return response()->json(['message' => 'Organizzazione non trovata'], 403);
     }
 
-    if (!(new VenditaPolicy)->annulla($addetto, $vendita)) {
+    if (!(new VenditaPolicy)->annulla($organizzazione, $vendita)) {
         return response()->json(['message' => 'Non autorizzato ad annullare questa vendita'], 403);
     }
 
