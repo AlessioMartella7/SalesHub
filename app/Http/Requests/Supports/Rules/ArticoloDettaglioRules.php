@@ -21,7 +21,7 @@ class ArticoloDettaglioRules
             'articoli.*.dettaglio.importo_anticipo' => ['nullable', 'numeric', 'between:0,99999999999999999999.99'],
             'articoli.*.dettaglio.importo_finanziato' => ['nullable', 'numeric', 'between:0,99999999999999999999.99'],
             'articoli.*.dettaglio.importo_credito' => ['nullable', 'numeric', 'between:0,99999999999999999999.99'],
-            'articoli.*.dettaglio.importo_ndc' => ['nullable', 'numeric', 'between:0,99999999999999999999.99'],
+            'articoli.*.dettaglio.importo_ndc' => ['nullable', 'numeric'],
 
             'articoli.*.dettaglio.importo_scontrino' => ['nullable', 'numeric', 'between:0,99999999999999999999.99'],
 

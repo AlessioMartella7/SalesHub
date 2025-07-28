@@ -40,7 +40,6 @@ class ArticoloDettaglioMessages
             'articoli.*.dettaglio.importo_credito.between' => 'L\'importo credito deve essere compreso tra :min e :max.',
 
             'articoli.*.dettaglio.importo_ndc.numeric' => 'L\'importo NDC deve essere un numero valido.',
-            'articoli.*.dettaglio.importo_ndc.between' => 'L\'importo NDC deve essere compreso tra :min e :max.',
 
             'articoli.*.dettaglio.importo_scontrino.numeric' => 'L\'importo scontrino deve essere un numero valido.',
             'articoli.*.dettaglio.importo_scontrino.between' => 'L\'importo scontrino deve essere compreso tra :min e :max.',
