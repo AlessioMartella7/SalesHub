@@ -23,6 +23,8 @@ class User extends Authenticatable implements OAuthenticatable
         'name',
         'email',
         'password',
+        'organizzazione_id',
+        'google_id'
     ];
 
     /**
@@ -46,5 +48,10 @@ class User extends Authenticatable implements OAuthenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function organizzazione(): BelongsTo
+    {
+        return $this->belongsTo(Organizzazione::class, 'organizzazione_id');
     }
 }

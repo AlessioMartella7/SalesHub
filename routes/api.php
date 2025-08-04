@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\FissoController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\VenditaController;
+use App\Http\Middleware\GoogleTokenAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Middleware\CheckToken;
@@ -35,3 +36,7 @@ Route::middleware(['auth:api', CheckToken::using('read')])
     ->group(function () {
         Route::get('/', 'index')->name('api.index');
     });
+
+// Rotta PowerBI
+
+Route::middleware(GoogleTokenAuth::class)->get('/dati-utente', [PowerBIController::class, 'getDatiUtente']);

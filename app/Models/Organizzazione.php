@@ -28,4 +28,10 @@ class Organizzazione extends Model
     {
         return $this->hasMany(Vendita::class);
     }
+
+    public function utenti(): HasMany
+    {
+        return $this->hasMany(User::class, 'organizzazione_id');
+    }
+
 }
