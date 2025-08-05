@@ -39,4 +39,4 @@ Route::middleware(['auth:api', CheckToken::using('read')])
 
 // Rotta PowerBI
 
-Route::middleware(GoogleTokenAuth::class)->get('/dati-utente', [PowerBIController::class, 'getDatiUtente']);
+Route::middleware('google.token')->get('/dati-utente', [PowerBIController::class, 'getDatiUtente']);
