@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class GoogleTokenAuth
 {
@@ -28,6 +29,9 @@ class GoogleTokenAuth
         $response = Http::withToken($token)
             ->get('https://www.googleapis.com/oauth2/v3/userinfo');
 
+        // Log dell'intera risposta JSON di Google DA RIMUOVERE IN PRODUZIONE SOLO SCOPO TEST
+        Log::info('[PowerBI] User info da Google:', $response->json());
+
         if (!$response->successful()) {
             return response()->json(['error' => 'Token Google non valido'], 401);
         }
@@ -37,8 +41,24 @@ class GoogleTokenAuth
         $user = User::where('google_id', $googleUser['sub'])->first();
 
         if (!$user) {
+        // Se non lo trovo per google_id, provo a cercare per email
+            $user = User::where('email', $googleUser['email'])->first();
+
+            if ($user) {
+            // Se trovato per email, salvo google_id
+            $user->google_id = $googleUser['sub'];
+            $user->save();
+            } else {
+            // Qui puoi decidere se creare un nuovo utente o bloccare la richiesta
             return response()->json(['error' => 'Utente non registrato nel sistema'], 403);
         }
+    }
+        // LOG DA RIMUOVERE IN PRODUZIONE SOLO SCOPO TEST
+        Log::info('[PowerBI] Utente autenticato in Laravel:', [
+            'id' => $user->id,
+            'email' => $user->email,
+            'google_id' => $user->google_id,
+        ]);
 
         // Autentica l’utente per la durata della richiesta
         auth()->setUser($user);

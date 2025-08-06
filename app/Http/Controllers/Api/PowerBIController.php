@@ -14,7 +14,8 @@ class PowerBIController extends Controller
         return response()->json([
             'email' => $user->email,
             'nome' => $user->name,
-            'organizzazione' => $user->organizzazione->id,
+            'google_id' => $user->google_id,
+            'organizzazione' => optional($user->organizzazione)->id,
             'dati' => 'dati simulati da aggiungere in risposta',
         ]);
     }
