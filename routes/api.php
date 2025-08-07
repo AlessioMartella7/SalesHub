@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\FissoController;
+use App\Http\Controllers\api\PowerBIController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\VenditaController;
 use App\Http\Middleware\GoogleTokenAuth;
