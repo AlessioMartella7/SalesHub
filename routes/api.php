@@ -36,6 +36,7 @@ Route::middleware(['auth:api', CheckToken::using('read')])
     ->name('fissi.')
     ->group(function () {
         Route::get('/', 'index')->name('api.index');
+        Route::post('/check-date', 'checkLastUpdatedDate')->name('checkUpdate');
     });
 
 // Rotta PowerBI

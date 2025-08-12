@@ -64,7 +64,7 @@ class FissoController extends Controller
         //
     }
 
-    public function getLastUpdatedDate(Request $request){
+    public function checkLastUpdatedDate(Request $request){
 
         $codici = $request->input('codici_pdv');
 
