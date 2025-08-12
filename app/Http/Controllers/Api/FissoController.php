@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Fisso;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isArray;
+use function PHPUnit\Framework\isEmpty;
+
 class FissoController extends Controller
 {
     /**
@@ -59,5 +62,25 @@ class FissoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getLastUpdatedDate(Request $request){
+
+        $codici = $request->input('codici_pdv');
+
+        if(!is_array($codici) || empty($codici)){
+            return response()->json([
+                'error' => 'Il campo codici_pdv è obbligatorio e deve essere un array.'
+            ],422);
+        }
+
+        $ultimaDataAggiornata = Fisso::whereIn('codice_pdv', $codici)
+        ->selectRaw('codice_pdv, MAX(updated_at) as updated_at')
+        ->groupBy('codice_pdv')
+        ->pluck('updated_at', 'codice_pdv');
+
+        return response()->json([
+            'updated_at' => $ultimaDataAggiornata
+        ],200);
     }
 }
