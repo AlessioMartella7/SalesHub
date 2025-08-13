@@ -23,11 +23,14 @@ class FissoController extends Controller
             $query->where('codice_contratto', request('codice_contratto'));
         }
 
-        if (filled(request('codice_pdv'))) {
-            $query->where('codice_pdv', request('codice_pdv'));
-        }
+        $fissi = $query->orderBy('id', 'asc')->paginate(200);
 
-        $fissi = $query->orderBy('id', 'asc')->paginate(50);
+        if (filled(request('codice_pdv'))) {
+            $codici = explode(',', request('codice_pdv'));
+            $query->whereIn('codice_pdv', $codici);
+            $fissi = $query->orderBy('id', 'asc')->get();
+
+        }
 
         return response()->json($fissi, 200);
     }
