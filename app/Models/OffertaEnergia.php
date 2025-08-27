@@ -45,4 +45,8 @@ class OffertaEnergia extends Model
         'flg_fisso_voce_customer',
         'tipologia_prestazione',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
