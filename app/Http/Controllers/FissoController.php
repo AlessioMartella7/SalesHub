@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreImportRequest;
 use App\Models\Fisso;
-use App\Imports\FissiImport;
+use App\Imports\FissiImportToModel;
 use App\Jobs\FissiImportExcel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -45,6 +43,14 @@ class FissoController extends Controller
         return view('pages.fissi.index', compact('fissi'));
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(Fisso $fisso)
+    {
+        return view('pages.fissi.show', compact('fisso'));
+    }
+
     public function importForm()
     {
         return view('pages.fissi.import');
@@ -53,43 +59,47 @@ class FissoController extends Controller
     /** Import a new Excel file */
     public function import(StoreImportRequest $request)
     {
-
-        if ($request->input('import_type') !== 'fissi') {
-            return back()->withInput()->with('error', 'Hai selezionato un tipo non coerente con il file caricato (Fissi).');
-        }
-
         $file = $request->file('import_file');
-        $fileSize = $file->getSize();
-        $fileName = $file->hashName();
-        $userID =  $request->user()->id;
+        $userID = $request->user()->id;
 
-        // Percoso da dove il file viene salvato
-        $filePath = $file->storeAs('excels_files', $userID . $fileName);
+        // ✅ Verifica intestazione (codice_contratto)
+        try {
+            $data = Excel::toCollection(null, $file);
+            $firstRow = $data->first()?->first();
+            $firstHeader = strtolower(trim($firstRow[0] ?? ''));
 
-        // Percorso in cui si trova il file
-        $fullPath = storage_path('app/private/'. $filePath);
-                // Se il file è più piccolo di X
-        if ($fileSize < 200 * 1024) {
-            Excel::import(new FissiImport($userID),$fullPath );
-            // Elimina il file dopo l'importazione
-            Storage::delete($filePath);
-            $message = 'File caricato con successo';
-        } else {
-
-            // Avvia il job in coda
-            FissiImportExcel::dispatch($filePath, $userID, $fullPath);
-            $message = 'File importato con successo, caricamento in corso in background';
+            if ($firstHeader !== 'codice contratto') {
+                return back()
+                    ->withInput()
+                    ->with('error', 'Hai selezionato un file non valido per Fissi. La prima colonna deve essere "codice_contratto".');
+            }
+        } catch (\Throwable $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Errore nella lettura del file: ' . $e->getMessage());
         }
 
+        // ✅ Salvataggio file
+        $fileName = $file->hashName();
+        $filePath = $file->storeAs('excels_files', $userID . $fileName);
+        $fullPath = storage_path('app/private/' . $filePath);
 
-        return redirect()->route('fissi.import')->with('success', $message);
+        // ✅ Scelta tra import immediato o via job (in base alla dimensione)
+        if ($file->getSize() < 200 * 1024) {
+            Excel::import(new FissiImportToModel($userID), $fullPath);
+            Storage::delete($filePath);
+
+            return redirect()
+                ->route('fissi.import')
+                ->with('success', 'File caricato con successo.');
+        } else {
+            FissiImportExcel::dispatch($filePath, $userID, $fullPath);
+
+            return redirect()
+                ->route('fissi.import')
+                ->with('success', 'File importato con successo, caricamento in corso in background.');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Fisso $fisso)
-    {
-        return view('pages.fissi.show', compact('fisso'));
-    }
+
 }

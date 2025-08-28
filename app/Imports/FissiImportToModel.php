@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\Fisso;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
@@ -12,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithUpserts;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Carbon;
 
-class FissiImportToModel implements ToModel, WithUpserts, WithStartRow, WithBatchInserts, WithChunkReading, ShouldQueue
+class FissiImportToModel implements ToModel, WithUpserts, WithStartRow, WithBatchInserts, WithChunkReading
 {
 
     private int $userId;
