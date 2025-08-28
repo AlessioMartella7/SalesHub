@@ -5,32 +5,72 @@
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="text-center mt-5">
-                    <h1>Carica Fissi</h1>
+                    <h1>Importazione File</h1>
                 </div>
+
                 {{-- Form import Excel --}}
-                <div class="col-8 my-3 ">
-                    <form action="{{ route('fissi.import') }}" method="POST" enctype="multipart/form-data">
+                <div class="col-8 my-3">
+                    <form id="importForm" method="POST" enctype="multipart/form-data">
                         @csrf
+
+                        {{-- Seleziona tipo file --}}
                         <div class="form-group text-center fw-bold">
+                            <label for="import_type">Tipo di file da importare</label>
+                            <select name="import_type" id="import_type" class="form-control" required>
+                                <option value="">-- Seleziona tipo --</option>
+                                <option value="fissi">Fissi</option>
+                                <option value="energia">Energia</option>
+                            </select>
+                        </div>
+
+                        {{-- File --}}
+                        <div class="form-group text-center fw-bold mt-3">
                             <label for="import_file">Seleziona il file Excel (XLSX, CSV)</label>
                             <input type="file" name="import_file" class="form-control" id="import_file" required>
                         </div>
 
-                        {{-- Mostriamo gli errori in pagina dalla validazione --}}
+                        {{-- Errori --}}
                         @error('import_file')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
+                            <div class="alert alert-danger mt-2">{{ $message }}</div>
                         @enderror
 
-                        <button type="submit" class="btn btn-primary mt-3 ">Importa</button>
+                        @error('import_type')
+                            <div class="alert alert-danger mt-2">{{ $message }}</div>
+                        @enderror
+
+                        @if (session('error'))
+                            <div class="alert alert-danger mt-2">{{ session('error') }}</div>
+                        @endif
+
+                        @if (session('success'))
+                            <div class="alert alert-success mt-2">{{ session('success') }}</div>
+                        @endif
+
+                        <button type="submit" class="btn btn-primary mt-3">Importa</button>
                     </form>
                 </div>
-                @if (session('success'))
-                    <div class="col-12 alert alert-success">{{ session('success') }}</div>
-                @endif
-
             </div>
         </div>
     </main>
+@endsection
+
+@section('additional scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const importTypeSelect = document.getElementById('import_type');
+            const form = document.getElementById('importForm');
+
+            importTypeSelect.addEventListener('change', function() {
+                const tipo = this.value;
+
+                if (tipo === 'fissi') {
+                    form.action = "{{ route('fissi.import') }}";
+                } else if (tipo === 'energia') {
+                    form.action = "{{ route('energia.import') }}";
+                } else {
+                    form.action = "#"; // fallback
+                }
+            });
+        });
+    </script>
 @endsection

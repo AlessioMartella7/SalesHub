@@ -54,6 +54,10 @@ class FissoController extends Controller
     public function import(StoreImportRequest $request)
     {
 
+        if ($request->input('import_type') !== 'fissi') {
+            return back()->withInput()->with('error', 'Hai selezionato un tipo non coerente con il file caricato (Fissi).');
+        }
+
         $file = $request->file('import_file');
         $fileSize = $file->getSize();
         $fileName = $file->hashName();

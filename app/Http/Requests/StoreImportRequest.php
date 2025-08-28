@@ -27,6 +27,10 @@ class StoreImportRequest extends FormRequest
                 'file',
                 'mimes:xlsx,csv',
                 'max:4096'
+            ],
+            'import_type' => [
+                'required',
+                'in:fissi,energia'
             ]
         ];
     }
