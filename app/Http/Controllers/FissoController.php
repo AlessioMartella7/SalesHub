@@ -8,6 +8,7 @@ use App\Imports\FissiImportToModel;
 use App\Jobs\FissiImportExcel;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class FissoController extends Controller
 {
@@ -62,16 +63,19 @@ class FissoController extends Controller
         $file = $request->file('import_file');
         $userID = $request->user()->id;
 
-        // ✅ Verifica intestazione (codice_contratto)
+        // Efficient header check
         try {
-            $data = Excel::toCollection(null, $file);
-            $firstRow = $data->first()?->first();
-            $firstHeader = strtolower(trim($firstRow[0] ?? ''));
+            $reader = IOFactory::createReaderForFile($file->getPathname());
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file->getPathname());
+            $worksheet = $spreadsheet->getActiveSheet();
+            $firstRow = $worksheet->rangeToArray('A1:Z1', null, true, false, false)[0];
+            $firstHeader = strtolower(trim(reset($firstRow)));
 
             if ($firstHeader !== 'codice contratto') {
                 return back()
                     ->withInput()
-                    ->with('error', 'Hai selezionato un file non valido per Fissi. La prima colonna deve essere "codice_contratto".');
+                    ->with('error', 'Hai selezionato un file non valido per Fissi.');
             }
         } catch (\Throwable $e) {
             return back()

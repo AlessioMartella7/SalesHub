@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('codice_pdv', 255);
             $table->string('codice_contratto', 255);
             $table->integer('num_item_in_pdc')->nullable();
-            $table->string('codice_contratto_esterno', 255);
+            $table->string('codice_contratto_esterno', 255)->nullable();
             $table->date('dt_creazione_pdc')->nullable();
             $table->date('dt_acquisizione_pdc')->nullable();
             $table->date('dt_annullamento_pdc')->nullable();

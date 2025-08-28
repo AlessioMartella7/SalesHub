@@ -26,7 +26,7 @@ class StoreImportRequest extends FormRequest
                 'required',
                 'file',
                 'mimes:xlsx,csv',
-                'max:4096'
+                'max:10240'
             ],
             'import_type' => [
                 'required',

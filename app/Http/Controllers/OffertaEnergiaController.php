@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreImportRequest;
-use App\Jobs\OfferteImportExcelJob;
+use App\Jobs\OfferteEnergiaImportExcel;
 use App\Models\OffertaEnergia;
-use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class OffertaEnergiaController extends Controller
 {
@@ -14,16 +14,20 @@ class OffertaEnergiaController extends Controller
         $file = $request->file('import_file');
         $userID = $request->user()->id;
 
-        // ✅ Verifica intestazione (dealer_id)
+        // Efficient header check
         try {
-            $data = Excel::toCollection(null, $file);
-            $firstRow = $data->first()?->first();
+            $reader = IOFactory::createReaderForFile($file->getPathname());
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file->getPathname());
+            $worksheet = $spreadsheet->getActiveSheet();
+            $firstRowArray = $worksheet->rangeToArray('A1:Z1', null, false, false, false);
+            $firstRow = isset($firstRowArray[0]) ? $firstRowArray[0] : [];
             $firstHeader = strtolower(trim($firstRow[0] ?? ''));
 
-            if ($firstHeader !== 'dealer id') {
+            if ($firstHeader !== 'dealerid') {
                 return back()
                     ->withInput()
-                    ->with('error', 'Hai selezionato un file non valido per Energia. La prima colonna deve essere "dealer_id".');
+                    ->with('error', 'Hai selezionato un file non valido per Energia.');
             }
         } catch (\Throwable $e) {
             return back()
@@ -37,10 +41,10 @@ class OffertaEnergiaController extends Controller
         $fullPath = storage_path('app/private/' . $filePath);
 
         // ✅ Dispatch del job in coda
-        OfferteImportExcelJob::dispatch($filePath, $userID, $fullPath);
+        OfferteEnergiaImportExcel::dispatch($filePath, $userID, $fullPath);
 
         return redirect()
-            ->route('energia.import')
+            ->route('fissi.import')
             ->with('success', 'File importato con successo, caricamento in corso in background');
     }
         /**
