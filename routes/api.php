@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\FissoController;
+use App\Http\Controllers\Api\OffertaEnergiaController;
 use App\Http\Controllers\api\PowerBIController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\VenditaController;
@@ -38,7 +39,16 @@ Route::middleware(['auth:api', CheckToken::using('read')])
         Route::get('/', 'index')->name('api.index');
         Route::post('/check-date', 'checkLastUpdatedDate')->name('checkUpdate');
     });
+// Rotte API Energia
 
+Route::middleware(['auth:api', CheckToken::using('read')])
+    ->controller(OffertaEnergiaController::class)
+    ->prefix('energia')
+    ->name('energia.')
+    ->group(function () {
+        Route::get('/', 'index')->name('api.index');
+        Route::post('/check-date', 'checkLastUpdatedDate')->name('checkUpdate');
+    });
 // Rotta PowerBI
 
 Route::middleware('google.token')->get('/dati-utente', [PowerBIController::class, 'getDatiUtente']);
