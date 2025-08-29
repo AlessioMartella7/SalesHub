@@ -1,3 +1,4 @@
+{{-- resources/views/import/form.blade.php --}}
 @extends('layouts.main')
 
 @section('content')
@@ -8,12 +9,11 @@
                     <h1>Importazione File</h1>
                 </div>
 
-                {{-- Form import Excel --}}
                 <div class="col-8 my-3">
                     <form id="importForm" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        {{-- Seleziona tipo file --}}
+                        {{-- Select import type --}}
                         <div class="form-group text-center fw-bold">
                             <label for="import_type">Tipo di file da importare</label>
                             <select name="import_type" id="import_type" class="form-control" required>
@@ -23,13 +23,13 @@
                             </select>
                         </div>
 
-                        {{-- File --}}
+                        {{-- File input --}}
                         <div class="form-group text-center fw-bold mt-3">
                             <label for="import_file">Seleziona il file Excel (XLSX, CSV)</label>
                             <input type="file" name="import_file" class="form-control" id="import_file" required>
                         </div>
 
-                        {{-- Errori --}}
+                        {{-- Validation / Flash errors --}}
                         @error('import_file')
                             <div class="alert alert-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -63,13 +63,17 @@
             importTypeSelect.addEventListener('change', function() {
                 const tipo = this.value;
 
-                if (tipo === 'fissi') {
-                    form.action = "{{ route('fissi.import') }}";
-                } else if (tipo === 'energia') {
-                    form.action = "{{ route('energia.import') }}";
-                } else {
-                    form.action = "#"; // fallback
-                }
+                @php
+                    // Provide fallback routes for safety
+                    $routes = [
+                        'fissi' => route('fissi.import'),
+                        'energia' => route('energia.import'),
+                    ];
+                @endphp
+
+                const routes = @json($routes);
+
+                form.action = routes[tipo] ?? "#";
             });
         });
     </script>

@@ -102,15 +102,15 @@ class OfferteEnergiaImport implements ToModel, WithUpserts, WithBatchInserts, Wi
     private function formatDate($date)
     {
         try {
+            // Se è un numero, lo convertiamo da formato Excel
             if (is_numeric($date)) {
                 return Date::excelToDateTimeObject($date)->format('Y-m-d');
             }
-            if ($date && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $date)) {
-                return Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
-            }
-            return $date ?: null;
+
+            // Convertiamo direttamente la data in formato 'DD/MM/YYYY' in 'YYYY-MM-DD'
+            return Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
         } catch (\Exception $e) {
-            return null;
+            return null;  // Se c'è un errore, ritorna null
         }
     }
 }

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
 
-        <a class="navbar-brand" href="{{ route('fissi.import.form') }}">
+        <a class="navbar-brand" href="{{ route('import.form') }}">
             Import
         </a>
 

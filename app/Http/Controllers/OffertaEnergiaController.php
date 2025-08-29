@@ -9,6 +9,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class OffertaEnergiaController extends Controller
 {
+
     public function import(StoreImportRequest $request)
     {
         $file = $request->file('import_file');
@@ -44,7 +45,7 @@ class OffertaEnergiaController extends Controller
         OfferteEnergiaImportExcel::dispatch($filePath, $userID, $fullPath);
 
         return redirect()
-            ->route('fissi.import')
+            ->route('import.form')
             ->with('success', 'File importato con successo, caricamento in corso in background');
     }
         /**

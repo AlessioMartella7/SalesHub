@@ -52,11 +52,6 @@ class FissoController extends Controller
         return view('pages.fissi.show', compact('fisso'));
     }
 
-    public function importForm()
-    {
-        return view('pages.fissi.import');
-    }
-
     /** Import a new Excel file */
     public function import(StoreImportRequest $request)
     {
@@ -94,13 +89,13 @@ class FissoController extends Controller
             Storage::delete($filePath);
 
             return redirect()
-                ->route('fissi.import')
+                ->route('import.form')
                 ->with('success', 'File caricato con successo.');
         } else {
             FissiImportExcel::dispatch($filePath, $userID, $fullPath);
 
             return redirect()
-                ->route('fissi.import')
+                ->route('import.form')
                 ->with('success', 'File importato con successo, caricamento in corso in background.');
         }
     }

@@ -20,10 +20,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Rotta Import
+Route::middleware('auth')->get('/import', function () {
+    return view('import.form');
+})->name('import.form');
+
+
 // Rotte Fissi
 Route::middleware('auth')->prefix('fissi')->controller(FissoController::class)->name('fissi.')->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/import', 'importForm')->name('import.form');
     Route::post('/import', 'import')->name('import');
     Route::get('/{fisso}', 'show')->name('show');
 });
