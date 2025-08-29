@@ -9,6 +9,10 @@
             Fissi
         </a>
 
+        <a class="navbar-brand" href="{{ route('energia.index') }}">
+            Energia
+        </a>
+
         <a class="navbar-brand" href="{{ route('vendite.index') }}">
             Vendite
         </a>

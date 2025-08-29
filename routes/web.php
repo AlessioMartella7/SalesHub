@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\VenditaController;
 use App\Http\Controllers\FissoController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OffertaEnergiaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -21,10 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Rotta Import
-Route::middleware('auth')->get('/import', function () {
-    return view('import.form');
-})->name('import.form');
-
+Route::get('/import', [ImportController::class, 'form'])->middleware('auth')->name('import.form');
 
 // Rotte Fissi
 Route::middleware('auth')->prefix('fissi')->controller(FissoController::class)->name('fissi.')->group(function () {
