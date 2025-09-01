@@ -31,13 +31,14 @@
                         <table class="table table-bordered border-dark">
                             <thead>
                                 <tr class="fw-bold fs-4 text-center ">
-                                    <th colspan="5" class="table-secondary border-dark">
+                                    <th colspan="6" class="table-secondary border-dark">
                                         <h3>Dettagli</h3>
                                     </th>
                                 </tr>
                                 <tr class="fw-bold fs-5 text-center table-light border-dark ">
                                     <th>Data Inizio</th>
                                     <th>Data Fine</th>
+                                    <th>Data Scontrino</th>
                                     <th>Codice Lotteria</th>
                                     <th>Totale Imponibile</th>
                                     <th>Totale</th>
@@ -47,6 +48,7 @@
                                 <tr class="text-center">
                                     <td>{{ $vendita->data_inizio }}</td>
                                     <td>{{ $vendita->data_fine }}</td>
+                                    <td>{{ $vendita->data_scontrino ?? '-' }}</td>
                                     <td>{{ $vendita->codice_lotteria ?? '-' }}</td>
                                     <td>{{ $vendita->totale_imponibile }} €</td>
                                     <td>{{ $vendita->totale }} €</td>

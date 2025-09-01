@@ -91,13 +91,13 @@
                             <p>Totale record: {{ $vendite->total() }}</p>
                             <tr class="fw-bold fs-5 text-center align-middle">
                                 <th>Organizzazione</th>
+                                <th>Attività</th>
                                 <th>Codice Vendita</th>
                                 <th>Codice Cliente</th>
-                                <th>Codice Addetto</th>
                                 <th>Flg Scontrino</th>
                                 <th>Numero Scontrino</th>
-                                <th>Data Scontrino</th>
                                 <th>Data Vendita</th>
+                                <th>Data Fine</th>
                                 <th>Stato</th>
                                 <th>Totale</th>
                                 <th>Dettagli</th>
@@ -108,12 +108,12 @@
                         @forelse ($vendite as $vendita)
                             <tr class="text-center align-middle">
                                 <td>{{ $vendita->organizzazione->subdir ?? '-' }}</td>
+                                <td>{{ $vendita->attivita->nominativo ?? '-' }}</td>
                                 <td>{{ $vendita->codice_esterno }}</td>
                                 <td>{{ $vendita->cliente->codice_esterno ?? '-' }}</td>
-                                <td>{{ $vendita->addetto->codice_esterno ?? '-' }}</td>
                                 <td>{{ $vendita->flg_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->numero_scontrino ?? '-' }}</td>
-                                <td>{{ $vendita->data_scontrino ?? '-' }}</td>
+                                <td>{{ $vendita->data_fine ?? '-' }}</td>
                                 <td>{{ $vendita->data_vendita }}</td>
                                 <td>{{ $vendita->stato }}</td>
                                 <td>{{ $vendita->totale }}€</td>
