@@ -31,7 +31,7 @@ class FissoController extends Controller
         if (filled(request('codice_contratto')) || filled(request('codice_pdv'))){
             $fissi = $query->orderBy('id', 'asc')->get();
         } else {
-            $fissi = $query->orderBy('id', 'asc')->paginate(2);
+            $fissi = $query->orderBy('id', 'asc')->paginate(200);
         }
 
         return response()->json($fissi, 200);
