@@ -19,13 +19,15 @@ class OffertaEnergiaController extends Controller
             $query->where('codice_contratto', request('codice_contratto'));
         }
 
-        $offertaEnergia = $query->orderBy('id', 'asc')->paginate(200);
-
         if (filled(request('codice_pdv'))) {
             $codici = explode(',', request('codice_pdv'));
             $query->whereIn('codice_pdv', $codici);
-            $offertaEnergia = $query->orderBy('id', 'asc')->get();
+        }
 
+        if (filled(request('codice_contratto')) || filled(request('codice_pdv'))){
+            $offertaEnergia = $query->orderBy('id', 'asc')->get();
+        } else {
+            $offertaEnergia = $query->orderBy('id', 'asc')->paginate(200);
         }
 
         return response()->json($offertaEnergia, 200);
