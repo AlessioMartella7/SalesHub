@@ -3,6 +3,7 @@
 use App\Http\Controllers\VenditaController;
 use App\Http\Controllers\FissoController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\OffertaAssicurazioneController;
 use App\Http\Controllers\OffertaEnergiaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,13 @@ Route::middleware('auth')->prefix('energia')->controller(OffertaEnergiaControlle
     Route::get('/', 'index')->name('index');
     Route::post('/import', 'import')->name('import');
     Route::get('/{energia}', 'show')->name('show');
+});
+
+// Rotte Assicurazioni
+Route::middleware('auth')->prefix('assicurazioni')->controller(OffertaAssicurazioneController::class)->name('assicurazioni.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/import', 'import')->name('import');
+    Route::get('/{assicurazione}', 'show')->name('show');
 });
 
 // Rotte Vendite

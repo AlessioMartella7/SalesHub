@@ -20,6 +20,7 @@
                                 <option value="">-- Seleziona tipo --</option>
                                 <option value="fissi">Fissi</option>
                                 <option value="energia">Energia</option>
+                                <option value="assicurazioni">Assicurazioni</option>
                             </select>
                         </div>
 
@@ -68,6 +69,7 @@
                     $routes = [
                         'fissi' => route('fissi.import'),
                         'energia' => route('energia.import'),
+                        'assicurazioni' => route('assicurazioni.import'),
                     ];
                 @endphp
 

@@ -30,7 +30,7 @@ class StoreImportRequest extends FormRequest
             ],
             'import_type' => [
                 'required',
-                'in:fissi,energia'
+                'in:fissi,energia,assicurazioni'
             ]
         ];
     }

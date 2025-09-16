@@ -21,20 +21,22 @@ class OffertaAssicurazioneController extends Controller
     public function import(StoreImportRequest $request)
     {
         $file = $request
-            ->validated()
             ->file('import_file');
         $userID = $request->user()->id;
         $now = now();
 
         try {
             $name = $file->hashName();
-            $path = $file->storeAs('imports_excel', $userID, $name);
+            $path = $file->storeAs('imports_excel/' . $userID, $name);
             $fullPath = storage_path('app/private/' . $path);
 
             $spreadsheet = IOFactory::load($fullPath);
 
             $writer = IOFactory::createWriter($spreadsheet, 'Csv');
-            $csvPath = storage_path('app/private/imports_csv/' . $userID);
+            $csvPath = storage_path("app/private/imports_csv/{$userID}");
+                if (!is_dir($csvPath)) {
+                mkdir($csvPath, 0777, true);
+            }
             $csvFullPath = $csvPath . '/' . $name . '.csv';
             $writer->save($csvFullPath);
 
@@ -50,7 +52,13 @@ class OffertaAssicurazioneController extends Controller
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
 
-            while (($line = fgetcsv($handle)) !== false) {
+            while (($line = fgetcsv( $handle, 0, ',', '"')) !== false) {
+                    \Log::info('Line:', $line);
+    break;
+                if (empty(array_filter($line))) {
+                    continue; // salta righe vuote
+                }
+
                 $stmt->execute([
                     $line[0],  // codice_pdv
                     $line[1],  // codice_contratto
