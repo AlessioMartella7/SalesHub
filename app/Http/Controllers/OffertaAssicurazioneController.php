@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class OffertaAssicurazioneController extends Controller
@@ -24,7 +25,7 @@ class OffertaAssicurazioneController extends Controller
     {
         $file = $request
             ->file('import_file');
-        $now = now();
+        $now = now()->format('Y-m-d H:i:s');
         $userID = auth()->id();
 
         try {
@@ -49,7 +50,7 @@ class OffertaAssicurazioneController extends Controller
 
             // Leggo il file CSV
             $handle = fopen($csvFullPath, 'r');
-            fgetcsv($handle); // salta intestazione
+            fgets($handle); // salta intestazione
 
             // Preparo la query di inserimento
             $pdo = DB::connection()->getPdo();
@@ -65,6 +66,7 @@ class OffertaAssicurazioneController extends Controller
             $tasks = [];
 
             foreach ($csvLines as $csvSingleLine) {
+
                 $tasks[] = function () use ($stmt, $userID, $now, $csvSingleLine) {
                     try {
                         if(empty(array_filter($csvSingleLine))) {
@@ -89,20 +91,29 @@ class OffertaAssicurazioneController extends Controller
                             $now,
                             $now
                         ]);
+                        Log::info('importazione riga CSV avvenuta con successo: {{contratto: '.$csvSingleLine[1].'}}');
+                        return ['user_id' => $userID, 'status' => 'success', 'contratto' => $csvSingleLine[1]];
 
                     } catch (Throwable $e){
-
+                        Log::error('errore importazione riga CSV: {{contratto: '.$csvSingleLine[1].'}} - '.$e->getMessage());
+                        return ['user_id' => $userID, 'status' => 'failed', 'error'=> $e->getMessage()];
                     }
                 };
             }
-
             fclose($handle);
+
+            // Avvio la concorrenza
+            Concurrency::run($tasks, ['maxProcesses' => 10, 'timeout' => 300]);
+
+
         } catch (Throwable $e) {
-            return back()
-                ->withInput()
-                ->withErrors(['error' => 'Errore nella lettura del file: ' . $e->getMessage()]);
+        return back()
+            ->withInput()
+            ->withErrors(['error' => 'Errore nella lettura del file: ' . $e->getMessage()]);
         }
-        return back()->with('success', 'Importazione completata con successo.');
+        return redirect()
+            ->route('import.form')
+            ->with('success', 'File importato con successo');
     }
 
     /**
