@@ -7,6 +7,8 @@ use App\Models\OffertaAssicurazione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Concurrency;
+use Throwable;
 
 class OffertaAssicurazioneController extends Controller
 {
@@ -22,27 +24,34 @@ class OffertaAssicurazioneController extends Controller
     {
         $file = $request
             ->file('import_file');
-        $userID = $request->user()->id;
         $now = now();
+        $userID = auth()->id();
 
         try {
             $name = $file->hashName();
-            $path = $file->storeAs('imports_excel/' . $userID, $name);
+            $path = $file->storeAs('imports_excel/' . $name);
             $fullPath = storage_path('app/private/' . $path);
 
             $spreadsheet = IOFactory::load($fullPath);
 
+            // Converto il file in CSV
             $writer = IOFactory::createWriter($spreadsheet, 'Csv');
-            $csvPath = storage_path("app/private/imports_csv/{$userID}");
+
+            // Creo la cartella se non esiste
+            $csvPath = storage_path("app/private/imports_csv/{$name}");
                 if (!is_dir($csvPath)) {
                 mkdir($csvPath, 0777, true);
             }
+
+            // Salvo il file CSV
             $csvFullPath = $csvPath . '/' . $name . '.csv';
             $writer->save($csvFullPath);
 
+            // Leggo il file CSV
             $handle = fopen($csvFullPath, 'r');
             fgetcsv($handle); // salta intestazione
 
+            // Preparo la query di inserimento
             $pdo = DB::connection()->getPdo();
             $stmt = $pdo->prepare(
                 "INSERT INTO offerte_assicurazioni (
@@ -52,35 +61,43 @@ class OffertaAssicurazioneController extends Controller
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
 
-            while (($line = fgetcsv( $handle, 0, ',', '"')) !== false) {
-                    \Log::info('Line:', $line);
-    break;
-                if (empty(array_filter($line))) {
-                    continue; // salta righe vuote
-                }
+            $csvLines = fgetcsv($handle, 0, ',', '"');
+            $tasks = [];
 
-                $stmt->execute([
-                    $line[0],  // codice_pdv
-                    $line[1],  // codice_contratto
-                    $line[2],  // id_carrello
-                    $line[3],  // venditore
-                    $line[4],  // stato_contratto
-                    $line[5],  // attivato
-                    $line[6],  // metodo_pagamento
-                    $line[7],  // dt_inserimento
-                    $line[8],  // dt_primo_pagamento
-                    $line[9],  // dt_cancellazione
-                    $line[10], // categoria
-                    $line[11], // pacchetto
-                    $line[12], // esito_carrello
-                    $line[13], // causale_cancellazione
-                    $userID,
-                    $now,
-                    $now
-                ]);
+            foreach ($csvLines as $csvSingleLine) {
+                $tasks[] = function () use ($stmt, $userID, $now, $csvSingleLine) {
+                    try {
+                        if(empty(array_filter($csvSingleLine))) {
+                            return; // salta righe vuote
+                        }
+                        $stmt->execute([
+                            $csvSingleLine[0],  // codice_pdv
+                            $csvSingleLine[1],  // codice_contratto
+                            $csvSingleLine[2],  // id_carrello
+                            $csvSingleLine[3],  // venditore
+                            $csvSingleLine[4],  // stato_contratto
+                            $csvSingleLine[5],  // attivato
+                            $csvSingleLine[6],  // metodo_pagamento
+                            $csvSingleLine[7],  // dt_inserimento
+                            $csvSingleLine[8],  // dt_primo_pagamento
+                            $csvSingleLine[9],  // dt_cancellazione
+                            $csvSingleLine[10], // categoria
+                            $csvSingleLine[11], // pacchetto
+                            $csvSingleLine[12], // esito_carrello
+                            $csvSingleLine[13], // causale_cancellazione
+                            $userID,
+                            $now,
+                            $now
+                        ]);
+
+                    } catch (Throwable $e){
+
+                    }
+                };
             }
+
             fclose($handle);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return back()
                 ->withInput()
                 ->withErrors(['error' => 'Errore nella lettura del file: ' . $e->getMessage()]);
