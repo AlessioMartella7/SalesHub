@@ -7,7 +7,6 @@ use App\Models\OffertaAssicurazione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -38,19 +37,15 @@ class OffertaAssicurazioneController extends Controller
             // Converto il file in CSV
             $writer = IOFactory::createWriter($spreadsheet, 'Csv');
 
-            // Creo la cartella se non esiste
-            $csvPath = storage_path("app/private/imports_csv/{$name}");
-                if (!is_dir($csvPath)) {
-                mkdir($csvPath, 0777, true);
-            }
+            $csvPath = storage_path("app/private/imports_csv/");
 
             // Salvo il file CSV
-            $csvFullPath = $csvPath . '/' . $name . '.csv';
+            $csvFullPath = $csvPath . $name . '.csv';
             $writer->save($csvFullPath);
 
             // Leggo il file CSV
             $handle = fopen($csvFullPath, 'r');
-            fgets($handle); // salta intestazione
+            fgetcsv($handle); // salta intestazione
 
             // Preparo la query di inserimento
             $pdo = DB::connection()->getPdo();
@@ -59,52 +54,48 @@ class OffertaAssicurazioneController extends Controller
                     codice_pdv, codice_contratto, id_carrello, venditore, stato_contratto, attivato, metodo_pagamento,
                     dt_inserimento, dt_primo_pagamento, dt_cancellazione, categoria, pacchetto, esito_carrello,
                     causale_cancellazione, user_id, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    codice_pdv = VALUES(codice_pdv),
+                    id_carrello = VALUES(id_carrello),
+                    venditore = VALUES(venditore),
+                    stato_contratto = VALUES(stato_contratto),
+                    attivato = VALUES(attivato),
+                    metodo_pagamento = VALUES(metodo_pagamento),
+                    dt_inserimento = VALUES(dt_inserimento),
+                    dt_primo_pagamento = VALUES(dt_primo_pagamento),
+                    dt_cancellazione = VALUES(dt_cancellazione),
+                    categoria = VALUES(categoria),
+                    pacchetto = VALUES(pacchetto),
+                    esito_carrello = VALUES(esito_carrello),
+                    causale_cancellazione = VALUES(causale_cancellazione),
+                    user_id = VALUES(user_id),
+                    updated_at = VALUES(updated_at)"
             );
+            Log::debug('Prepared Statement: ' . $stmt->queryString);
+           while(($line = fgetcsv($handle)) !== false) {
+                $stmt->execute([
+                    $line[0], // codice_pdv
+                    $line[1], // codice_contratto
+                    $line[2], // id_carrello
+                    $line[3], // venditore
+                    $line[4], // stato_contratto
+                    $line[5], // attivato
+                    $line[6], // metodo_pagamento
+                    $line[7] ? date('Y-m-d H:i:s', strtotime($line[7])) : null, // dt_inserimento
+                    $line[8] ? date('Y-m-d H:i:s', strtotime($line[8])) : null, // dt_primo_pagamento
+                    $line[9] ? date('Y-m-d H:i:s', strtotime($line[9])) : null, // dt_cancellazione
+                    $line[10], // categoria
+                    $line[11], // pacchetto
+                    $line[12], // esito_carrello
+                    $line[13], // causale_cancellazione
+                    $userID,   // user_id
+                    $now,      // created_at
+                    $now       // updated_at
+                ]);
+           }
 
-            $csvLines = fgetcsv($handle, 0, ',', '"');
-            $tasks = [];
-
-            foreach ($csvLines as $csvSingleLine) {
-
-                $tasks[] = function () use ($stmt, $userID, $now, $csvSingleLine) {
-                    try {
-                        if(empty(array_filter($csvSingleLine))) {
-                            return; // salta righe vuote
-                        }
-                        $stmt->execute([
-                            $csvSingleLine[0],  // codice_pdv
-                            $csvSingleLine[1],  // codice_contratto
-                            $csvSingleLine[2],  // id_carrello
-                            $csvSingleLine[3],  // venditore
-                            $csvSingleLine[4],  // stato_contratto
-                            $csvSingleLine[5],  // attivato
-                            $csvSingleLine[6],  // metodo_pagamento
-                            $csvSingleLine[7],  // dt_inserimento
-                            $csvSingleLine[8],  // dt_primo_pagamento
-                            $csvSingleLine[9],  // dt_cancellazione
-                            $csvSingleLine[10], // categoria
-                            $csvSingleLine[11], // pacchetto
-                            $csvSingleLine[12], // esito_carrello
-                            $csvSingleLine[13], // causale_cancellazione
-                            $userID,
-                            $now,
-                            $now
-                        ]);
-                        Log::info('importazione riga CSV avvenuta con successo: {{contratto: '.$csvSingleLine[1].'}}');
-                        return ['user_id' => $userID, 'status' => 'success', 'contratto' => $csvSingleLine[1]];
-
-                    } catch (Throwable $e){
-                        Log::error('errore importazione riga CSV: {{contratto: '.$csvSingleLine[1].'}} - '.$e->getMessage());
-                        return ['user_id' => $userID, 'status' => 'failed', 'error'=> $e->getMessage()];
-                    }
-                };
-            }
             fclose($handle);
-
-            // Avvio la concorrenza
-            Concurrency::run($tasks, ['maxProcesses' => 10, 'timeout' => 300]);
-
 
         } catch (Throwable $e) {
         return back()
