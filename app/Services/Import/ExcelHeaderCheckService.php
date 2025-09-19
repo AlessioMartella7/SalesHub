@@ -1,19 +1,33 @@
 <?php
 
 namespace App\Services\Import;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class ExcelHeaderCheckService {
-    public function checkHeader(string $filePath, string $expectedHeader) : bool {
+class ExcelHeaderCheckService
+{
+    /**
+     * Controlla che il primo campo dell'header del CSV sia quello atteso.
+     * Ritorna true se corretto, false altrimenti.
+     */
+    public function checkHeaderFromCsv(string $csvPath, string $expectedHeader): bool
+    {
+        if (!file_exists($csvPath) || !is_readable($csvPath)) {
+            return false;
+        }
 
-            $reader = IOFactory::createReaderForFile($filePath);
-            $reader->setReadDataOnly(true);
-            $spreadsheet = $reader->load($filePath);
-            $worksheet = $spreadsheet->getActiveSheet();
-            $firstRowArray = $worksheet->rangeToArray('A1:Z1', null, false, false, false);
-            $firstRow = isset($firstRowArray[0]) ? $firstRowArray[0] : [];
-            $firstHeader = strtolower(trim($firstRow[0] ?? ''));
+        if (($handle = fopen($csvPath, 'r')) === false) {
+            return false;
+        }
 
-            return $firstHeader === strtolower($expectedHeader);
+        // Legge solo la prima riga
+        $headerRow = fgetcsv($handle);
+        fclose($handle);
+
+        if (!$headerRow || count($headerRow) === 0) {
+            return false;
+        }
+
+        $firstHeader = strtolower(trim($headerRow[0]));
+
+        return $firstHeader === strtolower(trim($expectedHeader));
     }
 }

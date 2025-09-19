@@ -46,18 +46,16 @@ class OffertaAssicurazioneController extends Controller
         $file->storeAs('imports_excel', $name);
         $filePath = storage_path('app/private/imports_excel/' . $name);
 
-        // Controllo l'header del file Excel
-        if (! $headerCheckService->checkHeader($filePath, $expectedHeader)) {
-            return back()
-                ->withInput()
-                ->with(['error' => 'Hai selezionato un file non valido per Assicurazioni.']);
-        }
-
         try {
 
         // Converto in CSV
         $csvFilePath = $excelToCsv->convert($filePath, $name);
 
+        if (! $headerCheckService->checkHeaderFromCsv($csvFilePath, $expectedHeader)) {
+            return back()
+                ->withInput()
+                ->with('error', 'Hai selezionato un file non valido per Assicurazioni.');
+        }
         // Importo a chunk
         $importer->import($csvFilePath, $userID, $now);
 
