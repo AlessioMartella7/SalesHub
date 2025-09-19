@@ -52,7 +52,13 @@ class OffertaAssicurazioneController extends Controller
             $importer->import($csvFilePath, $userID, $now);
 
             $duration = round(microtime(true) - $startTime, 2);
-            Log::info("Importazione completata in $duration secondi");
+
+            Log::info('Importazione file completata', [
+                'user_id'    => $userID,
+                'filename'   => $name,
+                'duration_s' => $duration,
+                'created_at' => $now,
+                ]);
 
         } catch (Throwable $e) {
             Log::error('Errore nell importazione del file: ' . $e->getMessage());
