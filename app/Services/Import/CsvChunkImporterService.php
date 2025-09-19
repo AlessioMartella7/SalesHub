@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use PDO;
 use Illuminate\Support\Facades\Log;
 
-class CsvChunkImporter
+class CsvChunkImporterService
 {
     private PDO $pdo;
     private int $batchSize;
