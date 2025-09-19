@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\Import\ExcelToCsvService;
 use App\Services\Import\CsvChunkImporter;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Throwable;
 
 class OffertaAssicurazioneController extends Controller
@@ -38,6 +38,26 @@ class OffertaAssicurazioneController extends Controller
         $now = now()->format('Y-m-d H:i:s');
         $userID = auth()->id();
         $startTime = microtime(true);
+
+        try {
+            $reader = IOFactory::createReaderForFile($file->getPathname());
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file->getPathname());
+            $worksheet = $spreadsheet->getActiveSheet();
+            $firstRowArray = $worksheet->rangeToArray('A1:Z1', null, false, false, false);
+            $firstRow = isset($firstRowArray[0]) ? $firstRowArray[0] : [];
+            $firstHeader = strtolower(trim($firstRow[0] ?? ''));
+
+            if ($firstHeader !== 'codice') {
+                return back()
+                    ->withInput()
+                    ->with('error', 'Hai selezionato un file non valido per Assicurazioni.');
+            }
+        } catch (\Throwable $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Errore nella lettura del file: ' . $e->getMessage());
+        }
 
         try {
             // Salvo l’excel
