@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OffertaAssicurazione extends Model
 {
-    protected $table = 'offerta_assicurazioni';
+    protected $table = 'offerte_assicurazioni';
 
     protected $fillable = [
         'user_id',

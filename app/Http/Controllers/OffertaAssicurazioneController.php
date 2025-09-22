@@ -19,7 +19,33 @@ class OffertaAssicurazioneController extends Controller
      */
     public function index()
     {
-        //
+            $query = OffertaAssicurazione::query();
+
+        if (filled(request('codice_contratto'))) {
+            $query->where('codice_contratto', 'like', '%' . request('codice_contratto') . '%');
+        }
+        if (filled(request('codice_pdv'))) {
+            $query->where('codice_pdv', 'like', '%' . request('codice_pdv') . '%');
+        }
+        if (filled(request('pacchetto'))) {
+            $query->where('pacchetto', 'like', '%' . request('pacchetto') . '%');
+        }
+        if (filled(request('categoria'))) {
+            $query->where('categoria', 'like', '%' . request('categoria') . '%');
+        }
+        if (filled(request('stato_contratto'))) {
+            $query->where('stato_contratto', 'like', '%' . request('stato_contratto') . '%');
+        }
+        if (filled(request('dt_from'))) {
+            $query->whereDate('dt_inserimento', '>=', request('dt_from'));
+        }
+        if (filled(request('dt_to'))) {
+            $query->whereDate('dt_inserimento', '<=', request('dt_to'));
+        }
+
+        $assicurazioni = $query->orderByDesc('dt_inserimento')->paginate(50);
+
+        return view('pages.assicurazioni.index', compact('assicurazioni'));
     }
 
     /**
@@ -27,7 +53,7 @@ class OffertaAssicurazioneController extends Controller
      */
     public function show(OffertaAssicurazione $offertaAssicurazione)
     {
-        //
+        return view('pages.assicurazioni.show', compact('offertaAssicurazione'));
     }
 
     /**

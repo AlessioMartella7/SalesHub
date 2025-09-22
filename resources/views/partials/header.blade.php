@@ -13,6 +13,10 @@
             Energia
         </a>
 
+        <a class="navbar-brand" href="{{ route('assicurazioni.index') }}">
+            Assicurazioni
+        </a>
+
         <a class="navbar-brand" href="{{ route('vendite.index') }}">
             Vendite
         </a>
