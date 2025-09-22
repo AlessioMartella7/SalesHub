@@ -12,11 +12,31 @@
                     {{-- Card Dettagli --}}
                     <div class="card shadow-sm">
                         <div class="card-header fw-bold fs-5">
-                            Contratto - {{ $offertaAssicurazione->codice_contratto }}
+                            Contratto - {{ $assicurazione->codice_contratto }}
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <strong>Codice PDV:</strong> {{ $offertaAssicurazione->codice_pdv }}
+                                <strong>Codice PDV: </strong> {{ $assicurazione->codice_pdv }}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Venditore: </strong> {{ $assicurazione->venditore }}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Attivato: </strong> {{ $assicurazione->attivato }}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Metodo Pagamento: </strong> {{ $assicurazione->metodo_pagamento }}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Data Primo Pagamento: </strong> {{ $assicurazione->dt_primo_pagamento }}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Esito Carrello: </strong>
+                                {{ empty($assicurazione->esito_carrello) ? 'N/A' : $assicurazione->esito_carrello }}
+                            </div>
+                            <div class="mb-3">
+                                <strong>Causale Cancellazione: </strong>
+                                {{ empty($assicurazione->causale_cancellazione) ? 'N/A' : $assicurazione->esito_carrello }}
                             </div>
                         </div>
                     </div>

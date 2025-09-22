@@ -51,9 +51,9 @@ class OffertaAssicurazioneController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OffertaAssicurazione $offertaAssicurazione)
+    public function show(OffertaAssicurazione $assicurazione)
     {
-        return view('pages.assicurazioni.show', compact('offertaAssicurazione'));
+        return view('pages.assicurazioni.show', compact('assicurazione'));
     }
 
     /**
