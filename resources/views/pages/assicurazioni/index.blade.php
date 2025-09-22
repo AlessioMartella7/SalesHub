@@ -73,12 +73,12 @@
                             <tr>
                                 <td>{{ $item->codice_pdv }}</td>
                                 <td>{{ $item->codice_contratto }}</td>
-                                <td>{{ $item->id_carrello }}</td>
+                                <td>{{ empty($item->id_carrello) ? 'N/A' : $item->id_carrello }}</td>
                                 <td>{{ $item->stato_contratto }}</td>
                                 <td>{{ $item->categoria }}</td>
                                 <td>{{ $item->pacchetto }}</td>
                                 <td>{{ $item->dt_inserimento }}</td>
-                                <td>{{ $item->dt_cancellazione }}</td>
+                                <td>{{ $item->dt_cancellazione ?? 'N/A' }}</td>
 
                                 <td>
                                     <a href="{{ route('assicurazioni.show', ['assicurazione' => $item->id]) }}"
