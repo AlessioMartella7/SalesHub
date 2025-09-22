@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreImportRequest;
 use App\Jobs\OfferteEnergiaImportExcel;
 use App\Models\OffertaEnergia;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class OffertaEnergiaController extends Controller
@@ -61,9 +62,10 @@ class OffertaEnergiaController extends Controller
                     ->with('error', 'Hai selezionato un file non valido per Energia.');
             }
         } catch (\Throwable $e) {
+            Log::error('Errore nella lettura del file: ' . $e->getMessage(), ['exception' => $e]);
             return back()
                 ->withInput()
-                ->with('error', 'Errore nella lettura del file: ' . $e->getMessage());
+                ->with('error', 'Errore nella lettura del file');
         }
 
         // ✅ Salvataggio file

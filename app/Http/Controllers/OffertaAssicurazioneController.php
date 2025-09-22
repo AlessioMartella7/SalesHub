@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Services\Import\ExcelToCsvService;
 use App\Services\Import\CsvChunkImporterService;
 use App\Services\Import\ExcelHeaderCheckService;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use Throwable;
 
 class OffertaAssicurazioneController extends Controller
@@ -69,10 +69,16 @@ class OffertaAssicurazioneController extends Controller
             ]);
 
         } catch (Throwable $e) {
-            Log::error('Errore nell importazione del file: ' . $e->getMessage());
+
+            $errorMessage = App::environment('production')
+            ? 'Errore durante l\'importazione del file '
+            : 'Errore durante l\'importazione del file:' . $e->getMessage();
+
+            Log::error('Errore nell importazione del file: ' . $e->getMessage(), ['exception' => $e]);
+
             return back()
                 ->withInput()
-                ->withErrors(['error' => 'Errore import: ' . $e->getMessage()]);
+                ->with(['error' => $errorMessage]);
         }
 
         // Cancello i files

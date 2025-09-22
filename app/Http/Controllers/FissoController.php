@@ -6,6 +6,7 @@ use App\Http\Requests\StoreImportRequest;
 use App\Models\Fisso;
 use App\Imports\FissiImportToModel;
 use App\Jobs\FissiImportExcel;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -73,9 +74,10 @@ class FissoController extends Controller
                     ->with('error', 'Hai selezionato un file non valido per Fissi.');
             }
         } catch (\Throwable $e) {
+            Log::error('Errore nella lettura del file: ' . $e->getMessage(), ['exception' => $e]);
             return back()
                 ->withInput()
-                ->with('error', 'Errore nella lettura del file: ' . $e->getMessage());
+                ->with('error', 'Errore nella lettura del file');
         }
 
         // ✅ Salvataggio file
