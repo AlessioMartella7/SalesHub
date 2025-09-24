@@ -113,8 +113,8 @@
                                 <td>{{ $vendita->cliente->codice_esterno ?? '-' }}</td>
                                 <td>{{ $vendita->flg_scontrino ?? '-' }}</td>
                                 <td>{{ $vendita->numero_scontrino ?? '-' }}</td>
-                                <td>{{ $vendita->data_fine ?? '-' }}</td>
                                 <td>{{ $vendita->data_vendita }}</td>
+                                <td>{{ $vendita->data_fine ?? '-' }}</td>
                                 <td>{{ $vendita->stato }}</td>
                                 <td>{{ $vendita->totale }}€</td>
                                 <td>
