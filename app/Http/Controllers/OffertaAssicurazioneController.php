@@ -6,7 +6,7 @@ use App\Http\Requests\StoreImportRequest;
 use App\Models\OffertaAssicurazione;
 use Illuminate\Http\Request;
 use App\Services\Import\ExcelToCsvService;
-use App\Services\Import\CsvChunkImporterService;
+use App\Services\Import\Assicurazioni\CsvAssicurazioniChunkImporterService;
 use App\Services\Import\ExcelHeaderCheckService;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -59,7 +59,7 @@ class OffertaAssicurazioneController extends Controller
     /**
      * Show the form for importing a new resource.
      */
-    public function import(StoreImportRequest $request, ExcelToCsvService $excelToCsv, CsvChunkImporterService $importer, ExcelHeaderCheckService $headerCheckService)
+    public function import(StoreImportRequest $request, ExcelToCsvService $excelToCsv, CsvAssicurazioniChunkImporterService $importer, ExcelHeaderCheckService $headerCheckService)
     {
         $file = $request->file('import_file');
         $now = now()->format('Y-m-d H:i:s');

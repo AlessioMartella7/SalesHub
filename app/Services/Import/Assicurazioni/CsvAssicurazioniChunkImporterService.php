@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Services\Import;
+namespace App\Services\Import\Assicurazioni;
 
+use App\Services\Import\CsvChunkImporterInterface;
 use Illuminate\Support\Facades\DB;
 use PDO;
-use Illuminate\Support\Facades\Log;
-
-class CsvChunkImporterService
+class CsvAssicurazioniChunkImporterService implements CsvChunkImporterInterface
 {
-    private PDO $pdo;
-    private int $batchSize;
+    public PDO $pdo;
+    public int $batchSize;
 
     public function __construct(int $batchSize = 1000)
     {
@@ -28,7 +27,7 @@ class CsvChunkImporterService
         DB::transaction(function () use ($handle, $userID, $now) {
             $rows = [];
 
-            while (($line = fgetcsv($handle)) !== false) {
+            while (($line = fgetcsv($handle, 0, ',', '"')) !== false) {
                 $rows[] = [
                     $line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6],
                     $line[7] ? date('Y-m-d H:i:s', strtotime($line[7])) : null,
@@ -54,7 +53,7 @@ class CsvChunkImporterService
         fclose($handle);
     }
 
-    private function insertBatch(array $rows): void
+    public function insertBatch(array $rows): void
     {
         $placeholders = rtrim(str_repeat('(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?),', count($rows)), ',');
 

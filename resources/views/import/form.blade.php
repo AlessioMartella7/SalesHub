@@ -26,7 +26,7 @@
 
                         {{-- File input --}}
                         <div class="form-group text-center fw-bold mt-3">
-                            <label for="import_file">Seleziona il file Excel (XLSX, CSV)</label>
+                            <label for="import_file">Seleziona il file Excel</label>
                             <input type="file" name="import_file" class="form-control" id="import_file" required>
                         </div>
 
