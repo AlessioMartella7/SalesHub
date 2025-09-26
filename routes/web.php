@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\VenditaController;
 use App\Http\Controllers\FissoController;
 use App\Http\Controllers\ImportController;
@@ -56,5 +57,10 @@ Route::middleware('auth')->controller(VenditaController::class)
         Route::post('/', 'store')->name('storeTest');
         Route::get('/{vendita}', 'show')->name('show');
     });
+
+// Rotte autenticazione a due fattori
+Route::get('/verify', [TwoFactorController::class, 'index'])->name('verify.index');
+Route::post('/verify', [TwoFactorController::class, 'store'])->name('verify.store');
+
 
 require __DIR__ . '/auth.php';
