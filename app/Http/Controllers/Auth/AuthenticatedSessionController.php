@@ -27,9 +27,24 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $user = $request->user();
 
-        return redirect()->route('vendite.index',);
+        $user->two_factor_code = rand(100000, 999999);
+        $user->two_factor_expires_at = now()->addMinutes(10);
+        $user->save();
+
+        // Send code by email
+        \Mail::raw("Your login verification code is: {$user->two_factor_code}", function ($message) use ($user) {
+            $message->to($user->email)->subject('Your 2FA Code');
+        });
+
+        // Logout until verified
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('verify.index')->with('email', $user->email);
     }
 
     /**
