@@ -44,7 +44,10 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('verify.index')->with('email', $user->email);
+        return back()->with([
+            'email' => $user->email,
+            'show_2fa_modal' => true,
+        ]);
     }
 
     /**
