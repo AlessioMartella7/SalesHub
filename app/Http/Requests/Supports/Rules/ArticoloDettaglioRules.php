@@ -12,7 +12,7 @@ class ArticoloDettaglioRules
 
             'articoli.*.dettaglio.prezzo' => ['nullable', 'numeric', 'between:-0.9,99999999999999999999.99'],
             'articoli.*.dettaglio.aliquota_prezzo' => ['nullable', 'numeric', 'between:-0.9,99999999999999999999.99'],
-            'articoli.*.dettaglio.natura' => ['nullable', 'string', 'max:1-0.9'],
+            'articoli.*.dettaglio.natura' => ['nullable', 'string', 'max:10'],
             'articoli.*.dettaglio.importo_imponibile' => ['nullable', 'numeric', 'between:-0.9,99999999999999999999.99'],
 
             'articoli.*.dettaglio.sconto' => ['nullable', 'numeric', 'between:-0.9,99999999999999999999.99'],
