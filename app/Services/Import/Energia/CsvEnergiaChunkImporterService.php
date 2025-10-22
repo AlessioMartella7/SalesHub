@@ -9,6 +9,7 @@ use PDO;
 class CsvEnergiaChunkImporterService implements CsvChunkImporterInterface
 {
     public PDO $pdo;
+
     public int $batchSize;
 
     public function __construct(int $batchSize = 1000)
@@ -37,24 +38,24 @@ class CsvEnergiaChunkImporterService implements CsvChunkImporterInterface
                     $line[3],  // codice_contratto
                     $line[4],  // num_item_in_pdc
                     $line[5],  // codice_contratto_esterno
-                    $line[6] ? date('Y-m-d H:i:s', strtotime($line[6])) : null,
-                    $line[7] ? date('Y-m-d H:i:s', strtotime($line[7])) : null,
-                    $line[8] ? date('Y-m-d H:i:s', strtotime($line[8])) : null,
-                    $line[9] ? date('Y-m-d H:i:s', strtotime($line[9])) : null,
-                    $line[10] ? date('Y-m-d H:i:s', strtotime($line[10])) : null,
-                    $line[11] ? date('Y-m-d H:i:s', strtotime($line[11])) : null,
-                    $line[12] ? date('Y-m-d H:i:s', strtotime($line[12])) : null,
-                    $line[13] ? date('Y-m-d H:i:s', strtotime($line[13])) : null,
-                    $line[14] ? date('Y-m-d H:i:s', strtotime($line[14])) : null,
-                    $line[15] ? date('Y-m-d H:i:s', strtotime($line[15])) : null,
-                    $line[16] ? date('Y-m-d H:i:s', strtotime($line[16])) : null,
-                    $line[17], $line[18], $line[19],
-                    $line[20] ? date('Y-m-d H:i:s', strtotime($line[20])) : null,
+                    $this->parseDate($line[6] ?? null),
+                    $this->parseDate($line[7] ?? null),
+                    $this->parseDate($line[8] ?? null),
+                    $this->parseDate($line[9] ?? null),
+                    $this->parseDate($line[10] ?? null),
+                    $this->parseDate($line[11] ?? null),
+                    $this->parseDate($line[12] ?? null),
+                    $this->parseDate($line[13] ?? null),
+                    $this->parseDate($line[14] ?? null),
+                    $this->parseDate($line[15] ?? null),
+                    $this->parseDate($line[16] ?? null),
+                    $line[17] ?? null, $line[18] ?? null, $line[19] ?? null,
+                    $this->parseDate($line[20] ?? null),
                     $line[21], $line[22], $line[23], $line[24],
                     $line[25], $line[26], $line[27], $line[28],
                     $line[29], $line[30], $line[31], $line[32],
                     $line[33], // tipologia_prestazione
-                    $now, $now
+                    $now, $now,
                 ];
 
                 if (count($rows) === $this->batchSize) {
@@ -72,10 +73,37 @@ class CsvEnergiaChunkImporterService implements CsvChunkImporterInterface
         fclose($handle);
     }
 
+    private function parseDate(?string $value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+        $formats = [
+            'd/m/Y H:i:s', 'd/m/Y H:i', 'd/m/Y',
+            'd-m-Y H:i:s', 'd-m-Y',
+            'Y-m-d H:i:s', 'Y-m-d',
+            'm/d/Y H:i:s', 'm/d/Y',
+        ];
+
+        foreach ($formats as $fmt) {
+            $dt = \DateTime::createFromFormat($fmt, $value);
+            if ($dt !== false) {
+                return $dt->format('Y-m-d H:i:s');
+            }
+        }
+
+        // fallback a strtotime (ultimo tentativo)
+        $ts = strtotime($value);
+
+        return $ts !== false ? date('Y-m-d H:i:s', $ts) : null;
+    }
+
     public function insertBatch(array $rows): void
     {
         // 37 campi totali
-        $placeholders = rtrim(str_repeat('(' . rtrim(str_repeat('?, ', 37), ', ') . '),', count($rows)), ',');
+        $placeholders = rtrim(str_repeat('('.rtrim(str_repeat('?, ', 37), ', ').'),', count($rows)), ',');
 
         $sql = "INSERT INTO offerte_energia (
                     user_id, dealer_id, ragione_sociale, codice_pdv, codice_contratto, num_item_in_pdc, codice_contratto_esterno,
