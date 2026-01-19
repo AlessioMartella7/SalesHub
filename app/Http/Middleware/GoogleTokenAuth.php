@@ -30,7 +30,7 @@ class GoogleTokenAuth
             ->get('https://www.googleapis.com/oauth2/v3/userinfo');
 
         // Log dell'intera risposta JSON di Google DA RIMUOVERE IN PRODUZIONE SOLO SCOPO TEST
-        Log::info('[PowerBI] User info da Google:', $response->json());
+        Log::debug('[PowerBI] User info da Google:', $response->json());
 
         if (!$response->successful()) {
             return response()->json(['error' => 'Token Google non valido'], 401);

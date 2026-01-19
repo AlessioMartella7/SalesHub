@@ -8,8 +8,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/logo-bisuite.svg') }}" type="image/svg+xml">
+    <!-- Favicon (example asset for public distribution) -->
+    <link rel="icon" href="{{ asset('images/app-logo-example.svg') }}" type="image/svg+xml">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
