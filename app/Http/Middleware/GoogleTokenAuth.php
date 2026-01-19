@@ -29,8 +29,6 @@ class GoogleTokenAuth
         $response = Http::withToken($token)
             ->get('https://www.googleapis.com/oauth2/v3/userinfo');
 
-        // Log dell'intera risposta JSON di Google DA RIMUOVERE IN PRODUZIONE SOLO SCOPO TEST
-        Log::debug('[PowerBI] User info da Google:', $response->json());
 
         if (!$response->successful()) {
             return response()->json(['error' => 'Token Google non valido'], 401);
@@ -53,12 +51,6 @@ class GoogleTokenAuth
             return response()->json(['error' => 'Utente non registrato nel sistema'], 403);
         }
     }
-        // LOG DA RIMUOVERE IN PRODUZIONE SOLO SCOPO TEST
-        Log::info('[PowerBI] Utente autenticato in Laravel:', [
-            'id' => $user->id,
-            'email' => $user->email,
-            'google_id' => $user->google_id,
-        ]);
 
         // Autentica l’utente per la durata della richiesta
         auth()->setUser($user);

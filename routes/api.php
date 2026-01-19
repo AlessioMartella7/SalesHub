@@ -3,10 +3,8 @@
 use App\Http\Controllers\Api\FissoController;
 use App\Http\Controllers\Api\OffertaEnergiaController;
 use App\Http\Controllers\Api\OffertaAssicurazioneController;
-use App\Http\Controllers\api\PowerBIController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\VenditaController;
-use App\Http\Middleware\GoogleTokenAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Middleware\CheckToken;
@@ -63,6 +61,4 @@ Route::middleware(['auth:api', CheckToken::using('read')])
         Route::post('/check-date', 'checkLastUpdatedDate')->name('checkUpdate');
     });
 
-// Rotta PowerBI
 
-Route::middleware('google.token')->get('/dati-utente', [PowerBIController::class, 'getDatiUtente']);
